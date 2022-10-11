@@ -6,7 +6,7 @@ library(magrittr);library(rio);library(rstatix);library(diptest);
 library(multimode);library(factoextra);library(patchwork);library("readxl")
 
 ###Data import & prep###
-tapData <- read.csv("C:/..../tapData.csv", na.strings = "NA")
+tapData <- read.csv("data/tapData.csv", na.strings = "NA")
 names(tapData)
 tapData$Cluster_ID <- factor(tapData$Cluster_ID)
 tapData$Cluster_Location <- factor(tapData$Cluster_Location)
