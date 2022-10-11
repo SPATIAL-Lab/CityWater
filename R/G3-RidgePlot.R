@@ -3,15 +3,16 @@ library(ggridges);library(ggplot2);library(viridis);
 library(hrbrthemes);library(patchwork)
 
 #Oxigeno Latitud Norte-Sur
-tapData_1_ridge <- tapData_1 %>%
+tapData_1_ridge <- tapData.sf_1 %>%
   mutate(Cluster_Location = fct_relevel(Cluster_Location, 
-                                        levels = "Hawaii","Oahu","San Petersburgo",
-                                        "Gainesville","San Marcos","San_Diego",
-                                        "DallasForthWard","Phoenix","Atlanta","Athens",
-                                        "Los_Angeles","Albuquerque",
-                                        "Flagstaff","Nashville","San_Francisco","Cedar_City",
-                                        "Colorado_Springs","Lawrence",
-                                        "Denver","SLC_Area","SC","MBS","Wooster","Ann_Arbor",
+                                        levels = "Hawaii","Oahu","St Petersburg",
+                                        "Gainesville","San Marcos","San Diego",
+                                        "Dallas Fort Worth","Phoenix","Atlanta","Athens",
+                                        "Los Angeles","Albuquerque",
+                                        "Flagstaff","Nashville","San Francisco","Cedar City",
+                                        "Colorado Springs","Lawrence",
+                                        "Denver","Salt Lake City","State College","Morristown",
+                                        "Wooster","Ann Arbor",
                                         "LaCrosse","Minneapolis","Portland","Bellingham"))
 
 DensPlot_d18O<-ggplot(tapData_1_ridge, aes(x = `d18O`, y = `Cluster_Location`, fill = ..x..)) +
@@ -35,13 +36,14 @@ tapData.sf_1$d_ex <- d_ex
 #D-ex Latitud Norte-Sur
 tapData.sf_1_ridge <- tapData.sf_1 %>%
   mutate(Cluster_Location = fct_relevel(Cluster_Location, 
-                                        levels = "Hawaii","Oahu","San Petersburgo",
-                                        "Gainesville","San Marcos","San_Diego",
-                                        "DallasForthWard","Phoenix","Atlanta","Athens",
-                                        "Los_Angeles","Albuquerque",
-                                        "Flagstaff","Nashville","San_Francisco","Cedar_City",
-                                        "Colorado_Springs","Lawrence",
-                                        "Denver","SLC_Area","SC","MBS","Wooster","Ann_Arbor",
+                                        levels = "Hawaii","Oahu","St Petersburg",
+                                        "Gainesville","San Marcos","San Diego",
+                                        "Dallas Fort Worth","Phoenix","Atlanta","Athens",
+                                        "Los Angeles","Albuquerque",
+                                        "Flagstaff","Nashville","San Francisco","Cedar City",
+                                        "Colorado Springs","Lawrence",
+                                        "Denver","Salt Lake City","State College","Morristown",
+                                        "Wooster","Ann Arbor",
                                         "LaCrosse","Minneapolis","Portland","Bellingham"))
 
 DensPlot_d_ex <- ggplot(tapData.sf_1_ridge, aes(x = `d_ex`, y = `Cluster_Location`, fill = ..x..)) +

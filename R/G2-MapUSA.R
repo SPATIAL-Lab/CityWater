@@ -5,7 +5,7 @@ st_crs(us_states) #check CRS
 us_states <- st_transform(us_states, crs = 4326) #set WGS84
 
 
-mapFull <- read.csv("C:/Users/Ale/Desktop/USAtapData/mapFull.csv", na.strings = "NA")
+mapFull <- read.csv("data/mapFull.csv", na.strings = "NA")
 
 mapFull.sf <- st_as_sf(mapFull, 
                        coords = c("Long", "Lat"), #xLong yLat
@@ -28,7 +28,7 @@ CONUS_sd<-tm_shape(us_states) +
   tm_layout(frame = FALSE) +
   tm_legend(outside = TRUE) 
 
-#tmap_save(CONUS_sd, "CONUS_sd.TIFF")
+tmap_save(CONUS_sd, "out/CONUS_sd.TIFF")
 
 
 #Hawaii bubble map based on oxygen sd
@@ -44,4 +44,4 @@ HW_sd<-tm_shape(hawaii) +
   tm_layout(frame = FALSE) +
   tm_legend(outside = TRUE)  
 
-#tmap_save(HW_sd, "HW_sd.TIFF")
+tmap_save(HW_sd, "out/HW_sd.TIFF")

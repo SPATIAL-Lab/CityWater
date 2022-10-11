@@ -1,11 +1,11 @@
 ###BOXPLOTS time slices for SLC and SF####
 
-names(tapData_1)
-unique(tapData_1$Cluster_ID)
-unique(tapData_1$Cluster_Location)
+names(tapData.sf_1)
+unique(tapData.sf_1$Cluster_ID)
+unique(tapData.sf_1$Cluster_Location)
 
 #Boxplot SLC and SF time slices...
-Aboxtest_SLC.SF <- tapData_1 %>%
+Aboxtest_SLC.SF <- tapData.sf_1 %>%
   filter(Cluster_ID %in% c("1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8",
                            "1.9","1.1.0","1.11","25.1","25.2","25.3",
                            "25.3","25.4","25.5","25.6","25.7")) %>%
