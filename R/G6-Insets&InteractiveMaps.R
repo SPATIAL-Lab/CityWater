@@ -10,7 +10,7 @@ Map_Atl_7 <- tm_basemap(leaflet::providers$OpenStreetMap.Mapnik) + #OpenStreetMa
              palette = c("pink", "lightblue"), border.col = "black")
 
 #Interactive map in html
-tmap_save(Map_Atl_7, "Map_Atl_7v2.html")
+tmap_save(Map_Atl_7, "out/Map_Atl_7v2.html")
 
 #MULTIMODAL + RANGO LARGO = Lawrence_KS
 tapData.sf_1_Law_14$km_cluster <- tapData_1_Law_14$km_cluster
