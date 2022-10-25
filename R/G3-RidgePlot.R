@@ -25,7 +25,10 @@ DensPlot_d18O<-ggplot(tapData_1_ridge, aes(x = `d18O`, y = `Cluster_Location`, f
     axis.title.y=element_blank(),
     panel.spacing = unit(0.1, "lines"),
     strip.text.x = element_text(size = 8)
-  )
+  ) +
+  labs(
+    x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
+  ) 
 
 
 #D-ex calculado y adherido a la tabla
@@ -57,4 +60,5 @@ DensPlot_d_ex <- ggplot(tapData.sf_1_ridge, aes(x = `d_ex`, y = `Cluster_Locatio
 #geom_vline(xintercept = 10, linetype="dashed", 
 #color = "black")
 
-DensPlot_d18O+DensPlot_d_ex
+DensPlot_d18O+DensPlot_d_ex  
+  

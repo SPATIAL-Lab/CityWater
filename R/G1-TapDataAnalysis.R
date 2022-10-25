@@ -1,37 +1,12 @@
 #Run eveything!
-library(ggplot2);library(raster); library(RColorBrewer);library(sf);
+library(raster); library(RColorBrewer);library(sf);
 library(viridis);library(rgdal);library(mapview);library(leaflet);
 library(tmap);library(spData);library(ggpmisc);library(tidyverse);
 library(magrittr);library(rio);library(rstatix);library(diptest);
 library(multimode);library(factoextra);library(patchwork);library("readxl")
 
 ###Data import & prep###
-tapData <- read.csv("data/tapData.csv", na.strings = "NA")
-
-#update some names
-tapData$Cluster_Location = gsub("Ann_Arbor", "Ann Arbor", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("MBS", "Morristown", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("SC", "State College", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("SLC_Area", "Salt Lake City", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("Colorado_Springs", "Colorado Springs", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("Cedar_City", "Cedar City", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("San_Francisco", "San Francisco", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("Los_Angeles", "Los Angeles", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("DallasForthWard", "Dallas Fort Worth", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("San_Diego", "San Diego", tapData$Cluster_Location)
-tapData$Cluster_Location = gsub("San Petersburgo", "St Petersburg", tapData$Cluster_Location)
-
-tapData$Cluster_Location_Time = gsub("Ann_Arbor", "Ann Arbor", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("MBS", "Morristown", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("SC", "State College", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("SLC_Area", "Salt Lake City", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("Colorado_Springs", "Colorado Springs", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("Cedar_City", "Cedar City", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("San_Francisco", "San Francisco", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("Los_Angeles", "Los Angeles", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("DallasForthWard", "Dallas Fort Worth", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("San_Diego", "San Diego", tapData$Cluster_Location_Time)
-tapData$Cluster_Location_Time = gsub("San Petersburgo", "St Petersburg", tapData$Cluster_Location_Time)
+tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
 
 #keep going
 names(tapData)
@@ -121,8 +96,8 @@ intMap_SLC_1.9 <- mapview(tapData.sf_1_SLC_1.9,
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_1_SLC_1.1.0 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "Salt Lake City_Mar-May-17", ]
-intMap_SLC_1.1.0 <- mapview(tapData.sf_1_SLC_1.1.0, 
+tapData.sf_1_SLC_1.10 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "Salt Lake City_Mar-May-17", ]
+intMap_SLC_1.10 <- mapview(tapData.sf_1_SLC_1.10, 
                             col.regions = "coral2", # fill color
                             color = "gray",          # outline color
                             alpha.regions = 0.5,     # fill transparency
@@ -137,7 +112,7 @@ intMap_SLC_1.11 <- mapview(tapData.sf_1_SLC_1.11,
 
 intMap_SLC_1.1 + intMap_SLC_1.2 + intMap_SLC_1.3 + intMap_SLC_1.4 + 
   intMap_SLC_1.5 + intMap_SLC_1.6 + intMap_SLC_1.7 + intMap_SLC_1.8 + 
-  intMap_SLC_1.9 + intMap_SLC_1.1.0 + intMap_SLC_1.11
+  intMap_SLC_1.9 + intMap_SLC_1.10 + intMap_SLC_1.11
 
 #SAN FRANCISCO
 tapData.sf_1_SF_25.1 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "San Francisco_Dic-13", ]
@@ -252,7 +227,7 @@ intMap_LA_28.3 <- mapview(tapData.sf_1_LA_28.3,
 intMap_LA_28.1 + intMap_LA_28.2 + intMap_LA_28.3
 
 
-#Oahu
+#OAHU
 tapData.sf_1_Oahu_2 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "Oahu", ]
 intMap_Oahu_2 <- mapview(tapData.sf_1_Oahu_2, 
                          col.regions = "red", # fill color
@@ -260,7 +235,7 @@ intMap_Oahu_2 <- mapview(tapData.sf_1_Oahu_2,
                          alpha.regions = 0.5,     # fill transparency
                          alpha = 0.5)
 
-#San Petersburgo
+#St Petersburg
 tapData.sf_1_SanPete_3 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "St Petersburg", ]
 intMap_SanPete_3 <- mapview(tapData.sf_1_SanPete_3, 
                             col.regions = "red", # fill color
@@ -284,7 +259,7 @@ intMap_SM_5 <- mapview(tapData.sf_1_SM_5,
                        alpha.regions = 0.5,     # fill transparency
                        alpha = 0.5)
 
-#DallasForthWard
+#Dallas Fort Worth
 tapData.sf_1_DF_6 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "Dallas Fort Worth", ]
 intMap_DF_6 <- mapview(tapData.sf_1_DF_6, 
                        col.regions = "red", # fill color
@@ -340,7 +315,7 @@ intMap_Cedar_12 <- mapview(tapData.sf_1_Cedar_12,
                            alpha.regions = 0.5,     # fill transparency
                            alpha = 0.5)
 
-#Colorado_Springs
+#Colorado Springs
 tapData.sf_1_ColoSp_13 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "Colorado Springs", ]
 intMap_ColoSp_13 <- mapview(tapData.sf_1_ColoSp_13, 
                             col.regions = "red", # fill color
@@ -372,7 +347,7 @@ intMap_Morristown_16 <- mapview(tapData.sf_1_Morristown_16,
                          alpha.regions = 0.5,     # fill transparency
                          alpha = 0.5)
 
-#SC
+#State College
 tapData.sf_1_SC_17 <- tapData.sf_1[tapData.sf_1$Cluster_Location_Time == "State College", ]
 intMap_SC_17 <- mapview(tapData.sf_1_SC_17, 
                         col.regions = "red", # fill color

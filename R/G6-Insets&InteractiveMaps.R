@@ -106,8 +106,8 @@ intMap_SLC_1.9 <- mapview(tapData.sf_1_SLC_1.9,
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_1_SLC_1.1.0 <- tapData.sf_1_SLC[tapData.sf_1_SLC$Cluster_Location_Time == "SLC_Area_Mar-May-17", ]
-intMap_SLC_1.1.0 <- mapview(tapData.sf_1_SLC_1.1.0, 
+tapData.sf_1_SLC_1.10 <- tapData.sf_1_SLC[tapData.sf_1_SLC$Cluster_Location_Time == "SLC_Area_Mar-May-17", ]
+intMap_SLC_1.10 <- mapview(tapData.sf_1_SLC_1.10, 
                             col.regions = "coral2", # fill color
                             color = "gray",          # outline color
                             alpha.regions = 0.5,     # fill transparency
@@ -122,7 +122,7 @@ intMap_SLC_1.11 <- mapview(tapData.sf_1_SLC_1.11,
 
 intMap_SLC_1.1 + intMap_SLC_1.2 + intMap_SLC_1.3 + intMap_SLC_1.4 + 
   intMap_SLC_1.5 + intMap_SLC_1.6 + intMap_SLC_1.7 + intMap_SLC_1.8 + 
-  intMap_SLC_1.9 + intMap_SLC_1.1.0 + intMap_SLC_1.11
+  intMap_SLC_1.9 + intMap_SLC_1.10 + intMap_SLC_1.11
 
 #SAN FRANCISCO
 tapData.sf_1_SF_25.1 <- tapData.sf_1_San_Francisco[tapData.sf_1_San_Francisco$Cluster_Location_Time == "San_Francisco_Dic-13", ]

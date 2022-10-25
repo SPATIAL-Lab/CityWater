@@ -43,7 +43,7 @@ tapData_1_SLC_1.6 <- st_set_geometry(tapData.sf_1_SLC_1.6, NULL)
 tapData_1_SLC_1.7 <- st_set_geometry(tapData.sf_1_SLC_1.7, NULL)
 tapData_1_SLC_1.8 <- st_set_geometry(tapData.sf_1_SLC_1.8, NULL)
 tapData_1_SLC_1.9 <- st_set_geometry(tapData.sf_1_SLC_1.9, NULL)
-tapData_1_SLC_1.1.0 <- st_set_geometry(tapData.sf_1_SLC_1.1.0, NULL)
+tapData_1_SLC_1.10 <- st_set_geometry(tapData.sf_1_SLC_1.10, NULL)
 tapData_1_SLC_1.11 <- st_set_geometry(tapData.sf_1_SLC_1.11, NULL)
 tapData_1_SM_5 <- st_set_geometry(tapData.sf_1_SM_5, NULL)
 tapData_1_Woo_18 <- st_set_geometry(tapData.sf_1_Woo_18, NULL)
@@ -403,13 +403,13 @@ tapData_1_SLC_1.9$km_cluster <- km_SLC_1.9$cluster
 tapData_1_SLC_1.9$km_cluster <- factor(tapData_1_SLC_1.9$km_cluster)
 levels(tapData_1_SLC_1.9$km_cluster)
 
-#tapData_1_SLC_1.1.0
-km_SLC_1.1.0 <- tapData_1_SLC_1.1.0 %>%
+#tapData_1_SLC_1.10
+km_SLC_1.10 <- tapData_1_SLC_1.10 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
-tapData_1_SLC_1.1.0$km_cluster <- km_SLC_1.1.0$cluster
-tapData_1_SLC_1.1.0$km_cluster <- factor(tapData_1_SLC_1.1.0$km_cluster)
-levels(tapData_1_SLC_1.1.0$km_cluster)
+tapData_1_SLC_1.10$km_cluster <- km_SLC_1.10$cluster
+tapData_1_SLC_1.10$km_cluster <- factor(tapData_1_SLC_1.10$km_cluster)
+levels(tapData_1_SLC_1.10$km_cluster)
 
 #tapData_1_SLC_1.11
 km_SLC_1.11 <- tapData_1_SLC_1.11 %>%
