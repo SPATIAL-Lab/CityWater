@@ -85,3 +85,5 @@ tapData$County <- latlong2county(geocoding)
 tapData$County <- gsub(".*,", "", tapData$County)
 tapData$County <- str_to_title(tapData$County) 
 
+
+
