@@ -32,9 +32,7 @@ DensPlot_d18O<-ggplot(tapData_1_ridge, aes(x = `d18O`, y = `Cluster_Location`, f
 
 
 #D-ex calculado y adherido a la tabla
-d_ex = (tapData.sf_1$d2H - 8 * tapData.sf_1$d18O)
-d_ex
-tapData.sf_1$d_ex <- d_ex
+tapData.sf_1$d_ex <- (tapData.sf_1$d2H - 8 * tapData.sf_1$d18O)
 
 #D-ex Latitud Norte-Sur
 tapData.sf_1_ridge <- tapData.sf_1 %>%

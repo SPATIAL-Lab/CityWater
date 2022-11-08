@@ -44,9 +44,6 @@ Other than some typos that don't affect the code, this all looks good. I do prop
 # G2
 The coordinate reference system ```us_states``` is EPSG:4269. Is that okay when you're working in 4326? I'm not familiar with coordinate systems and EPSG codes. 
 
-# G3
-Is Hawai'i in this dataset the Big Island and not the entire archipelago? Is that why it's separate from Oahu?
-
 # G7
 Created ordered factor for SLC data so it goes from 1.1 - 1.11 properly. Original had 1.1, 1.10, 1.11, 1.2....
 

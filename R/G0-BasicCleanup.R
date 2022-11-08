@@ -1,7 +1,5 @@
 #Initial cleanup so there's a publication-ready .csv to work from. 
-library(viridis);library(rgdal);library(mapview);library(leaflet);
-library(tmap);library(spData);library(ggpmisc);library(tidyverse);
-library(readxl);library(sp);library(maps);library(maptools)
+library(tidyverse);library(readxl);library(sp);library(maps);library(maptools)
 
 ###Data import & prep###
 tapData <- read.csv("data/tapData.csv", na.strings = "NA")
@@ -38,6 +36,8 @@ tapData <- select(tapData, -c("Modality"))
 # Typo
 tapData$Sample_Comments = gsub("temporarily", "temporally", tapData$Sample_Comments)
 
+tapData$County <- ifelse(tapData$Cluster_Location == "Hawaii", "Hawaii", tapData$County)
+
 # Changing Cluster_ID 1.1.0 to 1.10
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
 
@@ -46,13 +46,16 @@ write.csv(tapData, "data/cityWater.csv")
 #### Let's prepare CoVariates for import to do some multilevel regression
 covariates <- read_excel("data/desc_stats1.xlsx", 
     sheet = "CoVariates", col_types = c("skip", 
-       "skip", "skip", "text", "skip", "text", 
-       "skip", "numeric", "numeric", "numeric", 
+       "text", "skip", "skip", "skip", "text", 
+       "skip", "skip", "skip", "numeric", 
        "numeric", "skip", "numeric", "numeric", 
        "numeric", "text", "skip", "numeric", 
        "numeric", "numeric"))
 
-
+covariates$COUNTYFP <- str_pad(covariates$COUNTYFP, 3, pad = "0")
+################
+# COUNTIES
+################
 #### Let's assign counties to each datapoint by coordinates
 # The single argument to this function, pointsDF, is a data.frame in which:
 #   - column 1 contains the longitude in degrees (negative in the US)
@@ -78,12 +81,80 @@ latlong2county <- function(pointsDF) {
   countyNames[indices]
 }
 
-# Test the function using points in Wisconsin and Oregon.
 geocoding <- data.frame(x = tapData$Long, y = tapData$Lat)
 
 tapData$County <- latlong2county(geocoding)
 tapData$County <- gsub(".*,", "", tapData$County)
 tapData$County <- str_to_title(tapData$County) 
 
+################
+# STATES
+################
+#Let's try to ID states from coordinates
+latlong2state <- function(pointsDF) {
+  # Prepare SpatialPolygons object with one SpatialPolygon
+  # per county
+  states <- map('state', fill=TRUE, col="transparent", plot=FALSE)
+  IDs <- sapply(strsplit(states$names, ":"), function(x) x[1])
+  states_sp <- map2SpatialPolygons(states, IDs=IDs,
+                                     proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Convert pointsDF to a SpatialPoints object 
+  pointsSP <- SpatialPoints(pointsDF, 
+                            proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Use 'over' to get _indices_ of the Polygons object containing each point 
+  indices <- over(pointsSP, states_sp)
+  
+  # Return the state names of the Polygons object containing each point
+  stateNames <- sapply(states_sp@polygons, function(x) x@ID)
+  stateNames[indices]
+}
+geocoding2 <- data.frame(x = tapData$Long, y = tapData$Lat)
 
+tapData$State <- latlong2state(geocoding2)
+tapData$State <- gsub(".*,", "", tapData$State)
+tapData$State <- str_to_title(tapData$State) 
+
+################
+# CITIES (BROKEN)
+################
+#Let's try to ID cities from coordinates. Note that only cities >40k population or capitals are included
+latlong2city <- function(pointsDF) {
+  # Prepare SpatialPolygons object with one SpatialPolygon
+  # per county
+  cities <- map('us_cities', fill = TRUE, col = "transparent", plot = FALSE)
+  IDs <- sapply(strsplit(cities$names, ":"), function(x) x[1])
+  cities_sp <- map2SpatialPolygons(cities, IDs=IDs,
+                                   proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Convert pointsDF to a SpatialPoints object 
+  pointsSP <- SpatialPoints(pointsDF, 
+                            proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Use 'over' to get _indices_ of the Polygons object containing each point 
+  indices <- over(pointsSP, cities_sp)
+  
+  # Return the state names of the Polygons object containing each point
+  cityNames <- sapply(cities_sp@polygons, function(x) x@ID)
+  cityNames[indices]
+}
+geocoding <- data.frame(x = tapData$Long, y = tapData$Lat)
+
+tapData$City <- latlong2city(geocoding)
+tapData$City <- gsub(".*,", "", tapData$City)
+tapData$City <- str_to_title(tapData$City) 
+
+rm(geocoding, geocoding2)
+################
+# ZIPCODES (Takes forever)
+################
+library(revgeo)
+#This is my (Chris's) personal API key so be sure to replace it with your own.
+#This takes approximately one millions years, so plan accordingly
+Zipcode <- revgeo(longitude = tapData$Long, latitude = tapData$Lat,
+                          provider = 'bing',
+                          API = 'AtyAEH5aBzGVG8ItlBt6hOjBcp3Jx6sdYQul0L6kV0cLetAxqQAuhK5I9PAe21Iv',
+                          output= 'frame'
+)
 
