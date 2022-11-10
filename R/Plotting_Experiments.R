@@ -59,24 +59,32 @@ table(subset(tapData, Cluster_Location == "LaCrosse")$County)
 #from PRISM
 #While I can map this, I can't pull this data into anything useful. Going to try with another data file option later
 #then just ask Gabe.
-precipMap <- raster("data/PRISM_rainflow.png")
-plot(precipMap, main = "Annual Precipitation last 30 years",
-     xlab = "Longitude", ylab= "Latitude", 
-     breaks = c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 
-                1000, 1500, 2000, 3000, 4000, 5000, 6000))
+library(tidyverse);library(readxl);library(sp);library(maps);library(maptools);
+library(raster)
 
-xy <- tapData %>% 
-  dplyr::select(Lat, Long)
-names(xy) <- c('x','y')
+xy <- data.frame("x" = tapData$Long, "y" = tapData$Lat)
+
+#read in raster
+precipMap <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+
+#make spatial object from xy
+xy.sp = SpatialPoints(xy, proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
+
+#extract
+r = raster::extract(precipMap, xy.sp, sp = TRUE)
+result <- raster::extract(precipMap, xy, cellnumbers = T)
+tapData2 <- cbind(result,coordinates(r)[result[,2],])
+tapData2 <- as.data.frame(tapData2)
+#plot
+spplot(r)
 
 
-cent_max <- raster::extract(precipMap,             # raster layer
-                            xy,   # SPDF with centroids for buffer
-                            buffer = 20,     # buffer size, units depend on CRS
- #                           fun = max,         # what to value to extract
-                            df = TRUE)         # return a dataframe? 
-raster::extract(precipMap, SpatialPoints(xy), sp = T)
-r <- cbind(raster::extract(precipMap, xy, df = T),xy)
+tapData2 <- rename(tapData2, precip = PRISM_ppt_30yr_normal_4kmM3_annual_asc)
+tapData2 <- cbind(tapData2, tapData)
+#interestingly (by which I mean potentially frustrating, the cbind seems to be merging slightly different coordinates together?)
+plot(tapData2$x, tapData2$Long)
+plot(tapData2$y, tapData2$Lat)
+#This might be based off which station is closest. 
 
 #Because the lat and long are going to be slightly different across the precipitation data and our tables,
 # we can go with assigning precip based off what's closest. 
