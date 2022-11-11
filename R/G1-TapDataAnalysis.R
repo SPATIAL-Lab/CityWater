@@ -29,7 +29,8 @@ tapData.sf <- st_as_sf(tapData,
 str(tapData.sf)
 
 #removing NC -non clustered- data
-tapData.sf_1 <- tapData.sf[tapData.sf$Cluster_ID != "NC", ]
+#NC data now removed in G0 since we never use it
+#tapData.sf_1 <- tapData.sf[tapData.sf$Cluster_ID != "NC", ]
 
 ###Subsetting Cities & Interactive Maps####
 #SLC

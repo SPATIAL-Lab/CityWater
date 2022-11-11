@@ -1,22 +1,35 @@
 #Let's try creating shapefiles matching the US Census using tigris, a package which directly pulls from Census data and plays well with tidyverse 
 #This assumed G0 has been run. 
 library(tigris)
-library(ggplot2)
 library(viridis)
 library(raster)
+library(tmap)
 
 #census data is nad83/ EPSG:4269
 # We want to use LAEA projection 
 
+#only counties included in our data
 slc_counties <- c("Davis", "Salt Lake")
-dfw_counties <- c("Collin County", "Dallas", "Denton", 
-                  "Ellis", "Hunt", "Kaufman", "Rockwall", 
-                  "Johnson", "Parker", "Tarrant", "Wise")
-abq_counties <- c("Bernalillo", "Sandoval", "Torrance", "Valencia")
-sf_counties <- c("Alameda", "Contra Costa", "Marin", "Napa", "San Francisco",
-                 "San Mateo", "Santa Clara", "Solano", "Sonoma")
-
+dfw_counties <- c("Collin County", "Dallas", 
+                  #"Denton", 
+                  "Ellis", 
+                  #"Hunt", "Kaufman", "Rockwall", 
+                  "Johnson",
+                  #"Parker",
+                  "Tarrant"
+                  #, "Wise"
+                  )
+abq_counties <- c("Bernalillo"
+                  #, "Sandoval", "Torrance", "Valencia"
+                  )
+sf_counties <- c("Alameda", "Contra Costa", "Marin", 
+                 #"Napa",
+                 "San Francisco", "San Mateo", "Santa Clara"
+                 #, "Solano", "Sonoma"
+                 )
+SLC <- counties("UT", slc_counties, cb = T, resolution = "20m", year = c("2020"))
 SLC <- block_groups("UT", slc_counties, cb = T)
+#note: either one gets us the county-based data we want in terms of ALAND, AWATER. 
 SLC2 <- geo_join(SLC, covariates, 'COUNTYFP', 'COUNTYFP')
 DFW <- block_groups("TX", dfw_counties, cb = T)
 DFW <- left_join(DFW, covariates, 'COUNTYFP', 'COUNTYFP')
@@ -47,7 +60,7 @@ ggplot() +
   scale_fill_viridis(option = "mako", discrete = T) +
   theme_void()
 
-table(subset(tapData, Cluster_Location == "LaCrosse")$County)
+table(subset(tapData, Cluster_Location == "Wooster")$County)
 
 #Okay so we can pull shape files for every county that exists in a target city. That's not too too difficult. 
 
@@ -59,33 +72,47 @@ table(subset(tapData, Cluster_Location == "LaCrosse")$County)
 #from PRISM
 #While I can map this, I can't pull this data into anything useful. Going to try with another data file option later
 #then just ask Gabe.
-precipMap <- raster("data/PRISM_rainflow.png")
-plot(precipMap, main = "Annual Precipitation last 30 years",
-     xlab = "Longitude", ylab= "Latitude", 
-     breaks = c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 
-                1000, 1500, 2000, 3000, 4000, 5000, 6000))
 
-xy <- tapData %>% 
-  dplyr::select(Lat, Long)
-names(xy) <- c('x','y')
+#xy <- data.frame("x" = tapData$Long, "y" = tapData$Lat)
+#read in raster
+precipMap <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 
+#make spatial object from xy
+xy.sp = SpatialPoints(xy, proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
 
-cent_max <- raster::extract(precipMap,             # raster layer
-                            xy,   # SPDF with centroids for buffer
-                            buffer = 20,     # buffer size, units depend on CRS
- #                           fun = max,         # what to value to extract
-                            df = TRUE)         # return a dataframe? 
-raster::extract(precipMap, SpatialPoints(xy), sp = T)
-r <- cbind(raster::extract(precipMap, xy, df = T),xy)
+#extract
+r = raster::extract(precipMap, xy.sp, sp = TRUE)
 
-#Because the lat and long are going to be slightly different across the precipitation data and our tables,
-# we can go with assigning precip based off what's closest. 
+#values
+r@data
 
-ggplot() + 
-  geom_sf(data = precipMap) + 
-  geom_point(data = subset(tapData, Cluster_Location == "San Francisco"), aes(x = Long, y = Lat)) +
-#  scale_fill_viridis(option = "mako", discrete = T) +
-  theme_void()
+#plot
+spplot(r)
+
+#creating dataframe of precip data pulled from rastering
+result <- raster::extract(r, xy, cellnumbers = T)
+r2 <- as.data.frame(r)
+precipData <- as.data.frame(cbind(result,coordinates(precipMap)[result[,2],]))
+r2 <- rename(r2, 
+                     precip = PRISM_ppt_30yr_normal_4kmM3_annual_asc, 
+                     Long = x, 
+                     Lat = y)
+
+#setting up our data for multivariate regression, and adding the precip data
+regressData <- subset(tapData, select = c(Cluster_Location, 
+                                      Season, 
+                                      Elevation_mabsl, 
+                                      Month, 
+                                      d2H, 
+                                      d18O, 
+                                      County, 
+                                      State, 
+                                      Lat, 
+                                      Long))
+regressData <- cbind(regressData, r2, by = c("Lat", "Long"))
+colnames(regressData)[12] = "x"
+colnames(regressData)[13] = "y"
+
 
 
 # Let's try rasterizing with another shapefile

@@ -6,15 +6,14 @@ library(MASS)
 #okay going through the covariates data I do have a question: what the heck is "Hawaii" as a city?
 
 # Let's create d-excess for tapData
-tapData$d_ex <- (tapData$d2H - 8 * tapData$d18O)
+regressData$d_ex <- (regressData$d2H - 8 * regressData$d18O)
 
 #Okay first what do we want from tapData
-multilevel <- tapData %>% 
-  dplyr::select(d_ex, d18O, County, Year, Season, Month, Cluster_ID, Elevation_mabsl, Cluster_Location) %>% 
-  rename(NAME = County, City = Cluster_Location) %>% 
-  subset(City != "NC")
+regressData <- regressData %>% 
+  rename(NAME = County, City = Cluster_Location) 
 
-multilevel <- left_join(multilevel, covariates, by = "NAME")
+
+multilevel <- left_join(regressData, covariates, by = "NAME")
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
 multilevel$ALANDlog <- log(multilevel$ALAND)
 multilevel$AWATERlog <- log(multilevel$AWATER)
