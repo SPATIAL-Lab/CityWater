@@ -10,7 +10,7 @@ tapData$d_ex <- (tapData$d2H - 8 * tapData$d18O)
 
 #Okay first what do we want from tapData
 multilevel <- tapData %>% 
-  dplyr::select(d_ex, d18O, County, Year, Season, Month, Cluster_ID, Elevation_mabsl, Cluster_Location) %>% 
+  dplyr::select(d_ex, d18O, County, Year, Season, Month, Cluster_ID, Elevation_mabsl, Cluster_Location, Lat, Long) %>% 
   rename(NAME = County, City = Cluster_Location) %>% 
   subset(City != "NC")
 
