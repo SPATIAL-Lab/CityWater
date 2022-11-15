@@ -40,18 +40,20 @@ tapData$County <- ifelse(tapData$Cluster_Location == "Hawaii", "Hawaii", tapData
 
 # Changing Cluster_ID 1.1.0 to 1.10
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
+tapData <- subset(tapData, Cluster_ID != "NC")
 
 write.csv(tapData, "data/cityWater.csv")
 
 #### Let's prepare CoVariates for import to do some multilevel regression
 covariates <- read_excel("data/desc_stats1.xlsx", 
     sheet = "CoVariates", col_types = c("skip", 
-       "text", "skip", "skip", "skip", "text", 
+       "text", "skip", "skip", "text", "text", 
        "skip", "skip", "skip", "numeric", 
        "numeric", "skip", "numeric", "numeric", 
-       "numeric", "text", "skip", "numeric", 
-       "numeric", "numeric"))
+       "numeric", "text", "skip", "skip", 
+       "skip", "skip"))
 
+covariates$GEOID <- str_pad(covariates$GEOID, 5, pad = "0")
 covariates$COUNTYFP <- str_pad(covariates$COUNTYFP, 3, pad = "0")
 ################
 # COUNTIES
@@ -81,9 +83,9 @@ latlong2county <- function(pointsDF) {
   countyNames[indices]
 }
 
-geocoding <- data.frame(x = tapData$Long, y = tapData$Lat)
+xy <- data.frame(x = tapData$Long, y = tapData$Lat)
 
-tapData$County <- latlong2county(geocoding)
+tapData$County <- latlong2county(xy)
 tapData$County <- gsub(".*,", "", tapData$County)
 tapData$County <- str_to_title(tapData$County) 
 
@@ -110,9 +112,8 @@ latlong2state <- function(pointsDF) {
   stateNames <- sapply(states_sp@polygons, function(x) x@ID)
   stateNames[indices]
 }
-geocoding2 <- data.frame(x = tapData$Long, y = tapData$Lat)
 
-tapData$State <- latlong2state(geocoding2)
+tapData$State <- latlong2state(xy)
 tapData$State <- gsub(".*,", "", tapData$State)
 tapData$State <- str_to_title(tapData$State) 
 
@@ -139,13 +140,11 @@ latlong2city <- function(pointsDF) {
   cityNames <- sapply(cities_sp@polygons, function(x) x@ID)
   cityNames[indices]
 }
-geocoding <- data.frame(x = tapData$Long, y = tapData$Lat)
 
-tapData$City <- latlong2city(geocoding)
+tapData$City <- latlong2city(xy)
 tapData$City <- gsub(".*,", "", tapData$City)
 tapData$City <- str_to_title(tapData$City) 
 
-rm(geocoding, geocoding2)
 ################
 # ZIPCODES (Takes forever)
 ################
