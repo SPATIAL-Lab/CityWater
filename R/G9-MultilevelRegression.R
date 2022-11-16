@@ -9,8 +9,10 @@ library(MASS)
 regressData$d_ex <- (regressData$d2H - 8 * regressData$d18O)
 
 #Okay first what do we want from tapData
-regressData <- regressData %>% 
-  rename(NAME = County, City = Cluster_Location) 
+multilevel <- tapData %>% 
+  dplyr::select(d_ex, d18O, County, Year, Season, Month, Cluster_ID, Elevation_mabsl, Cluster_Location, Lat, Long) %>% 
+  rename(NAME = County, City = Cluster_Location) %>% 
+  subset(City != "NC")
 
 
 multilevel <- left_join(regressData, covariates, by = "NAME")

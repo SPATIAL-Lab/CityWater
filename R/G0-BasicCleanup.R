@@ -45,6 +45,7 @@ tapData$County <- ifelse(tapData$Cluster_Location == "Oahu",
 
 # Changing Cluster_ID 1.1.0 to 1.10
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
+tapData <- subset(tapData, Cluster_ID != "NC")
 
 tapData <- subset(tapData, Cluster_ID != "NC")
 
@@ -56,10 +57,10 @@ covariates <- read_excel("data/desc_stats1.xlsx",
        "text", "skip", "skip", "text", "text", 
        "skip", "skip", "skip", "numeric", 
        "numeric", "skip", "numeric", "numeric", 
-       "numeric", "text", "skip", "numeric", 
-       "numeric", "numeric"))
+       "numeric", "text", "skip", "skip", 
+       "skip", "skip"))
 
-covariates$GEOID <- str_pad(covariates$GEOID, 6, pad = "0")
+covariates$GEOID <- str_pad(covariates$GEOID, 5, pad = "0")
 covariates$COUNTYFP <- str_pad(covariates$COUNTYFP, 3, pad = "0")
 ################
 # COUNTIES
@@ -146,7 +147,6 @@ latlong2city <- function(pointsDF) {
   cityNames <- sapply(cities_sp@polygons, function(x) x@ID)
   cityNames[indices]
 }
-xy <- data.frame(x = tapData$Long, y = tapData$Lat)
 
 tapData$City <- latlong2city(xy)
 tapData$City <- gsub(".*,", "", tapData$City)
