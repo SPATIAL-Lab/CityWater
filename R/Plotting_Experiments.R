@@ -2,7 +2,7 @@
 #which directly pulls from Census data and plays well with tidyverse 
 #This assumes G0 has been run. 
 library(tigris, options(tigris_use_cache = TRUE))
-library(viridis);library(raster)
+library(viridis);library(raster); library(sf)
 
 #census data is nad83/ EPSG:4269
 # We want to use LAEA projection 
@@ -69,10 +69,15 @@ HI <- counties("HI", cb = T, resolution = "20m") %>%
   st_union() %>%
   as_Spatial(IDs = "Hawaii")
 
-LCR <- counties("WI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Houston", "La Crosse", "Winona"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "LaCrosse")
+LCR <- counties("MN", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Houston", "Winona"))
+
+LCR2 <- counties("WI", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("La Crosse"))
+LCR3 <- st_union(LCR, LCR2)
+LCR <- st_union(LCR3)
+LCR <- as_Spatial(LCR, IDs = "La Crosse")
+rm(LCR2, LCR3)
 
 LAW <- counties("KS", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Douglas"))%>% 
@@ -110,10 +115,15 @@ PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>%
   st_union() %>% 
   as_Spatial(IDs = "Phoenix")
 
-PTD <- counties("OR", cb = TRUE, resolution = "20m") %>% 
-  filter(NAME %in% c("Clackmas", "Clark", "Multnomah"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Portland")
+PTD <- counties("OR", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Clackamas", "Multnomah"))
+
+PTD2 <- counties("WA", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Clark"))
+PTD3 <- st_union(PTD, PTD2)
+PTD <- st_union(PTD3)
+PTD <-as_Spatial(PTD, IDs = "Portland")
+rm(PTD2, PTD3)
 
 SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Salt Lake", "Davis")) %>% 
@@ -154,39 +164,36 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
 clusterLocations <- bind(SLC, DFW, ABQ, SF, AA, ATH, ATL, BEL, CED, COL, 
                           DEN, FLG, GNV, LCR, LAW, LAX, MSP, MOR, NAS, PHX,
                           PTD, SD, SM, SP, SC, WOO, keepnames = T)
-#removing one of the San Diego Counties
-clusterLocations <- clusterLocations[!duplicated(clusterLocations), ]
 
 #read in raster
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
-streamflow <- raster("C:/Users/u6047585/Dropbox/IRB/TapWaterCities Analysis/gis/fa_qs_ann.tif")
+streamflow <- raster("data/fa_qs_ann.tif")
 
-clusterLocations$streamflow <- raster::extract(streamflow, clusterLocations, weights = F, fun = sum)
-clusterLocations$precip <- raster::extract(precip, clusterLocations, weights = F, fun = mean)
+#some empty data in the tif, and so na.rm = T
+clusterLocations$streamflow <- raster::extract(streamflow, clusterLocations,
+                                               weights = F, fun = sum, 
+                                               na.rm = T)
+clusterLocations$precip <- raster::extract(precip, clusterLocations, 
+                                           weights = F, fun = mean)
 
-#streamflow isn't producing data for large swathes of California or Washington, which is frustrating. 
-# Or New Jersey, which is just odd. Poor New Jersey.
 multivariate <- as.data.frame(clusterLocations) %>% 
   select(c(streamflow, precip))
 multivariate$Cluster_ID <- getSpPPolygonsIDSlots(clusterLocations)
 
-
 ############
 # ALAND AND AWATER SUMS
 ############
+AA <- counties("MI", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Washtenaw"))%>%
+  summarize(total_area = sum(ALAND, na.rm = T), 
+            total_water = sum(AWATER, na.rm = T)) %>% 
+  add_column(Cluster_ID = "Ann Arbor")
 
 ABQ <- counties("NM", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Bernalillo"))%>%
   summarize(total_area = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = 'Albuquerque') 
-
-
-AA <- counties("MI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Washtenaw"))%>%
-  summarize(total_area = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_ID = "Ann Arbor")
 
 ATH <- counties("GA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Clarke","Oconee")) %>% 
@@ -250,11 +257,22 @@ HI <- counties("HI", cb = T, resolution = "20m") %>%
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "Hawaii")
 
-LCR <- counties("WI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Houston", "La Crosse", "Winona"))%>% 
+### NOTE: AHHHH THIS CROSSES STATE BORDERS!!!!
+LCR <- counties("MN", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Houston", "Winona"))%>% 
   summarize(total_area = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_ID = "LaCrosse")
+            total_water = sum(AWATER, na.rm = T))
+
+LCR2 <- counties("WI", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("La Crosse"))%>% 
+  summarize(total_area = sum(ALAND, na.rm = T), 
+            total_water = sum(AWATER, na.rm = T))
+
+LCR <- rbind(LCR, LCR2) %>% 
+  summarize(total_area = sum(total_area), 
+            total_water = sum(total_water))%>% 
+  add_column(Cluster_ID = "La Crosse")
+rm(LCR2)
 
 LAW <- counties("KS", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Douglas"))%>% 
@@ -269,17 +287,17 @@ LAX <- counties("CA", cb = T, resolution = "20m") %>%
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "Los Angeles")
 
-MSP <- counties("MN", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Anoka", "Hennepin", "Ramsey"))%>% 
-  summarize(total_area = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_ID = "Minneapolis")
-
 MOR <- counties("NJ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Essex", "Morris", "Somerset", "Union"))%>% 
   summarize(total_area = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "Morristown")
+
+MSP <- counties("MN", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Anoka", "Hennepin", "Ramsey"))%>% 
+  summarize(total_area = sum(ALAND, na.rm = T), 
+            total_water = sum(AWATER, na.rm = T)) %>% 
+  add_column(Cluster_ID = "Minneapolis")
 
 NAS <- counties("TN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Cheatham", "Davidson", "Rutherford", "Williamson"))%>% 
@@ -299,11 +317,22 @@ PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>%
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "Phoenix")
 
-PTD <- counties("OR", cb = TRUE, resolution = "20m") %>% 
-  filter(NAME %in% c("Clackmas", "Clark", "Multnomah"))%>% 
+### This also crosses state borders. I'm dead. 
+PTD <- counties("OR", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Clackamas", "Multnomah"))%>% 
   summarize(total_area = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
+            total_water = sum(AWATER, na.rm = T))
+
+PTD2 <- counties("WA", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Clark"))%>% 
+  summarize(total_area = sum(ALAND, na.rm = T), 
+            total_water = sum(AWATER, na.rm = T))
+
+PTD <- rbind(PTD, PTD2) %>% 
+  summarize(total_area = sum(total_area), 
+            total_water = sum(total_water))%>% 
   add_column(Cluster_ID = "Portland")
+rm(PTD2)
 
 SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Salt Lake", "Davis")) %>% 
@@ -330,29 +359,23 @@ SM <- counties("TX", cb = T, resolution = "20m") %>%
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "San Mateo")
 
-SP <- counties("FL", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Pinellas"))%>% 
-  summarize(total_area = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_ID = "St Petersburg")
-
 SC <- counties("PA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Centre"))%>% 
   summarize(total_area = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "State College")
 
+SP <- counties("FL", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Pinellas"))%>% 
+  summarize(total_area = sum(ALAND, na.rm = T), 
+            total_water = sum(AWATER, na.rm = T)) %>% 
+  add_column(Cluster_ID = "St Petersburg")
+
 WOO <- counties("OH", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Wayne"))%>% 
   summarize(total_area = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
   add_column(Cluster_ID = "Wooster")
-
-clusterLocations <- rbind(SLC, DFW, ABQ, SF, AA, ATH, ATL, BEL, CED, COL, 
-                         DEN, FLG, GNV, LCR, LAW, LAX, MSP, MOR, NAS, PHX,
-                         PTD, SD, SM, SP, SC, WOO)
-multivariate <- left_join(multivariate, clusterLocations, by = 'Cluster_ID')
-
 
 ################
 # CENSUS DATA
@@ -366,10 +389,6 @@ readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console
 Sys.getenv("CENSUS_KEY")
 
-apis <- listCensusApis()
-apis <- subset(apis, temporal == '2020/2020')
-
-
 acs_simple <- getCensus(
   name = "acs/acs5",
   vintage = 2020,
@@ -377,15 +396,262 @@ acs_simple <- getCensus(
   region =  "county:*") %>% 
   rename(pop = B01001_001E, 
          medincome = B19013_001E) %>% 
-  mutate(GEOID = str)
+  unite(GEOID, c("state", "county"), sep = '')
   
+#Let's combine population and average median income. 
+AA$pop <- subset(acs_simple, GEOID == "26161")$pop
+AA$medincome <- subset(acs_simple, GEOID == "26161")$medincome
+  
+ABQ$pop <- subset(acs_simple, GEOID == "35001")$pop
+ABQ$medincome <- subset(acs_simple, GEOID == "35001")$medincome
+
+ATH$pop <- sum(subset(acs_simple, 
+                      GEOID == "13219" | GEOID == "13059")$pop)
+ATH$medincome <- weighted.mean(subset(acs_simple, 
+                                GEOID == "13219" | GEOID == "13059")$medincome,
+                         subset(acs_simple, 
+                                GEOID == "13219" | GEOID == "13059")$pop)
+
+ATL$pop <- sum(subset(acs_simple, 
+                      GEOID == "13121" |
+                      GEOID == "13089" | 
+                      GEOID == "13067")$pop)
+ATL$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "13121" |
+                                      GEOID == "13089" | 
+                                      GEOID == "13067")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "13121" |
+                                      GEOID == "13089" | 
+                                      GEOID == "13067")$pop)
+
+BEL$pop <- subset(acs_simple, GEOID == "53073")$pop 
+BEL$medincome <- subset(acs_simple, GEOID == "53073")$medincome 
+
+CED$pop <- subset(acs_simple, GEOID == "49021")$pop 
+CED$medincome <- subset(acs_simple, GEOID == "49021")$medincome 
+
+COL$pop <- subset(acs_simple, GEOID == "08041")$pop 
+COL$medincome <- subset(acs_simple, GEOID == "08041")$medincome 
+
+DEN$pop <- sum(subset(acs_simple, 
+                      GEOID == "08005" |
+                        GEOID == "08001" | 
+                        GEOID == "08013" |
+                        GEOID == "08014" |
+                        GEOID == "08059" |
+                        GEOID == "08031")$pop)
+DEN$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "08005" |
+                                      GEOID == "08001" | 
+                                      GEOID == "08013" |
+                                      GEOID == "08014" |
+                                      GEOID == "08059" |
+                                      GEOID == "08031")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "08005" |
+                                      GEOID == "08001" | 
+                                      GEOID == "08013" |
+                                      GEOID == "08014" |
+                                      GEOID == "08059" |
+                                      GEOID == "08031")$pop)
+
+DFW$pop <- sum(subset(acs_simple, 
+                      GEOID == "48085" |
+                        GEOID == "48113" | 
+                        GEOID == "48139" |
+                        GEOID == "48251" |
+                        GEOID == "48439")$pop)
+DFW$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "48085" |
+                                        GEOID == "48113" | 
+                                        GEOID == "48139" |
+                                        GEOID == "48251" |
+                                        GEOID == "48439")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "48085" |
+                                        GEOID == "48113" | 
+                                        GEOID == "48139" |
+                                        GEOID == "48251" |
+                                        GEOID == "48439")$pop)
+
+FLG$pop <- subset(acs_simple, GEOID == "04005")$pop 
+FLG$medincome <- subset(acs_simple, GEOID == "04005")$medincome 
+
+GNV$pop <- subset(acs_simple, GEOID == "12001")$pop 
+GNV$medincome <- subset(acs_simple, GEOID == "12001")$medincome 
+
+HI$pop <- subset(acs_simple, GEOID == "15001")$pop 
+HI$medincome <- subset(acs_simple, GEOID == "15001")$medincome 
+
+LAW$pop <- subset(acs_simple, GEOID == "20045")$pop 
+LAW$medincome <- subset(acs_simple, GEOID == "20045")$medincome 
+
+LAX$pop <- sum(subset(acs_simple, 
+                      GEOID == "06037" |
+                      GEOID == "06065" | 
+                      GEOID == "06071" |
+                      GEOID == "06073")$pop)
+LAX$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "06037" |
+                                      GEOID == "06065" | 
+                                      GEOID == "06071" |
+                                      GEOID == "06073")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "06037" |
+                                      GEOID == "06065" | 
+                                      GEOID == "06071" |
+                                      GEOID == "06073")$pop)
+LCR$pop <- sum(subset(acs_simple, 
+                      GEOID == "55063" |
+                      GEOID == "27055" | 
+                      GEOID == "27169")$pop)
+LCR$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "55063" |
+                                      GEOID == "27055" | 
+                                      GEOID == "27169")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "55063" |
+                                      GEOID == "27055" | 
+                                      GEOID == "27169")$pop)
+
+MOR$pop <- sum(subset(acs_simple, 
+                      GEOID == "34013" |
+                      GEOID == "34027" | 
+                      GEOID == "34035" |
+                      GEOID == "34039")$pop)
+MOR$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "34013" |
+                                      GEOID == "34027" | 
+                                      GEOID == "34035" |
+                                      GEOID == "34039")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "34013" |
+                                      GEOID == "34027" | 
+                                      GEOID == "34035" |
+                                      GEOID == "34039")$pop)
+
+MSP$pop <- sum(subset(acs_simple, 
+                      GEOID == "27003" |
+                      GEOID == "27053" | 
+                      GEOID == "27123")$pop)
+MSP$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "27003" |
+                                      GEOID == "27053" | 
+                                      GEOID == "27123")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "27003" |
+                                      GEOID == "27053" | 
+                                      GEOID == "27123")$pop)
+
+NAS$pop <- sum(subset(acs_simple, 
+                      GEOID == "47021" |
+                        GEOID == "47037" | 
+                        GEOID == "47149" |
+                        GEOID == "47187")$pop)
+NAS$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "47021" |
+                                        GEOID == "47037" | 
+                                        GEOID == "47149" |
+                                        GEOID == "47187")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "47021" |
+                                        GEOID == "47037" | 
+                                        GEOID == "47149" |
+                                        GEOID == "47187")$pop)
+
+OA$pop <- subset(acs_simple, GEOID == "15003")$pop 
+OA$medincome <- subset(acs_simple, GEOID == "15003")$medincome 
+
+PHX$pop <- sum(subset(acs_simple, 
+                      GEOID == "04013" |GEOID == "04021")$pop)
+PHX$medincome <- weighted.mean(subset(acs_simple, GEOID == "04013" |
+                                      GEOID == "04021")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "04013" |GEOID == "04021")$pop) 
+
+PTD$pop <- sum(subset(acs_simple, 
+                         GEOID == "41005" |
+                         GEOID == "53011" | 
+                         GEOID == "27123")$pop)
+PTD$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "41005" |
+                                      GEOID == "53011" | 
+                                      GEOID == "27123")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "41005" |
+                                      GEOID == "53011" | 
+                                      GEOID == "27123")$pop)
+
+SC$pop <- subset(acs_simple, GEOID == "42027")$pop
+SC$medincome <- subset(acs_simple, GEOID == "42027")$medincome
+
+SD$pop <- subset(acs_simple, GEOID == "06073")$pop
+SD$medincome <- subset(acs_simple, GEOID == "06073")$medincome
+
+SF$pop <- sum(subset(acs_simple, 
+                      GEOID == "06001" |
+                      GEOID == "06013" | 
+                      GEOID == "06041" |
+                      GEOID == "06075"| 
+                      GEOID == "06081"| 
+                      GEOID == "06085")$pop)
+SF$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "06001" |
+                                      GEOID == "06013" | 
+                                      GEOID == "06041" |
+                                      GEOID == "06075"| 
+                                      GEOID == "06081"| 
+                                      GEOID == "06085")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "06001" |
+                                      GEOID == "06013" | 
+                                      GEOID == "06041" |
+                                      GEOID == "06075" | 
+                                      GEOID == "06081" | 
+                                      GEOID == "06085")$pop)
+
+SLC$pop <- sum(subset(acs_simple, 
+                      GEOID == "49011" |
+                        GEOID == "49035")$pop)
+SLC$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "49011" |
+                                        GEOID == "49035")$medincome,
+                               subset(acs_simple, 
+                                      GEOID == "49011" |
+                                        GEOID == "49035")$pop)
+
+SM$pop <- subset(acs_simple, GEOID == "06081")$pop 
+SM$medincome <- subset(acs_simple, GEOID == "06081")$medincome 
+
+SP$pop <- subset(acs_simple, GEOID == "12103")$pop 
+SP$medincome <- subset(acs_simple, GEOID == "12103")$medincome 
+
+WOO$pop <- subset(acs_simple, GEOID == "39169")$pop 
+WOO$medincome <- subset(acs_simple, GEOID == "39169")$medincome 
 
 
-#K202302_001E median income?
+clusterLocations <- rbind(SLC, DFW, ABQ, SF, AA, ATH, ATL, BEL, CED, COL, 
+                          DEN, FLG, GNV, LCR, LAW, LAX, MSP, MOR, NAS, PHX,
+                          PTD, SD, SM, SP, SC, WOO)
+
+
+tapData$d_ex <- (tapData$d2H - 8 * tapData$d18O)
+
+multivariate <- left_join(multivariate, clusterLocations, by = 'Cluster_ID')
+
+
+
+
 
 ##############
 #GRAVEYARD 
 #################
+#Okay first what do we want from tapData
+multilevel <- tapData %>% 
+  dplyr::select(d_ex, d18O, County, Year, Season, Month, Cluster_ID, Elevation_mabsl, Cluster_Location, Lat, Long) %>% 
+  rename(NAME = County, City = Cluster_Location) 
+
 library(tidycensus)
 census_api_key("7d9a4b25e4c9d0cced63abc32010591eac577c4e", install = TRUE)
 readRenviron("~/.Renviron")
@@ -500,3 +766,56 @@ clusterLocations <- rbind(SLC, DFW, ABQ, SF, AA, ATH, ATL, BEL, CED, COL,
                           PTD, SD, SM, SP, SC, WOO)
 #removing one of the San Diego Counties
 clusterLocations <- clusterLocations[!duplicated(clusterLocations), ]
+
+
+################
+# CITIES (BROKEN)
+################
+#Let's try to ID cities from coordinates. Note that only cities >40k population or capitals are included
+latlong2city <- function(pointsDF) {
+  # Prepare SpatialPolygons object with one SpatialPolygon
+  # per county
+  cities <- map('us_cities', fill = TRUE, col = "transparent", plot = FALSE)
+  IDs <- sapply(strsplit(cities$names, ":"), function(x) x[1])
+  cities_sp <- map2SpatialPolygons(cities, IDs=IDs,
+                                   proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Convert pointsDF to a SpatialPoints object 
+  pointsSP <- SpatialPoints(pointsDF, 
+                            proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Use 'over' to get _indices_ of the Polygons object containing each point 
+  indices <- over(pointsSP, cities_sp)
+  
+  # Return the state names of the Polygons object containing each point
+  cityNames <- sapply(cities_sp@polygons, function(x) x@ID)
+  cityNames[indices]
+}
+
+tapData$City <- latlong2city(xy)
+tapData$City <- gsub(".*,", "", tapData$City)
+tapData$City <- str_to_title(tapData$City) 
+
+################
+# ZIPCODES (Takes forever)
+################
+library(revgeo)
+#This is my (Chris's) personal API key so be sure to replace it with your own.
+#This takes approximately one millions years, so plan accordingly
+Zipcode <- revgeo(longitude = tapData$Long, latitude = tapData$Lat,
+                  provider = 'bing',
+                  API = 'AtyAEH5aBzGVG8ItlBt6hOjBcp3Jx6sdYQul0L6kV0cLetAxqQAuhK5I9PAe21Iv',
+                  output= 'frame'
+)
+
+#### Let's prepare CoVariates for import to do some multilevel regression
+covariates <- read_excel("data/desc_stats1.xlsx", 
+                         sheet = "CoVariates", col_types = c("skip", 
+                                                             "text", "skip", "skip", "text", "text", 
+                                                             "skip", "skip", "skip", "numeric", 
+                                                             "numeric", "skip", "numeric", "numeric", 
+                                                             "numeric", "text", "skip", "skip", 
+                                                             "skip", "skip"))
+
+covariates$GEOID <- str_pad(covariates$GEOID, 5, pad = "0")
+covariates$COUNTYFP <- str_pad(covariates$COUNTYFP, 3, pad = "0")

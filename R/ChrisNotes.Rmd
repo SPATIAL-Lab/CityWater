@@ -12,12 +12,11 @@ library(tidyverse)
 # Intro
 I set up this Markdown notebook to keep notes related to CityWater project. I have a lot of catching up to do. 
 
-# tapData
+# Files Notes
+## tapData.csv
 For tapData.csv, a data description file will be useful for readers after publication, never mind help me figure this out. 
 
 We're going to want explanations for what got marked as clustered and not clustered (NC) and why. Going to probably want to rethink NC as a category for ```Cluster_State```, given the existence of North Carolina. 
-
-For ```Sample_Comments``` and the phrase "isn't temporarily", do we mean temporally? 
 
 Do we have a list of WI_Analysis_Source and easy reference?
 
@@ -25,25 +24,35 @@ For SLC, what's up with the outliers we're seeing between -4 and -8?
 
 *** Changing SLC_1.1.0 to 1.10 to match system. Changing in other files as well. 
 
-```{r exploratoryGraphs, echo = F}
-ggplot(data = subset(tapData, Cluster_Location == "Salt Lake City"), aes(x = Month, y = d18O, color = Lat)) +
-  geom_point(size = 3) + 
-  theme_classic()
-
-ggplot(data = subset(tapData, Cluster_Location != "NC"), aes(x = d2H, d18O, color = Cluster_Location)) + 
-  geom_point(size = 3) + 
-  theme_classic()
-```
-
 While looking at desc_stats1.xlsx, I think we could stand to go back to the original data. There seems to have already been some data manipulation that reviewers are going to question. Specifically, how was modality assigned in these excel files? 
 I can see now the notes for how the time slices were determined, with the names in Cluster_Location_Time. How were these slices assigned?  
 
-# G1 
+## G0 
+This has been created so the readers will have a cleaned cityWater.xlsx to work with. We don't need to provide G0 to them later, only the excel file. 
+
+## G1 
 Other than some typos that don't affect the code, this all looks good. I do propose we create a G0 to clean the data. This will make publication-ready data easier, as readers don't need to see our typos. 
 
-# G2
+## G2
 The coordinate reference system ```us_states``` is EPSG:4269. Is that okay when you're working in 4326? I'm not familiar with coordinate systems and EPSG codes. 
 
-# G7
+## G7
 Created ordered factor for SLC data so it goes from 1.1 - 1.11 properly. Original had 1.1, 1.10, 1.11, 1.2....
 
+## G8
+This has been added to scrape the necessary info in order to do multivariate multiple regression in G9. This scrapes: 
+* land area for the studied metro area
+* water area for the studied metro area
+* precipitation
+* streamflow
+* population
+* median income
+
+
+For each Cluster_Location, the counties sampled within that area were identified. The shapefiles of these counties were pulled using the tigris package, as well as total landmass and water of the Cluster_Location area. The shapefiles from tigris were used to extract the average precipitation for that location (from the PRISM Climate Group, 30-year normal precipitation) as well as the total streamflow within that region (what do we cite for streamflow?), 
+For population and median income, these values were scraped from American Community Survey 5-Year Data (2020) using censusapi package. If multiple counties make up the cluster location, the population is summed and the median income was calculated as a mean, weighted by the population of each county. 
+
+PRISM Climate Group, Oregon State University, https://prism.oregonstate.edu, data created 4 Feb 2014, accessed 16 Dec 2020.
+
+## G9
+This is where I use the data from G8 for multilevel multivariate regression. 

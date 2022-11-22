@@ -1,5 +1,6 @@
 #Initial cleanup so there's a publication-ready .csv to work from. 
-library(tidyverse);library(readxl);library(sp);library(maps);library(maptools)
+library(tidyverse);library(readxl);library(sp);library(maps);library(maptools); 
+library(elevatr)
 
 ###Data import & prep###
 tapData <- read.csv("data/tapData.csv", na.strings = "NA")
@@ -16,6 +17,7 @@ tapData$Cluster_Location = gsub("Los_Angeles", "Los Angeles", tapData$Cluster_Lo
 tapData$Cluster_Location = gsub("DallasForthWard", "Dallas Fort Worth", tapData$Cluster_Location)
 tapData$Cluster_Location = gsub("San_Diego", "San Diego", tapData$Cluster_Location)
 tapData$Cluster_Location = gsub("San Petersburgo", "St Petersburg", tapData$Cluster_Location)
+tapData$Cluster_Location = gsub("LaCrosse", "La Crosse", tapData$Cluster_Location)
 
 tapData$Cluster_Location_Time = gsub("Ann_Arbor", "Ann Arbor", tapData$Cluster_Location_Time)
 tapData$Cluster_Location_Time = gsub("MBS", "Morristown", tapData$Cluster_Location_Time)
@@ -31,17 +33,9 @@ tapData$Cluster_Location_Time = gsub("San Petersburgo", "St Petersburg", tapData
 
 # Removing NC as a Cluster_State so there's no future confusion with North Carolina (not currently in the system)
 tapData$Cluster_State = gsub("NC", NA, tapData$Cluster_State)
-# Removing "Modality" since it was added to the data after the fact. Let's find a way to assign modality using the script
-tapData <- select(tapData, -c("Modality"))
+
 # Typo
 tapData$Sample_Comments = gsub("temporarily", "temporally", tapData$Sample_Comments)
-
-tapData$County <- ifelse(tapData$Cluster_Location == "Hawaii", 
-                         "Hawaii",
-                         tapData$County)
-tapData$County <- ifelse(tapData$Cluster_Location == "Oahu", 
-                         "Oahu",
-                         tapData$County)
 
 # Changing Cluster_ID 1.1.0 to 1.10
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
@@ -49,19 +43,10 @@ tapData <- subset(tapData, Cluster_ID != "NC")
 
 tapData <- subset(tapData, Cluster_ID != "NC")
 
-write.csv(tapData, "data/cityWater.csv")
+# Let's create d-excess for tapData
+tapData$d_ex <- (tapData$d2H - 8 * tapData$d18O)
 
-#### Let's prepare CoVariates for import to do some multilevel regression
-covariates <- read_excel("data/desc_stats1.xlsx", 
-    sheet = "CoVariates", col_types = c("skip", 
-       "text", "skip", "skip", "text", "text", 
-       "skip", "skip", "skip", "numeric", 
-       "numeric", "skip", "numeric", "numeric", 
-       "numeric", "text", "skip", "skip", 
-       "skip", "skip"))
 
-covariates$GEOID <- str_pad(covariates$GEOID, 5, pad = "0")
-covariates$COUNTYFP <- str_pad(covariates$COUNTYFP, 3, pad = "0")
 ################
 # COUNTIES
 ################
@@ -124,43 +109,19 @@ tapData$State <- latlong2state(xy)
 tapData$State <- gsub(".*,", "", tapData$State)
 tapData$State <- str_to_title(tapData$State) 
 
-################
-# CITIES (BROKEN)
-################
-#Let's try to ID cities from coordinates. Note that only cities >40k population or capitals are included
-latlong2city <- function(pointsDF) {
-  # Prepare SpatialPolygons object with one SpatialPolygon
-  # per county
-  cities <- map('us_cities', fill = TRUE, col = "transparent", plot = FALSE)
-  IDs <- sapply(strsplit(cities$names, ":"), function(x) x[1])
-  cities_sp <- map2SpatialPolygons(cities, IDs=IDs,
-                                   proj4string=CRS("+proj=longlat +datum=WGS84"))
-  
-  # Convert pointsDF to a SpatialPoints object 
-  pointsSP <- SpatialPoints(pointsDF, 
-                            proj4string=CRS("+proj=longlat +datum=WGS84"))
-  
-  # Use 'over' to get _indices_ of the Polygons object containing each point 
-  indices <- over(pointsSP, cities_sp)
-  
-  # Return the state names of the Polygons object containing each point
-  cityNames <- sapply(cities_sp@polygons, function(x) x@ID)
-  cityNames[indices]
-}
+##############
+# ELEVATION
+#################
+#Because not all collected data has elevation information, we'll instead pull elevation
+#using elevatr package
+elevation_USGS <- get_elev_point(xy, prj = 4326, src = "epqs")
+tapData$elevation <- elevation_USGS$elevation
 
-tapData$City <- latlong2city(xy)
-tapData$City <- gsub(".*,", "", tapData$City)
-tapData$City <- str_to_title(tapData$City) 
-
-################
-# ZIPCODES (Takes forever)
-################
-library(revgeo)
-#This is my (Chris's) personal API key so be sure to replace it with your own.
-#This takes approximately one millions years, so plan accordingly
-Zipcode <- revgeo(longitude = tapData$Long, latitude = tapData$Lat,
-                          provider = 'bing',
-                          API = 'AtyAEH5aBzGVG8ItlBt6hOjBcp3Jx6sdYQul0L6kV0cLetAxqQAuhK5I9PAe21Iv',
-                          output= 'frame'
-)
-
+plot(tapData$Elevation_mabsl, tapData$elevation)
+#okay, we see a few things: 
+# a) lots of data where the elevation inputted was falsely zero. Mostly by Tipple
+# b) a line where the two elevation columns don't follow- because elevation_mabsl 
+# is in feet...
+#c) some are one to one
+tapData <- tapData[ -c(8, 24) ]
+write.csv(tapData, "data/cityWater.csv")
