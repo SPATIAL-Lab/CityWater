@@ -55,4 +55,37 @@ For population and median income, these values were scraped from American Commun
 PRISM Climate Group, Oregon State University, https://prism.oregonstate.edu, data created 4 Feb 2014, accessed 16 Dec 2020.
 
 ## G9
-This is where I use the data from G8 for multilevel multivariate regression. 
+This is where I use the data from G8 for multilevel multivariate regression. Hawaiian locations are left out here, as there is no streamflow information for Hawaii. Thus, only contiguous US locations are included in the multilevel modelling. 
+When I run a very simplified mlm, like so: 
+```{r firstTryMLM}
+M1 <- lm(cbind(d_ex, d18O) ~ elevation + streamflow + precip + landlog + waterlog + medincome +
+           popdensity, data = multilevel)
+```
+
+what if we instead run standard deviation of oxygen. 
+
+
+Everything ends up statistically significant. EVERYTHING. I find that unbelievable.
+
+First, let's think about independant variables that are correlated and thus maybe not appropriate to include. 
+For example, there's significant correction (Pearson's) between: 
+* popdensity and streamflow (r = -0.63)
+* popdensity and land area (r = -0.47)
+* popdensity and medincome (r = 0.63)
+* popdensity and water area (r = 0.58)
+* land area and elevation (r = -0.54)
+* land area and streamflow (r = 0.70)
+* land area and precip (r = -0.45)
+
+So, let's think about dropping land area and population density from the model. 
+
+Okay so that gives....something. 
+
+
+Gabe doesn't think elevation is that useful. Instead, max and min should be grabbed. 
+Even if so, the mean elevation of the area (merged counties) might be useful, or a buffer distance around the city. Would a range of the area around the city be useful. 
+What size is the buffer? Whatever we want to set it to. Maybe start 25km from edge of polygon. 
+Heterogeneity of the expanded area is useful? 
+
+Let's instead look at variation within each cluster- that's a lot smarter! 
+
