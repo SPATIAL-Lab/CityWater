@@ -1,0 +1,44 @@
+---
+title: "Multilevel regression"
+author: "Chris Stantis"
+date: '2022-12-02'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plm);library(caret);library(leaps)
+```
+
+# Intro
+God help me, if I write this out I stand a chance of remembering what I've done. 
+
+# Setup
+Run G8 to get multivariate dataset, which has scraped a bunch of the independent variables. 
+
+Then, import tapData and remove the Hawaiian samples.  
+```{r import, include = F}
+setwd("~/GitHub/CityWater")
+tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
+tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
+
+multilevel <- left_join(tapData, multivariate, by = "Cluster_Location")
+multilevel <- subset(multilevel, !is.na(precip))
+#huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
+multilevel$landlog <- log(multilevel$total_area)
+multilevel$waterlog <- log(multilevel$total_water)
+multilevel <- multilevel %>% 
+  select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
+         popdensity, medincome)
+
+shapiro.test(multilevel$d18O)
+shapiro.test(multilevel$d_ex)
+# neither of our dependent variables are normally distributed. 
+```
+
+Exploring our R2 if we just throw everything in, with d18O and d_ex as dependent variables. 
+
+```{r lm, echo = T}
+lm1 <- lm(multilevel,formula = cbind(d18O, d_ex) ~.)
+summary(lm1)
+```

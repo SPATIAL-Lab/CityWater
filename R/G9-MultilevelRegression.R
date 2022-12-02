@@ -8,20 +8,106 @@ tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Haw
 
 df <- group_by(tapData, Cluster_Location) %>% 
   summarize(var(rep(d18O)))
-multilevel <- left_join()
+multilevel <- left_join(multivariate, df, by = "Cluster_Location")
+multilevel$variance <- multilevel$'var(rep(d18O))'
 
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
 multilevel$landlog <- log(multilevel$total_area)
 multilevel$waterlog <- log(multilevel$total_water)
 
+
+##################
+# Summarized Data
+##################
+p1 <- ggplot(data = multilevel, aes(x = streamflow, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+
+p2 <- ggplot(data = multilevel, aes(x = precip, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p4 <- ggplot(data = multilevel, aes(x = total_land, y = variance)) +
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p5 <- ggplot(data = multilevel, aes(x = total_water, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p6 <- ggplot(data = multilevel, aes(x = total_area, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p7 <- ggplot(data = multilevel, aes(x = popdensity, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+p8 <- ggplot(data = multilevel, aes(x = medincome, y = variance)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +                                     
+  theme_classic()
+
+ggarrange(p1, p2, p3, p4, p5, p6, p7, p8)
+
+
+
+
+###############
+# All tap data
+###############
+multilevel <- left_join(tapData, multivariate, by = "Cluster_Location")
 multilevel <- subset(multilevel, !is.na(precip))
+#huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
+multilevel$landlog <- log(multilevel$total_area)
+multilevel$waterlog <- log(multilevel$total_water)
+multilevel <- multilevel %>% 
+  select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
+         popdensity, medincome)
+
 shapiro.test(multilevel$d18O)
 shapiro.test(multilevel$d_ex)
-cor.test(multilevel$popdensity, multilevel$landlog)
-cor(multilevel[, c('elevation', "streamflow", "precip", "landlog", "waterlog", "popdensity")])
+# neither of our dependent variables are normally distributed. 
+lm1 <- lm(multilevel,formula = cbind(d18O, d_ex) ~.)
+summary(lm1)
+
+
+
+
+
+cor.test(multilevel$elevation_range, multilevel$landlog)
+cor(multilevel[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity")])
 
 summary(manova(cbind(d_ex, d18O) ~ elevation + streamflow + precip + waterlog + medincome,
-               data = multilevel2))
+               data = multilevel))
 
 multilevel2 <- subset(multilevel, Cluster_Location != "Salt Lake City")
 
@@ -44,8 +130,8 @@ M2 <- plm(d18O ~ elevation + streamflow + precip + landlog + waterlog + medincom
                     model = "within")
 
 require(car)
-summary(M1)
-summary(Anova(M1))
+summary(M2)
+summary(Anova(M2))
 residM1 <- resid(M1)
 #produce residual vs. fitted plot
 plot(fitted(M1), residM1)
