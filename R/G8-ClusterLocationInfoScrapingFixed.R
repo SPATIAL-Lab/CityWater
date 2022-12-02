@@ -178,6 +178,7 @@ clusterLocations$elevation_min[clusterLocations$elevation_min <0] <- 0
 clusterLocations$elevation_max <- raster::extract(elevation, clusterLocations,
                                                   weights = F, fun = max)
 clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
+clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
 
 #read in raster
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
@@ -187,6 +188,7 @@ streamflow <- raster("data/fa_qs_ann.tif")
 clusterLocations$streamflow <- raster::extract(streamflow, clusterLocations,
                                                weights = F, fun = sum, 
                                                na.rm = T)
+clusterLocations$streamflow <- c(clusterLocations$streamflow)
 clusterLocations$streamflow <- c(clusterLocations$streamflow)
 clusterLocations$precip <- raster::extract(precip, clusterLocations, 
                                            weights = F, fun = mean, 
@@ -565,7 +567,7 @@ NAS$medincome <- weighted.mean(subset(acs_simple,
                                         GEOID == "47149" |
                                         GEOID == "47187")$medincome,
                                subset(acs_simple, 
-                                      GEOID == "47021" |
+                                        GEOID == "47021" |
                                         GEOID == "47037" | 
                                         GEOID == "47149" |
                                         GEOID == "47187")$pop)
@@ -575,10 +577,12 @@ OA$medincome <- subset(acs_simple, GEOID == "15003")$medincome
 
 PHX$pop <- sum(subset(acs_simple, 
                       GEOID == "04013" |GEOID == "04021")$pop)
-PHX$medincome <- weighted.mean(subset(acs_simple, GEOID == "04013" |
+PHX$medincome <- weighted.mean(subset(acs_simple, 
+                                      GEOID == "04013" |
                                         GEOID == "04021")$medincome,
                                subset(acs_simple, 
-                                      GEOID == "04013" |GEOID == "04021")$pop) 
+                                      GEOID == "04013" |
+                                        GEOID == "04021")$pop) 
 
 PTD$pop <- sum(subset(acs_simple, 
                       GEOID == "41005" |
@@ -600,30 +604,30 @@ SD$pop <- subset(acs_simple, GEOID == "06073")$pop
 SD$medincome <- subset(acs_simple, GEOID == "06073")$medincome
 
 SF$pop <- sum(subset(acs_simple, 
-                     GEOID == "06001" |
-                       GEOID == "06013" | 
-                       GEOID == "06041" |
-                       GEOID == "06075"| 
-                       GEOID == "06081"| 
-                       GEOID == "06085")$pop)
+                      GEOID == "06001" |
+                      GEOID == "06013" | 
+                      GEOID == "06041" |
+                      GEOID == "06075"| 
+                      GEOID == "06081"| 
+                      GEOID == "06085")$pop)
 SF$medincome <- weighted.mean(subset(acs_simple, 
-                                     GEOID == "06001" |
-                                       GEOID == "06013" | 
-                                       GEOID == "06041" |
-                                       GEOID == "06075"| 
-                                       GEOID == "06081"| 
-                                       GEOID == "06085")$medincome,
+                                      GEOID == "06001" |
+                                      GEOID == "06013" | 
+                                      GEOID == "06041" |
+                                      GEOID == "06075"| 
+                                      GEOID == "06081"| 
+                                      GEOID == "06085")$medincome,
                               subset(acs_simple, 
-                                     GEOID == "06001" |
-                                       GEOID == "06013" | 
-                                       GEOID == "06041" |
-                                       GEOID == "06075" | 
-                                       GEOID == "06081" | 
-                                       GEOID == "06085")$pop)
+                                      GEOID == "06001" |
+                                      GEOID == "06013" | 
+                                      GEOID == "06041" |
+                                      GEOID == "06075" | 
+                                      GEOID == "06081" | 
+                                      GEOID == "06085")$pop)
 
 SLC$pop <- sum(subset(acs_simple, 
                       GEOID == "49011" |
-                        GEOID == "49035")$pop)
+                      GEOID == "49035")$pop)
 SLC$medincome <- weighted.mean(subset(acs_simple, 
                                       GEOID == "49011" |
                                         GEOID == "49035")$medincome,
@@ -651,6 +655,9 @@ clusterLocations$total_area <- (clusterLocations$total_land +
 multivariate <- left_join(multivariate, clusterLocations, by = "Cluster_Location")
 multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
 multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevation_min
-multivariate <- multivariate[ -c(1, 2, 8) ]
-rm(list = setdiff(ls(), "multivariate"))
+multivariate$elevation_range <- c(multivariate$elevation_range)
+multivariate <- multivariate[ -c(1, 2, 10) ]
+
+#removes all dataframes and lists other than multivariate in order to have a clean slate. Comment out if you want to keep your mess.
+rm(list=setdiff(ls(), "multivariate"))
 
