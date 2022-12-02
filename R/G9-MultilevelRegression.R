@@ -2,16 +2,16 @@
 # Run G8 before this
 library(plm);library(caret);library(leaps);library(MASS);library(HLMdiag)
 
-tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
+tapData <- read.csv("data/cityWater.csv")
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 #Okay first what do we want from tapData
 
 df <- group_by(tapData, Cluster_Location) %>% 
   summarize(var(rep(d18O)))
-multilevel <- left_join()
+multilevel <- left_join(tapData, multivariate)
 
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_area)
+multilevel$arealog <- log(multilevel$total_area)
 multilevel$waterlog <- log(multilevel$total_water)
 
 multilevel <- subset(multilevel, !is.na(precip))
