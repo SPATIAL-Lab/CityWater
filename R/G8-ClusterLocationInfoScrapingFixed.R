@@ -167,7 +167,7 @@ clusterLocations <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG,
                          SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
 
 #convert clusterLocations from degress to meters for expanding the borders of the metro areas
-clusterLocations <- spTransform(clusterLocations, CRS("+proj=utm +datum=WGS84")) %>% 
+clusterLocations <- spTransform(clusterLocations, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs")) %>% 
   gBuffer(width = 20000, byid = T )
 
 elevation <- get_elev_raster(clusterLocations, z = 7)
