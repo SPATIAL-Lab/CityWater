@@ -22,23 +22,94 @@ setwd("~/GitHub/CityWater")
 tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 
-multilevel <- left_join(tapData, multivariate, by = "Cluster_Location")
-multilevel <- subset(multilevel, !is.na(precip))
+df <- left_join(tapData, multivariate, by = "Cluster_Location")
+df <- subset(df, !is.na(precip))
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_area)
-multilevel$waterlog <- log(multilevel$total_water)
-multilevel <- multilevel %>% 
+df$landlog <- log(df$total_area)
+df$waterlog <- log(df$total_water)
+multilevel <- df %>% 
   select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
          popdensity, medincome)
 
-shapiro.test(multilevel$d18O)
-shapiro.test(multilevel$d_ex)
+shapiro.test(df$d18O)
+shapiro.test(df$d_ex)
 # neither of our dependent variables are normally distributed. 
 ```
 
 Exploring our R2 if we just throw everything in, with d18O and d_ex as dependent variables. 
 
-```{r lm, echo = T}
+```{r basicModel, echo = T}
 lm1 <- lm(multilevel,formula = cbind(d18O, d_ex) ~.)
 summary(lm1)
+```
+```{r residuals}
+residM1 <- resid(lm1)
+#produce residual vs. fitted plot
+plot(fitted(lm1), residM1)
+
+#add a horizontal line at 0 
+abline(0,0)
+#create Q-Q plot for residuals
+qqnorm(residM1)
+
+#add a straight diagonal line to the plot
+qqline(residM1) 
+
+#Create density plot of residuals
+plot(density(residM1))
+```
+
+With so many SLC points, is this skewing our information? What if we reduce the amount of SLC, how does that change the model? 
+
+```{r lessSLC}
+noSLC <- subset(df, Cluster_Location != "Salt Lake City")
+set.seed(1)
+SLC <- subset(df, Cluster_Location == "Salt Lake City")
+SLC$id <- 1:nrow(SLC)
+lessSLC <- SLC %>% dplyr::sample_frac(0.40)
+lessSLC <- lessSLC[ -c(39) ]
+multilevel2 <- rbind(noSLC, lessSLC) %>% 
+  select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
+         popdensity, medincome)
+```
+
+Interestingly, while reducing the high number of SLC datapoints, we've improved the R2 for d_ex. 
+```{r lessSLCModel, echo = T}
+lm2 <- lm(multilevel2,formula = cbind(d18O, d_ex) ~.)
+summary(lm2)
+```
+
+```{r bestfit}
+Best_Subset <- regsubsets(d18O~.,
+               data = multilevel,
+               nbest = 1,      # 1 best model for each number of predictors
+               nvmax = 9,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+summary_best_subset <- summary(regsubsets.out)
+as.data.frame(summary_best_subset$outmat)
+```
+
+```{r residuals}
+residM2 <- resid(lm2)
+#produce residual vs. fitted plot
+plot(fitted(lm2), residM2)
+
+#add a horizontal line at 0 
+abline(0,0)
+#create Q-Q plot for residuals
+qqnorm(residM2)
+
+#add a straight diagonal line to the plot
+qqline(residM2) 
+
+#Create density plot of residuals
+plot(density(residM2))
+```
+
+```{r fixedEffects}
+M2 <- plm(d18O ~ elevation + streamflow,
+                    data = df,
+                    index = "Cluster_Location", 
+                    model = "within")
 ```
