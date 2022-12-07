@@ -1,24 +1,24 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
 # Run G8 before this
-library(plm);library(caret);library(leaps);library(MASS);library(HLMdiag)
+library(ggpubr); library(ggplot2)
 
 tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 #Okay first what do we want from tapData
 
 df <- group_by(tapData, Cluster_Location) %>% 
-  summarize(var(rep(d18O)))
+  summarize(variance = var(rep(d18O)),
+            max = max(d18O), 
+            min = min(d18O))
+df$range <- df$max - df$min
+
 multilevel <- left_join(multivariate, df, by = "Cluster_Location")
-multilevel$variance <- multilevel$'var(rep(d18O))'
 
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
 multilevel$landlog <- log(multilevel$total_area)
 multilevel$waterlog <- log(multilevel$total_water)
 
-
-##################
 # Summarized Data
-##################
 p1 <- ggplot(data = multilevel, aes(x = streamflow, y = variance)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
@@ -76,11 +76,112 @@ p8 <- ggplot(data = multilevel, aes(x = medincome, y = variance)) +
   geom_point() +                                     
   theme_classic()
 
-ggarrange(p1, p2, p3, p4, p5, p6, p7, p8)
+variancePlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7, p8)
+variancePlot
+###################
+# Range exploration
+###################
+
+##################
+# Summarized Data
+##################
+p9 <- ggplot(data = multilevel, aes(x = streamflow, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +  
+  labs(
+    x = "Streamflow (total)",
+    y = "Range"
+  ) +
+  theme_classic()
 
 
+p10 <- ggplot(data = multilevel, aes(x = precip, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Precipitation (mean)",
+    y = ""
+  ) +
+  theme_classic()
 
+p11 <- ggplot(data = multilevel, aes(x = elevation_range, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +  
+  labs(
+    x = "Elevation (range)",
+    y = ""
+  ) +
+  theme_classic()
 
+p12 <- ggplot(data = multilevel, aes(x = total_land, y = range)) +
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Total Land (sq m)",
+    y = "Range"
+  ) +
+  theme_classic()
+
+p13 <- ggplot(data = multilevel, aes(x = total_water, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +
+  labs(
+    x = "Total water (sq m)",
+    y = ""
+  ) +
+  theme_classic()
+
+p14 <- ggplot(data = multilevel, aes(x = total_area, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() +
+  labs(
+    x = "Total area (sq m)",
+    y = ""
+  ) +
+  theme_classic()
+
+p15 <- ggplot(data = multilevel, aes(x = popdensity, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Population Density",
+    y = "Range"
+  ) +
+  theme_classic()
+
+p16 <- ggplot(data = multilevel, aes(x = medincome, y = range)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Median Income",
+    y = ""
+  ) +
+  theme_classic()
+
+rangePlot <- ggarrange(p9, p10, p11, p12, p13, p14, p15, p16)
+rangePlot
+
+ggplot(data = df, aes(x = range, y = variance, label = Cluster_Location)) + 
+  geom_point() + 
+ # geom_text(nudge_y = -0.5) + 
+  theme_classic()
+multilevel <- subset(multilevel, Cluster_Location != "San Francisco")
 ###############
 # All tap data
 ###############

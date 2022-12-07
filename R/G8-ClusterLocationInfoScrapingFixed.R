@@ -163,11 +163,11 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
   as_Spatial(IDs = "Wooster")
 
 clusterLocations <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
-                         GNV, LAW, LAX, LCR,  MSP, MOR, NAS, PHX, PTD, SC, 
+                         GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
                          SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
 
 #convert clusterLocations from degress to meters for expanding the borders of the metro areas
-clusterLocations <- spTransform(clusterLocations, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs")) %>% 
+clusterLocations <- spTransform(clusterLocations, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +datum=WGS84 +units=m +no_defs")) %>% 
   gBuffer(width = 20000, byid = T )
 
 elevation <- get_elev_raster(clusterLocations, z = 7)
@@ -642,7 +642,7 @@ WOO$pop <- subset(acs_simple, GEOID == "39169")$pop
 WOO$medincome <- subset(acs_simple, GEOID == "39169")$medincome 
 
 clusterLocations <- rbind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
-                         GNV, LAW, LAX, LCR, MOR, MSP, NAS, PHX, PTD, SC, 
+                         GNV, LAW, LAX, LCR, HI, MOR, MSP, NAS, OA, PHX, PTD, SC, 
                          SD, SF, SLC, SM, SP, WOO)
 
 clusterLocations$total_area <- (clusterLocations$total_land + 
