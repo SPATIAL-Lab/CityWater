@@ -2,8 +2,8 @@
 #which directly pulls from Census data and plays well with tidyverse 
 #This assumes G0 has been run. 
 library(tidyverse);library(tigris, options(tigris_use_cache = TRUE))
-library(viridis);library(raster); library(sf);library(maps);library(maptools); 
-library(censusapi); library(elevatr); library(rgeos)
+library(viridis);library(raster);library(sf);library(maps);library(maptools); 
+library(censusapi);library(elevatr);library(rgeos)
 
 #census data is nad83/ EPSG:4269
 # We want to use LAEA projection 
@@ -178,6 +178,8 @@ clusterLocations$elevation_min[clusterLocations$elevation_min <0] <- 0
 clusterLocations$elevation_max <- raster::extract(elevation, clusterLocations,
                                                   weights = F, fun = max)
 clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
+clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
+
 #read in raster
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 streamflow <- raster("data/fa_qs_ann.tif")
@@ -186,6 +188,7 @@ streamflow <- raster("data/fa_qs_ann.tif")
 clusterLocations$streamflow <- raster::extract(streamflow, clusterLocations,
                                                weights = F, fun = sum, 
                                                na.rm = T)
+clusterLocations$streamflow <- c(clusterLocations$streamflow)
 clusterLocations$streamflow <- c(clusterLocations$streamflow)
 clusterLocations$precip <- raster::extract(precip, clusterLocations, 
                                            weights = F, fun = mean, 
