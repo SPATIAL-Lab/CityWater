@@ -24,4 +24,4 @@ Aboxtest_SLC.SF <- tapData.sf_1 %>%
   theme(axis.text.x = element_text(angle = 90))
 
 Aboxtest_SLC.SF
-ggsave("boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
+ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)

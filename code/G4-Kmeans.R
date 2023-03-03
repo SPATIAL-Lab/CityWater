@@ -1,52 +1,52 @@
 ####De-convertion from spatial objects (sf) to non-spatial objects -Kmeans doesnt like sf-#######
-tapData_1_ABQ_9 <- st_set_geometry(tapData.sf_1_ABQ_9, NULL)
-tapData_1_Ann_19 <- st_set_geometry(tapData.sf_1_Ann_19, NULL)
-tapData_1_Ath_8 <- st_set_geometry(tapData.sf_1_Ath_8, NULL)
-tapData_1_Atl_7 <- st_set_geometry(tapData.sf_1_Atl_7, NULL)
-tapData_1_Bell_22 <- st_set_geometry(tapData.sf_1_Bell_22, NULL)
-tapData_1_Cedar_12 <- st_set_geometry(tapData.sf_1_Cedar_12, NULL)
-tapData_1_ColoSp_13 <- st_set_geometry(tapData.sf_1_ColoSp_13, NULL)
-tapData_1_Denv_15 <- st_set_geometry(tapData.sf_1_Denv_15, NULL)
-tapData_1_DF_6 <- st_set_geometry(tapData.sf_1_DF_6, NULL)
-tapData_1_Flag_10 <- st_set_geometry(tapData.sf_1_Flag_10, NULL)
-tapData_1_Gaines_4 <- st_set_geometry(tapData.sf_1_Gaines_4, NULL)
-tapData_1_Haw_24 <- st_set_geometry(tapData.sf_1_Haw_24, NULL)
-tapData_1_LA_28.1 <- st_set_geometry(tapData.sf_1_LA_28.1, NULL)
-tapData_1_LA_28.2 <- st_set_geometry(tapData.sf_1_LA_28.2, NULL)
-tapData_1_LA_28.3 <- st_set_geometry(tapData.sf_1_LA_28.3, NULL)
-tapData_1_LaCro_20 <- st_set_geometry(tapData.sf_1_LaCro_20, NULL)
-tapData_1_Law_14 <- st_set_geometry(tapData.sf_1_Law_14, NULL)
-tapData_1_MBS_16 <- st_set_geometry(tapData.sf_1_Morristown_16, NULL)
-tapData_1_MPLS_21 <- st_set_geometry(tapData.sf_1_MPLS_21, NULL)
-tapData_1_Nashv_11 <- st_set_geometry(tapData.sf_1_Nashv_11, NULL)
-tapData_1_Oahu_2 <- st_set_geometry(tapData.sf_1_Oahu_2, NULL)
-tapData_1_PHO_26.1 <- st_set_geometry(tapData.sf_1_PHO_26.1, NULL)
-tapData_1_PHO_26.2 <- st_set_geometry(tapData.sf_1_PHO_26.2, NULL)
-tapData_1_Port_23 <- st_set_geometry(tapData.sf_1_Port_23, NULL)
-tapData_1_SanPete_3 <- st_set_geometry(tapData.sf_1_SanPete_3, NULL)
-tapData_1_SC_17 <- st_set_geometry(tapData.sf_1_SC_17, NULL)
-tapData_1_SD_27.1 <- st_set_geometry(tapData.sf_1_SD_27.1, NULL)
-tapData_1_SD_27.2 <- st_set_geometry(tapData.sf_1_SD_27.2, NULL)
-tapData_1_SF_25.1 <- st_set_geometry(tapData.sf_1_SF_25.1, NULL)
-tapData_1_SF_25.2 <- st_set_geometry(tapData.sf_1_SF_25.2, NULL)
-tapData_1_SF_25.3 <- st_set_geometry(tapData.sf_1_SF_25.3, NULL)
-tapData_1_SF_25.4 <- st_set_geometry(tapData.sf_1_SF_25.4, NULL)
-tapData_1_SF_25.5 <- st_set_geometry(tapData.sf_1_SF_25.5, NULL)
-tapData_1_SF_25.6 <- st_set_geometry(tapData.sf_1_SF_25.6, NULL)
-tapData_1_SF_25.7 <- st_set_geometry(tapData.sf_1_SF_25.7, NULL)
-tapData_1_SLC_1.1 <- st_set_geometry(tapData.sf_1_SLC_1.1, NULL)
-tapData_1_SLC_1.2 <- st_set_geometry(tapData.sf_1_SLC_1.2, NULL)
-tapData_1_SLC_1.3 <- st_set_geometry(tapData.sf_1_SLC_1.3, NULL)
-tapData_1_SLC_1.4 <- st_set_geometry(tapData.sf_1_SLC_1.4, NULL)
-tapData_1_SLC_1.5 <- st_set_geometry(tapData.sf_1_SLC_1.5, NULL)
-tapData_1_SLC_1.6 <- st_set_geometry(tapData.sf_1_SLC_1.6, NULL)
-tapData_1_SLC_1.7 <- st_set_geometry(tapData.sf_1_SLC_1.7, NULL)
-tapData_1_SLC_1.8 <- st_set_geometry(tapData.sf_1_SLC_1.8, NULL)
-tapData_1_SLC_1.9 <- st_set_geometry(tapData.sf_1_SLC_1.9, NULL)
-tapData_1_SLC_1.10 <- st_set_geometry(tapData.sf_1_SLC_1.10, NULL)
-tapData_1_SLC_1.11 <- st_set_geometry(tapData.sf_1_SLC_1.11, NULL)
-tapData_1_SM_5 <- st_set_geometry(tapData.sf_1_SM_5, NULL)
-tapData_1_Woo_18 <- st_set_geometry(tapData.sf_1_Woo_18, NULL)
+tapData_1_ABQ_9 <- st_set_geometry(tapData.sf_ABQ_9, NULL)
+tapData_1_Ann_19 <- st_set_geometry(tapData.sf_Ann_19, NULL)
+tapData_1_Ath_8 <- st_set_geometry(tapData.sf_Ath_8, NULL)
+tapData_1_Atl_7 <- st_set_geometry(tapData.sf_Atl_7, NULL)
+tapData_1_Bell_22 <- st_set_geometry(tapData.sf_Bell_22, NULL)
+tapData_1_Cedar_12 <- st_set_geometry(tapData.sf_Cedar_12, NULL)
+tapData_1_ColoSp_13 <- st_set_geometry(tapData.sf_ColoSp_13, NULL)
+tapData_1_Denv_15 <- st_set_geometry(tapData.sf_Denv_15, NULL)
+tapData_1_DF_6 <- st_set_geometry(tapData.sf_DF_6, NULL)
+tapData_1_Flag_10 <- st_set_geometry(tapData.sf_Flag_10, NULL)
+tapData_1_Gaines_4 <- st_set_geometry(tapData.sf_Gaines_4, NULL)
+tapData_1_Haw_24 <- st_set_geometry(tapData.sf_Haw_24, NULL)
+tapData_1_LA_28.1 <- st_set_geometry(tapData.sf_LA_28.1, NULL)
+tapData_1_LA_28.2 <- st_set_geometry(tapData.sf_LA_28.2, NULL)
+tapData_1_LA_28.3 <- st_set_geometry(tapData.sf_LA_28.3, NULL)
+tapData_1_LaCro_20 <- st_set_geometry(tapData.sf_LaCro_20, NULL)
+tapData_1_Law_14 <- st_set_geometry(tapData.sf_Law_14, NULL)
+tapData_1_MBS_16 <- st_set_geometry(tapData.sf_Morristown_16, NULL)
+tapData_1_MPLS_21 <- st_set_geometry(tapData.sf_MPLS_21, NULL)
+tapData_1_Nashv_11 <- st_set_geometry(tapData.sf_Nashv_11, NULL)
+tapData_1_Oahu_2 <- st_set_geometry(tapData.sf_Oahu_2, NULL)
+tapData_1_PHO_26.1 <- st_set_geometry(tapData.sf_PHO_26.1, NULL)
+tapData_1_PHO_26.2 <- st_set_geometry(tapData.sf_PHO_26.2, NULL)
+tapData_1_Port_23 <- st_set_geometry(tapData.sf_Port_23, NULL)
+tapData_1_SanPete_3 <- st_set_geometry(tapData.sf_SanPete_3, NULL)
+tapData_1_SC_17 <- st_set_geometry(tapData.sf_SC_17, NULL)
+tapData_1_SD_27.1 <- st_set_geometry(tapData.sf_SD_27.1, NULL)
+tapData_1_SD_27.2 <- st_set_geometry(tapData.sf_SD_27.2, NULL)
+tapData_1_SF_25.1 <- st_set_geometry(tapData.sf_SF_25.1, NULL)
+tapData_1_SF_25.2 <- st_set_geometry(tapData.sf_SF_25.2, NULL)
+tapData_1_SF_25.3 <- st_set_geometry(tapData.sf_SF_25.3, NULL)
+tapData_1_SF_25.4 <- st_set_geometry(tapData.sf_SF_25.4, NULL)
+tapData_1_SF_25.5 <- st_set_geometry(tapData.sf_SF_25.5, NULL)
+tapData_1_SF_25.6 <- st_set_geometry(tapData.sf_SF_25.6, NULL)
+tapData_1_SF_25.7 <- st_set_geometry(tapData.sf_SF_25.7, NULL)
+tapData_1_SLC_1.1 <- st_set_geometry(tapData.sf_SLC_1.1, NULL)
+tapData_1_SLC_1.2 <- st_set_geometry(tapData.sf_SLC_1.2, NULL)
+tapData_1_SLC_1.3 <- st_set_geometry(tapData.sf_SLC_1.3, NULL)
+tapData_1_SLC_1.4 <- st_set_geometry(tapData.sf_SLC_1.4, NULL)
+tapData_1_SLC_1.5 <- st_set_geometry(tapData.sf_SLC_1.5, NULL)
+tapData_1_SLC_1.6 <- st_set_geometry(tapData.sf_SLC_1.6, NULL)
+tapData_1_SLC_1.7 <- st_set_geometry(tapData.sf_SLC_1.7, NULL)
+tapData_1_SLC_1.8 <- st_set_geometry(tapData.sf_SLC_1.8, NULL)
+tapData_1_SLC_1.9 <- st_set_geometry(tapData.sf_SLC_1.9, NULL)
+tapData_1_SLC_1.10 <- st_set_geometry(tapData.sf_SLC_1.10, NULL)
+tapData_1_SLC_1.11 <- st_set_geometry(tapData.sf_SLC_1.11, NULL)
+tapData_1_SM_5 <- st_set_geometry(tapData.sf_SM_5, NULL)
+tapData_1_Woo_18 <- st_set_geometry(tapData.sf_Woo_18, NULL)
 
 
 ####K-MEANS#######
@@ -436,4 +436,30 @@ tapData_1_Woo_18$km_cluster <- factor(tapData_1_Woo_18$km_cluster)
 levels(tapData_1_Woo_18$km_cluster)
 
 
+# Modality ----------------------------------------------------------------
 
+#Let's count the number of clusters and report modality in a reproducible table. 
+kmeans <- list(tapData_1_ABQ_9, 
+tapData_1_Ann_19, tapData_1_Ath_8,  tapData_1_Atl_7,  tapData_1_Bell_22       
+tapData_1_Cedar_12       tapData_1_ColoSp_13      tapData_1_Denv_15        tapData_1_DF_6,  
+tapData_1_Flag_10        tapData_1_Gaines_4       tapData_1_Haw_24, tapData_1_LA_28.1       
+tapData_1_LA_28.2        tapData_1_LA_28.3        tapData_1_LaCro_20       tapData_1_Law_14        
+tapData_1_MBS_16, tapData_1_MPLS_21        tapData_1_Nashv_11       tapData_1_Oahu_2        
+tapData_1_PHO_26.1       tapData_1_PHO_26.2       tapData_1_Port_23        tapData_1_SanPete_3     
+tapData_1_SC_17,  tapData_1_SD_27.1        tapData_1_SD_27.2        tapData_1_SF_25.1       
+tapData_1_SF_25.2        tapData_1_SF_25.3        tapData_1_SF_25.4        tapData_1_SF_25.5       
+tapData_1_SF_25.6        tapData_1_SF_25.7        tapData_1_SLC_1.1        tapData_1_SLC_1.10      
+tapData_1_SLC_1.11       tapData_1_SLC_1.2        tapData_1_SLC_1.3        tapData_1_SLC_1.4       
+tapData_1_SLC_1.5        tapData_1_SLC_1.6        tapData_1_SLC_1.7        tapData_1_SLC_1.8       
+tapData_1_SLC_1.9        tapData_1_SM_5,   tapData_1_Woo_18  
+
+modality <- lapply(kmeans, n_distinct(x$cluster))
+modality <- lapply(kmeans, function(x) {x$clusters <- n_distinct(x$cluster)})
+
+modality <- data.frame(matrix(ncol = 3, nrow = 48))
+for (i in kmeans2) {
+out <- n_distinct(i$km_cluster)
+print(out)
+}
+
+n_distinct(km_ABQ_9$cluster)
