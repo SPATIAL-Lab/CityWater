@@ -1,32 +1,12 @@
-#Run eveything!
+# This script sets up everything for the following scripts, run completely. 
 library(raster); library(sf); library(viridis);library(rgdal);library(mapview);
-library(leaflet); library(tmap);library(spData);library(ggpmisc);
+library(leaflet); library(spData);library(ggpmisc);library(usmap);
 library(tidyverse); library(magrittr);library(rio);library(rstatix);
-library(diptest); library(multimode);library(factoextra);library(patchwork)
+library(diptest); library(multimode);library(factoextra);library(patchwork); 
+
 
 ###Data import & prep###
 tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
-
-# Descriptive Stats
-# GRAPE count (n) not working...yet
-datasummary <- tapData %>%
-  group_by(Cluster_Location) %>%
-  summarize(across(c(d18O, d2H, d_ex), list(
-    min = min, 
-    max = max, 
-    mean = mean,
-    sd = sd
-    )))
-
-datasummary2 <- tapData %>%
-  group_by(Cluster_Location) %>%
-  summarize(n = n())
-  
-datasummary <- datasummary %>% 
-  left_join(datasummary2) %>% 
-  mutate_at(2:14, round, 2)
-  
-write.csv(datasummary, "data/datasummary.csv")
 
 #keep going
 #names(tapData)

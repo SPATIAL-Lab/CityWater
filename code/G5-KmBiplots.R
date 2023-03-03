@@ -1,3 +1,14 @@
+# Plot of Modality and Standard Deviation Across US
+plot_usmap(regions = "states") + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = d18O_sd, color = Modality)) + 
+  labs(color = "Modality",
+       size = "Standard Deviation") + 
+  scale_color_manual(values = c("#003f5c", "#ffa600")) + 
+  scale_size_continuous(range = c(1, 12)) + 
+  theme_void() + 
+  theme(legend.position = 'top')
+
+ggsave("figures/sdplot.pdf")
 ################BIPLOTS with clusters#################
 
 #tapData_1_Ann_19

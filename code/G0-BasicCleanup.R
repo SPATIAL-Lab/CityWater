@@ -115,9 +115,9 @@ tapData$State <- str_to_title(tapData$State)
 #Because not all collected data has elevation information, we'll instead pull elevation
 #using elevatr package
 elevation_USGS <- get_elev_point(xy, prj = 4326, src = "epqs")
-tapData$elevation <- elevation_USGS$elevation
+tapData$Elevation <- elevation_USGS$Elevation
 
-plot(tapData$Elevation_mabsl, tapData$elevation)
+plot(tapData$Elevation_mabsl, tapData$Elevation)
 #okay, we see a few things: 
 # a) lots of data where the elevation inputted was falsely zero. Mostly by Tipple
 # b) a line where the two elevation columns don't follow- because elevation_mabsl 
