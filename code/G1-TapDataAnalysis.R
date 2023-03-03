@@ -3,7 +3,7 @@ library(raster); library(sf); library(viridis);library(rgdal);library(mapview);
 library(leaflet); library(spData);library(ggpmisc);library(usmap);
 library(tidyverse); library(magrittr);library(rio);library(rstatix);
 library(diptest); library(multimode);library(factoextra);library(patchwork); 
-
+library(ggridges); library(hrbrthemes); library(patchwork)
 
 ###Data import & prep###
 tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
