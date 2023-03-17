@@ -38,7 +38,19 @@ tapData$Cluster_State = gsub("NC", NA, tapData$Cluster_State)
 tapData$Sample_Comments = gsub("temporarily", "temporally", tapData$Sample_Comments)
 
 # Changing Cluster_ID 1.1.0 to 1.10
+# ARGH FIX THISSSSS
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.2", "1.02", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.3", "1.03", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.3", "1.03", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.4", "1.04", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.5", "1.05", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.6", "1.06", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.7", "1.07", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.8", "1.08", tapData$Cluster_ID)
+tapData$Cluster_ID = gsub("1.9", "1.09", tapData$Cluster_ID)
+tapData = mutate(tapData, Cluster_ID = ifelse(Cluster_Location_Time == "Salt Lake City_Ap-13",
+                                              "1.01", Cluster_ID))
 tapData <- subset(tapData, Cluster_ID != "NC")
 
 tapData <- subset(tapData, Cluster_ID != "NC")
@@ -46,11 +58,9 @@ tapData <- subset(tapData, Cluster_ID != "NC")
 # Let's create d-excess for tapData
 tapData$d_ex <- (tapData$d2H - 8 * tapData$d18O)
 
+# Counties ----------------------------------------------------------------
 
-################
-# COUNTIES
-################
-#### Let's assign counties to each datapoint by coordinates
+# Let's assign counties to each datapoint by coordinates
 # The single argument to this function, pointsDF, is a data.frame in which:
 #   - column 1 contains the longitude in degrees (negative in the US)
 #   - column 2 contains the latitude in degrees
@@ -81,9 +91,9 @@ tapData$County <- latlong2county(xy)
 tapData$County <- gsub(".*,", "", tapData$County)
 tapData$County <- str_to_title(tapData$County) 
 
-################
-# STATES
-################
+
+# States ------------------------------------------------------------------
+
 #Let's try to ID states from coordinates
 latlong2state <- function(pointsDF) {
   # Prepare SpatialPolygons object with one SpatialPolygon
@@ -109,12 +119,13 @@ tapData$State <- latlong2state(xy)
 tapData$State <- gsub(".*,", "", tapData$State)
 tapData$State <- str_to_title(tapData$State) 
 
-##############
-# ELEVATION
-#################
+
+# Elevation ---------------------------------------------------------------
+
 #Because not all collected data has elevation information, we'll instead pull elevation
 #using elevatr package
-elevation_USGS <- get_elev_point(xy, prj = 4326, src = "epqs")
+
+elevation_USGS <- get_elev_point(xy, prj = 4326, src = "aws")
 tapData$Elevation <- elevation_USGS$Elevation
 
 plot(tapData$Elevation_mabsl, tapData$Elevation)

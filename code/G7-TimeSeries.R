@@ -6,12 +6,12 @@ unique(tapData.sf$Cluster_Location)
 
 #Boxplot SLC and SF time slices...
 Aboxtest_SLC.SF <- tapData.sf %>%
-  filter(Cluster_ID %in% c("1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8",
-                           "1.9","1.10","1.11","25.1","25.2","25.3",
+  filter(Cluster_ID %in% c("1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
+                           "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.3","25.4","25.5","25.6","25.7")) %>%
   mutate(Cluster_ID = fct_relevel(Cluster_ID,
-                       "1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8",
-                           "1.9","1.10","1.11","25.1","25.2","25.3",
+                       "1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
+                           "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.4","25.5","25.6","25.7")) %>%
   ggplot(aes(x=Cluster_ID, y=d18O)) + 
   geom_boxplot() +
@@ -25,3 +25,12 @@ Aboxtest_SLC.SF <- tapData.sf %>%
 
 Aboxtest_SLC.SF
 ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
+
+
+# Let's look a little more in-depth for time series 
+#First, create a grouped dataframe for quickly looking at things by time
+
+SLC_timeseries <- group_by(subset(tapData, Cluster_Location == "Salt Lake City"), 
+                           Cluster_ID) 
+
+tally(SLC_timeseries)

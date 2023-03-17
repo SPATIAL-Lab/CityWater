@@ -7,7 +7,8 @@ library(ggridges); library(hrbrthemes); library(patchwork); library(tmap);
 library(ggrepel)
 
 ###Data import & prep###
-tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
+tapData <- read_csv("data/cityWater.csv", 
+                    col_types = cols(Cluster_ID = col_character()))
 
 #names(tapData)
 tapData$Cluster_ID <- factor(tapData$Cluster_ID)
@@ -24,64 +25,64 @@ tapData.sf <- st_as_sf(tapData,
 # Subsetting Urban Areas and Slices ---------------------------------------
 
 #SLC
-tapData.sf_SLC_1.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-13", ]
-intMap_SLC_1.1 <- mapview(tapData.sf_SLC_1.1, 
+tapData.sf_SLC_1.01 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-13", ]
+intMap_SLC_1.01 <- mapview(tapData.sf_SLC_1.01, 
                           col.regions = "red", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)  
 
-tapData.sf_SLC_1.2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Oct-13", ]
-intMap_SLC_1.2 <- mapview(tapData.sf_SLC_1.2, 
+tapData.sf_SLC_1.02 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Oct-13", ]
+intMap_SLC_1.02 <- mapview(tapData.sf_SLC_1.02, 
                           col.regions = "blue", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)  
 
-tapData.sf_SLC_1.3 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Feb-14", ]
-intMap_SLC_1.3 <- mapview(tapData.sf_SLC_1.3, 
+tapData.sf_SLC_1.03 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Feb-14", ]
+intMap_SLC_1.03 <- mapview(tapData.sf_SLC_1.03, 
                           col.regions = "yellow", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)  
 
-tapData.sf_SLC_1.4 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-14", ]
-intMap_SLC_1.4 <- mapview(tapData.sf_SLC_1.4, 
+tapData.sf_SLC_1.04 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-14", ]
+intMap_SLC_1.04 <- mapview(tapData.sf_SLC_1.04, 
                           col.regions = "black", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)  
 
-tapData.sf_SLC_1.5 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Sep-14", ]
-intMap_SLC_1.5 <- mapview(tapData.sf_SLC_1.5, 
+tapData.sf_SLC_1.05 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Sep-14", ]
+intMap_SLC_1.05 <- mapview(tapData.sf_SLC_1.05, 
                           col.regions = "aquamarine4", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_SLC_1.6 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-15", ]
-intMap_SLC_1.6 <- mapview(tapData.sf_SLC_1.6, 
+tapData.sf_SLC_1.06 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-15", ]
+intMap_SLC_1.06 <- mapview(tapData.sf_SLC_1.06, 
                           col.regions = "antiquewhite3", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_SLC_1.7 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-Oct-15", ]
-intMap_SLC_1.7 <- mapview(tapData.sf_SLC_1.7, 
+tapData.sf_SLC_1.07 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-Oct-15", ]
+intMap_SLC_1.07 <- mapview(tapData.sf_SLC_1.07, 
                           col.regions = "chartreuse3", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_SLC_1.8 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-16", ]
-intMap_SLC_1.8 <- mapview(tapData.sf_SLC_1.8, 
+tapData.sf_SLC_1.08 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-16", ]
+intMap_SLC_1.08 <- mapview(tapData.sf_SLC_1.08, 
                           col.regions = "chocolate1", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
 
-tapData.sf_SLC_1.9 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-16", ]
-intMap_SLC_1.9 <- mapview(tapData.sf_SLC_1.9, 
+tapData.sf_SLC_1.09 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-16", ]
+intMap_SLC_1.09 <- mapview(tapData.sf_SLC_1.09, 
                           col.regions = "chocolate4", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
@@ -101,9 +102,9 @@ intMap_SLC_1.11 <- mapview(tapData.sf_SLC_1.11,
                            alpha.regions = 0.5,     # fill transparency
                            alpha = 0.5)
 
-intMap_SLC_1.1 + intMap_SLC_1.2 + intMap_SLC_1.3 + intMap_SLC_1.4 + 
-  intMap_SLC_1.5 + intMap_SLC_1.6 + intMap_SLC_1.7 + intMap_SLC_1.8 + 
-  intMap_SLC_1.9 + intMap_SLC_1.10 + intMap_SLC_1.11
+intMap_SLC_1.01 + intMap_SLC_1.02 + intMap_SLC_1.03 + intMap_SLC_1.04 + 
+  intMap_SLC_1.05 + intMap_SLC_1.06 + intMap_SLC_1.07 + intMap_SLC_1.08 + 
+  intMap_SLC_1.09 + intMap_SLC_1.10 + intMap_SLC_1.11
 
 #SAN FRANCISCO
 tapData.sf_SF_25.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Dic-13", ]
