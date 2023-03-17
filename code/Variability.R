@@ -1,0 +1,53 @@
+# Plot of Modality and Standard Deviation Across US. Run 1 first
+
+transformed_data <- usmap_transform(datasummary)
+
+# Oxygen SD
+plot_usmap(regions = "states", fill = 'grey90') + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = d18O_sd, fill = Modality), shape = 21) + 
+  labs(color = "Modality",
+       size = "Standard Deviation") + 
+  scale_fill_manual(values = c("#003f5c", "#ffa600")) + 
+  scale_size_continuous(range = c(1, 10)) + 
+  theme_void() + 
+  theme(legend.position = 'top')
+
+# Hydrogen SD
+plot_usmap(regions = "states", fill = 'grey90') + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = d2H_sd, fill = Modality), shape = 21) + 
+  labs(color = "Modality",
+       size = "Standard Deviation") + 
+  scale_fill_manual(values = c("#003f5c", "#ffa600")) + 
+  scale_size_continuous(range = c(1, 10)) + 
+  theme_void() + 
+  theme(legend.position = 'top')
+
+# Deuterium excess SD
+plot_usmap(regions = "states", fill = 'grey90') + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = d_ex_sd, fill = Modality), shape = 21) + 
+  labs(color = "Modality",
+       size = "Standard Deviation") + 
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
+  scale_size_continuous(range = c(1, 10)) + 
+  theme_void() + 
+  theme(legend.position = 'top',
+        legend.text=element_text(size=rel(1)))
+
+ggsave("figures/sdplot.pdf")
+
+# Sample Size
+plot_usmap(regions = "states", fill = 'grey90') + 
+  geom_point(data = transformed_data, 
+             aes(x = x, y = y, size = n), shape = 21, fill = "#003f5c") + 
+  labs(size = "Sample Size") + 
+  scale_size_continuous(range = c(1, 10)) + 
+  theme_void() + 
+  theme(legend.position = 'top')
+
+# Comparing oxygen and hydrogen variability
+
+ggplot(data = datasummary, aes(x = d18O_sd, y = d2H_sd)) + 
+    geom_smooth(se = F, method = lm) +
+  geom_point(aes(color = Modality), size = 3) + 
+  scale_color_manual(values = c("#003f5c", "#ffa600")) +
+  geom_text_repel(aes(label = Cluster_Location))

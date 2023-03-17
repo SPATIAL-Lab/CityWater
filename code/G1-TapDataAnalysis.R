@@ -3,34 +3,26 @@ library(raster); library(sf); library(viridis);library(rgdal);library(mapview);
 library(leaflet); library(spData);library(ggpmisc);library(usmap);
 library(tidyverse); library(magrittr);library(rio);library(rstatix);
 library(diptest); library(multimode);library(factoextra);library(patchwork); 
-library(ggridges); library(hrbrthemes); library(patchwork); library(tmap)
+library(ggridges); library(hrbrthemes); library(patchwork); library(tmap); 
+library(ggrepel)
 
 ###Data import & prep###
 tapData <- read.csv("data/cityWater.csv", na.strings = "NA")
 
-#keep going
 #names(tapData)
 tapData$Cluster_ID <- factor(tapData$Cluster_ID)
 tapData$Cluster_Location <- factor(tapData$Cluster_Location)
 tapData$Cluster_Location_Time <- factor(tapData$Cluster_Location_Time)
 tapData$Cluster_State <- factor(tapData$Cluster_State)
 tapData$Project_ID <- factor(tapData$Project_ID)
-#Chris: I want to create reproducible way or how modality is assigned
-# tapData$Modality <- factor(tapData$Modality)
-levels(tapData$Cluster_ID)
-levels(tapData$Cluster_Location)
-levels(tapData$Cluster_Location_Time)
-
-#levels(tapData$Modality)
-str(tapData)
 
 #going spatial
 tapData.sf <- st_as_sf(tapData, 
                         coords = c("Long", "Lat"),
-                        crs = 4326) #EPSG code for WGS84!
-str(tapData.sf)
+                        crs = 4326) #EPSG code for WGS84
 
-###Subsetting Cities & Interactive Maps####
+# Subsetting Urban Areas and Slices ---------------------------------------
+
 #SLC
 tapData.sf_SLC_1.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-13", ]
 intMap_SLC_1.1 <- mapview(tapData.sf_SLC_1.1, 
@@ -408,4 +400,3 @@ intMap_Haw_24 <- mapview(tapData.sf_Haw_24,
                          color = "gray",          # outline color
                          alpha.regions = 0.5,     # fill transparency
                          alpha = 0.5)
-
