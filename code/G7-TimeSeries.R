@@ -13,19 +13,18 @@ Aboxtest_SLC.SF <- tapData.sf %>%
                        "1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
                            "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.4","25.5","25.6","25.7")) %>%
-  ggplot(aes(x=Cluster_ID, y=d18O)) + 
+  ggplot(aes(y = Cluster_ID, x = d18O)) + 
   geom_boxplot() +
   stat_summary(fun="mean", fill="blue", shape=23) +
   theme_bw(base_size = 16) + 
   labs(
-    y = expression(paste(delta^18, "O", " (\u2030, VSMOW)")), 
-    x = "Cluster ID"
+    x = expression(paste(delta^18, "O", " (\u2030, VSMOW)")), 
+    y = "Cluster ID"
   ) +
   theme(axis.text.x = element_text(angle = 90))
 
 Aboxtest_SLC.SF
 ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
-
 
 # Let's look a little more in-depth for time series 
 #First, create a grouped dataframe for quickly looking at things by time
@@ -34,3 +33,20 @@ SLC_timeseries <- group_by(subset(tapData, Cluster_Location == "Salt Lake City")
                            Cluster_ID) 
 
 tally(SLC_timeseries)
+
+timeseriessummary <- subset(tapData, Cluster_Location == "Salt Lake City") %>%
+  group_by(Cluster_ID) %>%
+  summarize(across(c(d18O, d2H, d_ex), list(
+    min = min, 
+    max = max, 
+    mean = mean,
+    sd = sd
+  ))) 
+
+timeseriessummary2 <- subset(tapData, Cluster_Location == "Salt Lake City") %>%
+  group_by(Cluster_ID) %>%
+  summarize(n = n())
+
+timeseriessummary <- timeseriessummary %>% 
+  left_join(timeseriessummary2) %>% 
+  mutate_at(2:13, round, 2)
