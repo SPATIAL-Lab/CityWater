@@ -395,7 +395,7 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
 
 # tidycensus doesn't do income, only population by race. So, off we go
 
-Sys.setenv(CENSUS_KEY = "YOURKEYHERE")
+Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console
@@ -658,6 +658,4 @@ multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevat
 multivariate$elevation_range <- c(multivariate$elevation_range)
 multivariate <- multivariate[ -c(1, 2, 10) ]
 
-#removes all dataframes and lists other than multivariate in order to have a clean slate. Comment out if you want to keep your mess.
-rm(list=setdiff(ls(), "multivariate"))
-
+write.csv(multivariate, "data/multivariate.csv")

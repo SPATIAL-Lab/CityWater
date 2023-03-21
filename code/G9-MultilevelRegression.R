@@ -1,9 +1,11 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
-# Run G8 before this
-library(ggpubr); library(ggplot2)
+library(tidyverse)
 
-tapData <- read.csv("data/cityWater.csv")
+tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
+datasummary <- read.csv("data/datasummary.csv")
+datasummary <- datasummary[,-c(1, 3:14)]
+multivariate <- read.csv("data/multivariate.csv")
 #Okay first what do we want from tapData
 
 df <- group_by(tapData, Cluster_Location) %>% 
@@ -13,19 +15,20 @@ df <- group_by(tapData, Cluster_Location) %>%
 df$range <- df$max - df$min
 
 multilevel <- left_join(multivariate, df, by = "Cluster_Location")
+multilevel <- left_join(multilevel, datasummary, by = 'Cluster_Location')
 
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$arealog <- log(multilevel$total_area)
+multilevel$landlog <- log(multilevel$total_area)
 multilevel$waterlog <- log(multilevel$total_water)
 
-# Summarized Data
+# Summarized Data ---------------------------------------------------------
+
 p1 <- ggplot(data = multilevel, aes(x = streamflow, y = variance)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
   stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
   geom_point() +                                     
   theme_classic()
-
 
 p2 <- ggplot(data = multilevel, aes(x = precip, y = variance)) + 
   stat_smooth(method = "lm", formula= y~x) +
@@ -182,53 +185,72 @@ ggplot(data = df, aes(x = range, y = variance, label = Cluster_Location)) +
  # geom_text(nudge_y = -0.5) + 
   theme_classic()
 multilevel <- subset(multilevel, Cluster_Location != "San Francisco")
+
 ###############
 # All tap data
 ###############
-multilevel <- left_join(tapData, multivariate, by = "Cluster_Location")
-multilevel <- subset(multilevel, !is.na(precip))
-#huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_area)
-multilevel$waterlog <- log(multilevel$total_water)
-multilevel <- multilevel %>% 
+model <- left_join(tapData, multilevel, by = "Cluster_Location")
+model <- subset(model, !is.na(precip))
+
+model <- model %>% 
   select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
          popdensity, medincome)
 
-multilevel <- subset(multilevel, !is.na(precip))
-#huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_area)
-multilevel$waterlog <- log(multilevel$total_water)
-multilevel <- multilevel %>% 
-  select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-         popdensity, medincome)
-
-shapiro.test(multilevel$d18O)
-shapiro.test(multilevel$d_ex)
+shapiro.test(model$d18O)
+shapiro.test(model$d_ex)
 # neither of our dependent variables are normally distributed. 
-lm1 <- lm(multilevel,formula = cbind(d18O, d_ex) ~.)
+
+lm1 <- lm(model,formula = cbind(d18O, d_ex) ~.)
 summary(lm1)
 
 
+cor.test(model$elevation_range, model$landlog)
+cor(model[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
 
+summary(manova(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome,
+               data = model))
 
+shapiro.test(model2$d18O)
+shapiro.test(model2$d_ex)
 
-cor.test(multilevel$elevation_range, multilevel$landlog)
-cor(multilevel[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity")])
+M1 <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome + popdensity,
+         data = model)
+summary(M1)
 
-summary(manova(cbind(d_ex, d18O) ~ elevation + streamflow + precip + waterlog + medincome,
-               data = multilevel))
+# To absolutely no one's surprise, the major factors in d_ex values are: elevation, streamflow, precipitation, 
+# and amount of water. The median income and population density is a slight surprise, but that's probably just because it's correlated with 
+# water in the area. 
 
-multilevel2 <- subset(multilevel, Cluster_Location != "Salt Lake City")
+ggplot(data = model2, aes(x = medincome, y = d_ex)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 20, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 18, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Median Income",
+    y = "d-excess"
+  ) +
+  theme_classic()
 
-shapiro.test(multilevel2$d18O)
-shapiro.test(multilevel2$d_ex)
+ggplot(data = model2, aes(x = popdensity, y = d_ex)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 20, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 18, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Population Density",
+    y = "d-excess"
+  ) +
+  theme_classic()
 
-M1 <- lm(cbind(d_ex, d18O) ~ elevation + streamflow + precip + waterlog + medincome,
-         data = multilevel)
-
+model2 <- subset(model, Cluster_Location != "Salt Lake City")
 #Is Salt Lake City simply too many samples from one area
-M2 <- lm(cbind(d_ex, d18O) ~ elevation + streamflow + precip + waterlog + medincome,
-           popdensity, data = multilevel2)
+M2 <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome,
+           popdensity, data = model2)
+summary(M2)
+cor(model2[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
+
+
 
 #fixed effects modelling. currently broken
 
@@ -276,13 +298,14 @@ plot(density(residM2))
 M3 <- update(M1, . ~ . - medincome - popdensity)
 anova(M1, M3)
 # Okay so removing median income and pop density gives us a significantly different model
-# suggestin that these are pretty important factors actually
+# suggesting that these are pretty important factors actually
 
 
 # stepwise to help deal with the linearly dependant columns? 
 # Fit the full model 
-full.model <- lm(d18O ~ elevation + streamflow + precip + landlog + waterlog + medincome +
-                   popdensity, data = multilevel)
+full.model <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome + popdensity,
+                 data = model)
+library(MASS)
 # Stepwise regression model
 step.model <- stepAIC(full.model, direction = "both", 
                       trace = FALSE)
@@ -290,11 +313,6 @@ summary(step.model)
 
 
 
-### God help us, let's plot the locations and each of these variables
-elevation <- ggplot(data = multilevel, 
-                    aes(x = d18O, y = elevation)) + 
-  geom_point()+ 
-  theme_classic()
 
 
 

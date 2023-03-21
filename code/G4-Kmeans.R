@@ -364,7 +364,6 @@ km_SLC_1.10 <- tapData_SLC_1.10 %>%
   eclust("kmeans", nboot = 500)
 tapData_SLC_1.10$km_cluster <- km_SLC_1.10$cluster
 tapData_SLC_1.10$km_cluster <- factor(tapData_SLC_1.10$km_cluster)
-tapData_SLC_1.10$Cluster_ID = gsub("1.1", "1.10", tapData_SLC_1.10$Cluster_ID)
 
 #tapData_SLC_1.11
 km_SLC_1.11 <- tapData_SLC_1.11 %>%
@@ -417,7 +416,7 @@ for (i in kmeans) {
 
 tapData <- left_join(tapData, modality) %>% 
   group_by(Cluster_Location) %>% 
-  mutate(Modality = ifelse(mean(Clusters) <= 1, "Multi", "Uni"))
+  mutate(Modality = ifelse(mean(Clusters) <= 1, "Uni", "Multi"))
 
 # Descriptive Stats
 datasummary <- tapData %>%
