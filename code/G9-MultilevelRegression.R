@@ -1,10 +1,10 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
-library(tidyverse)
+library(tidyverse); library(leaps)
 
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:14)]
+datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
 #Okay first what do we want from tapData
 
@@ -22,6 +22,8 @@ multilevel$landlog <- log(multilevel$total_area)
 multilevel$waterlog <- log(multilevel$total_water)
 
 # Summarized Data ---------------------------------------------------------
+
+# looking at d18O variance and relationship to different variables
 
 p1 <- ggplot(data = multilevel, aes(x = streamflow, y = variance)) + 
   stat_smooth(method = "lm", formula= y~x) +
@@ -81,13 +83,9 @@ p8 <- ggplot(data = multilevel, aes(x = medincome, y = variance)) +
 
 variancePlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7, p8)
 variancePlot
-###################
-# Range exploration
-###################
 
-##################
-# Summarized Data
-##################
+# now let's compared d18O range to different variables
+
 p9 <- ggplot(data = multilevel, aes(x = streamflow, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
@@ -186,21 +184,20 @@ ggplot(data = df, aes(x = range, y = variance, label = Cluster_Location)) +
   theme_classic()
 multilevel <- subset(multilevel, Cluster_Location != "San Francisco")
 
-###############
-# All tap data
-###############
+
+# Modelling ---------------------------------------------------------------
+
 model <- left_join(tapData, multilevel, by = "Cluster_Location")
-model <- subset(model, !is.na(precip))
 
 model <- model %>% 
   select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-         popdensity, medincome)
+         Lat, popdensity, medincome, Elevation)
 
 shapiro.test(model$d18O)
 shapiro.test(model$d_ex)
 # neither of our dependent variables are normally distributed. 
 
-lm1 <- lm(model,formula = cbind(d18O, d_ex) ~.)
+lm1 <- lm(model,formula = d18O ~.)
 summary(lm1)
 
 
@@ -210,10 +207,7 @@ cor(model[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", 
 summary(manova(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome,
                data = model))
 
-shapiro.test(model2$d18O)
-shapiro.test(model2$d_ex)
-
-M1 <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome + popdensity,
+M1 <- lm(cbind(d_ex, d18O) ~ .,
          data = model)
 summary(M1)
 
@@ -243,14 +237,47 @@ ggplot(data = model2, aes(x = popdensity, y = d_ex)) +
   ) +
   theme_classic()
 
-model2 <- subset(model, Cluster_Location != "Salt Lake City")
-#Is Salt Lake City simply too many samples from one area
-M2 <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome,
-           popdensity, data = model2)
-summary(M2)
-cor(model2[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
+cor(model[, c('lat', 'elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
 
 
+# Choosing best predictors ------------------------------------------------
+Best_Subset <- regsubsets(d18O ~ landlog + waterlog + elevation_range + streamflow + 
+                            precip + Lat + popdensity + medincome,
+                          data = model,
+                          nbest = 1,      # 1 best model for each number of predictors
+                          nvmax = NULL,    # NULL for no limit on number of variables
+                          force.in = NULL,
+                          force.out = NULL,
+                          method = "exhaustive")
+summary_best_subset <- summary(Best_Subset)
+as.data.frame(summary_best_subset$outmat)
+
+summary_best_subset$which[which.max(summary_best_subset$adjr2),]
+
+best.model <- lm(d18O ~ landlog + waterlog + elevation_range + streamflow + 
+                   precip + Lat + popdensity + medincome, data = model)
+summary(best.model)
+# okay, leaps loves all the predictor variables I threw at it. 
+Best_Subset <- regsubsets(d_ex ~ landlog + waterlog + elevation_range + streamflow + 
+                            precip + Lat + popdensity + medincome,
+                          data = model,
+                          nbest = 1,      # 1 best model for each number of predictors
+                          nvmax = NULL,    # NULL for no limit on number of variables
+                          force.in = NULL,
+                          force.out = NULL,
+                          method = "exhaustive")
+summary_best_subset <- summary(Best_Subset)
+as.data.frame(summary_best_subset$outmat)
+
+summary_best_subset$which[which.max(summary_best_subset$adjr2),]
+
+best.model <- lm(d_ex ~ landlog + elevation_range + streamflow + 
+                   precip + Lat + popdensity, data = model)
+summary(best.model)
+#compare to all predictors, there's only a difference of 0.0004 in R2
+summary(lm(d_ex ~ landlog + waterlog + elevation_range + streamflow + 
+             precip + Lat + popdensity + medincome, data = model))
+# Code Graveyard, Ignore --------------------------------------------------
 
 #fixed effects modelling. currently broken
 
@@ -312,7 +339,9 @@ step.model <- stepAIC(full.model, direction = "both",
 summary(step.model)
 
 
-
+ggplot() + 
+  geom_point(data = tapData, aes(x = d18O, y = d2H, color = Elevation)) + 
+  theme_classic()
 
 
 

@@ -126,7 +126,7 @@ tapData$State <- str_to_title(tapData$State)
 #using elevatr package
 
 elevation_USGS <- get_elev_point(xy, prj = 4326, src = "aws")
-tapData$Elevation <- elevation_USGS$Elevation
+tapData$Elevation <- elevation_USGS$elevation
 
 plot(tapData$Elevation_mabsl, tapData$Elevation)
 #okay, we see a few things: 
