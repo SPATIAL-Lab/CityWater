@@ -91,103 +91,39 @@ tapData.sf_Nashv_11 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Nashville
 
 #Cedar City
 tapData.sf_Cedar_12 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Cedar City", ]
-intMap_Cedar_12 <- mapview(tapData.sf_Cedar_12, 
-                           col.regions = "red", # fill color
-                           color = "gray",          # outline color
-                           alpha.regions = 0.5,     # fill transparency
-                           alpha = 0.5)
 
 #Colorado Springs
 tapData.sf_ColoSp_13 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Colorado Springs", ]
-intMap_ColoSp_13 <- mapview(tapData.sf_ColoSp_13, 
-                            col.regions = "red", # fill color
-                            color = "gray",          # outline color
-                            alpha.regions = 0.5,     # fill transparency
-                            alpha = 0.5)
 
 #Lawrence
 tapData.sf_Law_14 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Lawrence", ]
-intMap_Law_14 <- mapview(tapData.sf_Law_14, 
-                         col.regions = "red", # fill color
-                         color = "gray",          # outline color
-                         alpha.regions = 0.5,     # fill transparency
-                         alpha = 0.5)
 
 #Denver
 tapData.sf_Denv_15 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Denver", ]
-intMap_Denv_15 <- mapview(tapData.sf_Denv_15, 
-                          col.regions = "red", # fill color
-                          color = "gray",          # outline color
-                          alpha.regions = 0.5,     # fill transparency
-                          alpha = 0.5)
 
 #Morristown
 tapData.sf_Morristown_16 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Morristown", ]
-intMap_Morristown_16 <- mapview(tapData.sf_Morristown_16, 
-                         col.regions = "red", # fill color
-                         color = "gray",          # outline color
-                         alpha.regions = 0.5,     # fill transparency
-                         alpha = 0.5)
 
 #State College
 tapData.sf_SC_17 <- tapData.sf[tapData.sf$Cluster_Location_Time == "State College", ]
-intMap_SC_17 <- mapview(tapData.sf_SC_17, 
-                        col.regions = "red", # fill color
-                        color = "gray",          # outline color
-                        alpha.regions = 0.5,     # fill transparency
-                        alpha = 0.5)
 
 #Wooster
 tapData.sf_Woo_18 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Wooster", ]
-intMap_Woo_18 <- mapview(tapData.sf_Woo_18, 
-                         col.regions = "red", # fill color
-                         color = "gray",          # outline color
-                         alpha.regions = 0.5,     # fill transparency
-                         alpha = 0.5)
 
 #Ann Arbor
 tapData.sf_Ann_19 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Ann Arbor", ]
-intMap_Ann_19 <- mapview(tapData.sf_Ann_19, 
-                         col.regions = "red", # fill color
-                         color = "gray",          # outline color
-                         alpha.regions = 0.5,     # fill transparency
-                         alpha = 0.5)
 
 #LaCrosse
 tapData.sf_LaCro_20 <- tapData.sf[tapData.sf$Cluster_Location_Time == "LaCrosse", ]
-intMap_LaCro_20 <- mapview(tapData.sf_LaCro_20, 
-                           col.regions = "red", # fill color
-                           color = "gray",          # outline color
-                           alpha.regions = 0.5,     # fill transparency
-                           alpha = 0.5)
 
 #Minneapolis
 tapData.sf_MPLS_21 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Minneapolis", ]
-intMap_MPLS_21 <- mapview(tapData.sf_MPLS_21, 
-                          col.regions = "red", # fill color
-                          color = "gray",          # outline color
-                          alpha.regions = 0.5,     # fill transparency
-                          alpha = 0.5)
 
 #Bellingham
 tapData.sf_Bell_22 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Bellingham", ]
-intMap_Bell_22 <- mapview(tapData.sf_Bell_22, 
-                          col.regions = "red", # fill color
-                          color = "gray",          # outline color
-                          alpha.regions = 0.5,     # fill transparency
-                          alpha = 0.5)
 
 #Portland
 tapData.sf_Port_23 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Portland", ]
-intMap_Port_23 <- mapview(tapData.sf_Port_23, 
-                          col.regions = "red", # fill color
-                          color = "gray",          # outline color
-                          alpha.regions = 0.5,     # fill transparency
-                          alpha = 0.5)
+
 #Hawaii
 tapData.sf_Haw_24 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Hawaii", ]
-intMap_Haw_24 <- mapview(tapData.sf_Haw_24, 
-                         col.regions = "red", # fill color
-                         color = "gray",          # outline color
-                         alpha.regions = 0.5,     # fill transparency
-                         alpha = 0.5)

@@ -159,13 +159,34 @@ intMap_Oahu_2 <- mapview(tapData.sf_Oahu_2,
                          alpha.regions = 0.5,     # fill transparency
                          alpha = 0.5)
 
-# St Petersburg -----------------------------------------------------------
+# Cedar City --------------------------------------------------------------
 
+intMap_Cedar_12 <- mapview(tapData.sf_Cedar_12, 
+                           col.regions = "red", # fill color
+                           color = "gray",          # outline color
+                           alpha.regions = 0.5,     # fill transparency
+                           alpha = 0.5)
+
+# Colorado Springs --------------------------------------------------------
+
+intMap_ColoSp_13 <- mapview(tapData.sf_ColoSp_13, 
+                            col.regions = "red", # fill color
+                            color = "gray",          # outline color
+                            alpha.regions = 0.5,     # fill transparency
+                            alpha = 0.5)
+
+# St Petersburg -----------------------------------------------------------
 intMap_SanPete_3 <- mapview(tapData.sf_SanPete_3, 
                             col.regions = "red", # fill color
                             color = "gray",          # outline color
                             alpha.regions = 0.5,     # fill transparency
                             alpha = 0.5)
+# Lawrence ----------------------------------------------------------------
+intMap_Law_14 <- mapview(tapData.sf_Law_14, 
+                         col.regions = "red", # fill color
+                         color = "gray",          # outline color
+                         alpha.regions = 0.5,     # fill transparency
+                         alpha = 0.5)
 
 # Gainesville -------------------------------------------------------------
 
@@ -230,3 +251,84 @@ intMap_Nashv_11 <- mapview(tapData.sf_Nashv_11,
                            color = "gray",          # outline color
                            alpha.regions = 0.5,     # fill transparency
                            alpha = 0.5)
+
+# Denver ------------------------------------------------------------------
+
+intMap_Denv_15 <- mapview(tapData.sf_Denv_15, 
+                          col.regions = "red", # fill color
+                          color = "gray",          # outline color
+                          alpha.regions = 0.5,     # fill transparency
+                          alpha = 0.5)
+
+# Morristown --------------------------------------------------------------
+
+intMap_Morristown_16 <- mapview(tapData.sf_Morristown_16, 
+                                col.regions = "red", # fill color
+                                color = "gray",          # outline color
+                                alpha.regions = 0.5,     # fill transparency
+                                alpha = 0.5)
+
+# State College -----------------------------------------------------------
+
+intMap_SC_17 <- mapview(tapData.sf_SC_17, 
+                        col.regions = "red", # fill color
+                        color = "gray",          # outline color
+                        alpha.regions = 0.5,     # fill transparency
+                        alpha = 0.5)
+
+# Wooster -----------------------------------------------------------------
+
+intMap_Woo_18 <- mapview(tapData.sf_Woo_18, 
+                         col.regions = "red", # fill color
+                         color = "gray",          # outline color
+                         alpha.regions = 0.5,     # fill transparency
+                         alpha = 0.5)
+
+# Ann Arbor ---------------------------------------------------------------
+
+intMap_Ann_19 <- mapview(tapData.sf_Ann_19, 
+                         col.regions = "red", # fill color
+                         color = "gray",          # outline color
+                         alpha.regions = 0.5,     # fill transparency
+                         alpha = 0.5)
+
+# LaCrosse ----------------------------------------------------------------
+
+intMap_LaCro_20 <- mapview(tapData.sf_LaCro_20, 
+                           col.regions = "red", # fill color
+                           color = "gray",          # outline color
+                           alpha.regions = 0.5,     # fill transparency
+                           alpha = 0.5)
+
+
+# Minneapolis -------------------------------------------------------------
+
+intMap_MPLS_21 <- mapview(tapData.sf_MPLS_21, 
+                          col.regions = "red", # fill color
+                          color = "gray",          # outline color
+                          alpha.regions = 0.5,     # fill transparency
+                          alpha = 0.5)
+
+# Bellingham --------------------------------------------------------------
+
+intMap_Bell_22 <- mapview(tapData.sf_Bell_22, 
+                          col.regions = "red", # fill color
+                          color = "gray",          # outline color
+                          alpha.regions = 0.5,     # fill transparency
+                          alpha = 0.5)
+
+# Portland ----------------------------------------------------------------
+
+intMap_Port_23 <- mapview(tapData.sf_Port_23, 
+                          col.regions = "red", # fill color
+                          color = "gray",          # outline color
+                          alpha.regions = 0.5,     # fill transparency
+                          alpha = 0.5)
+
+# Hawai'i -----------------------------------------------------------------
+
+intMap_Haw_24 <- mapview(tapData.sf_Haw_24, 
+                         col.regions = "red", # fill color
+                         color = "gray",          # outline color
+                         alpha.regions = 0.5,     # fill transparency
+                         alpha = 0.5)
