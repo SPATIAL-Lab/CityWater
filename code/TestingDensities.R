@@ -1,6 +1,8 @@
 #Run G1 while trying to find a better density plotting solution
-library(ggplot2); library(dplyr); library(broom); library(ggridges)
+library(ggplot2); library(dplyr); library(broom); library(ggridges); 
+library(forcats); library(viridis)
 
+tapData <- as.data.frame(read.csv("data/cityWater.csv"))
 
 # Ribbons -------------------------------------------------------
 # Nope this doesn't create multimodal plots
@@ -49,10 +51,8 @@ for (i in unique(df$GroupNum)) {
     geom_segment(data = labels[labels$GroupNum == i,], x = min(df$x), xend = max(df$x), aes(y = ymin, yend = ymin), linewidth = 1.5, lineend = "round") 
 }
 
+p
 # Density Ridges ----------------------------------------------------------
-tapData <- read_csv("data/cityWater.csv", 
-                    col_types = cols(Cluster_ID = col_character()))
-
 density <- tapData %>%
   mutate(Cluster_Location = fct_relevel(Cluster_Location, 
                                         levels = "Hawaii","Oahu","St Petersburg",
@@ -65,8 +65,6 @@ density <- tapData %>%
                                         "Wooster","Ann Arbor",
                                         "La Crosse","Minneapolis","Portland","Bellingham")) %>% 
   select(c(Cluster_Location, d2H, d18O, d_ex))
-
-
 
 # Basic Density Factor Wrap -----------------------------------------------
 
@@ -92,6 +90,7 @@ ggplot() +
     panel.spacing = unit(0.1, "lines"),
     strip.text.x = element_text(size = 8)
   ) +
+  xlim(-20, 5) + 
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   ) 
@@ -135,12 +134,12 @@ ggplot() +
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   ) 
 
-
 # HELP: If we do a for loop we are able to do every Cluster_Location and each one gets its own 
 # bandwidth. But we can't control the y-axis order it seems? 
 
 p <- ggplot() +
-  scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
+#  scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
+  scale_fill_viridis() + 
   theme_bw(base_size = 16) +
   theme(
     legend.position = "none",
@@ -148,6 +147,7 @@ p <- ggplot() +
     panel.spacing = unit(0.1, "lines"),
     strip.text.x = element_text(size = 8)
   ) +
+  xlim(-20, 5) + 
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   )
@@ -160,7 +160,7 @@ for (i in unique(density$Cluster_Location)) {
                                                    scale = 0.9)
     }
 
-
+p
 # This only takes the first bandwidth in the list, so it doesn't really work. 
 bw <- c(0.114, 0.828, 0.354, 0.199, 0.462, 0.368, 0.767, 0.141, 0.035, 0.251, 0.0275, 
         0.0357, 0.387, 0.0392, 0.0494, 0.136, 0.0468, 0.065, 0.174, 0.379, 0.0522, 
