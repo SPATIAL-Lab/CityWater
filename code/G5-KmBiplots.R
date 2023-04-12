@@ -36,7 +36,6 @@ Biplot_ATL <- ggplot(data = tapData_Atl_7, aes(x = d18O, y = d2H)) +
 Biplot_ATL <- Biplot_ATL + aes(fill = factor(km_cluster)) + 
   geom_polygon(data = hull_km_Atl_7, alpha = 0.5)
 
-
 #tapData_Bell_22
 hull_km_Bell_22 <- tapData_Bell_22 %>%
   group_by(km_cluster) %>%
@@ -53,7 +52,6 @@ Biplot_Bell_22 <- ggplot(data = tapData_Bell_22, aes(x = d18O, y = d2H)) +
 
 Biplot_Bell_22 <- Biplot_Bell_22 + aes(fill = factor(km_cluster)) + 
   geom_polygon(data = hull_km_Bell_22, alpha = 0.5)
-
 
 #tapData_ColoSp_13
 hull_km_ColoSp_13 <- tapData_ColoSp_13 %>%
@@ -159,7 +157,6 @@ Biplot_LA_28.3 <- ggplot(data = tapData_LA_28.3, aes(x = d18O, y = d2H)) +
 Biplot_LA_28.3 <- Biplot_LA_28.3 + aes(fill = factor(km_cluster)) + 
   geom_polygon(data = hull_km_LA_28.3, alpha = 0.5)
 
-
 #tapData_Law_14
 hull_km_Law_14 <- tapData_Law_14 %>%
   group_by(km_cluster) %>%
@@ -247,40 +244,22 @@ Biplot_SanPete_3 <- ggplot(data = tapData_SanPete_3, aes(x = d18O, y = d2H)) +
 Biplot_SanPete_3 <- Biplot_SanPete_3 + aes(fill = factor(km_cluster)) + 
   geom_polygon(data = hull_km_SanPete_3, alpha = 0.5)
 
-#tapData_SD_27.1
-hull_km_SD_27.1 <- tapData_SD_27.1 %>%
+#tapData_SD_27
+hull_km_SD_27 <- tapData_SD_27 %>%
   group_by(km_cluster) %>%
   slice(chull(d18O, d2H))
 
-Biplot_SD_27.1 <- ggplot(data = tapData_SD_27.1, aes(x = d18O, y = d2H)) + 
+Biplot_SD_27 <- ggplot(data = tapData_SD_27, aes(x = d18O, y = d2H)) + 
   geom_point(aes(fill = km_cluster), shape = 21, size = 5, alpha = 0.5) +
-  geom_smooth(data = tapData_SD_27.1, aes(d18O, d2H, colour = "black"), colour = "grey", method = "lm",size = 1, se = F) + 
+  geom_smooth(data = tapData_SD_27, aes(d18O, d2H, colour = "black"), colour = "grey", method = "lm",size = 1, se = F) + 
   stat_poly_eq( 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
                parse = TRUE) +
   labs(title="SD_27.1") + #tag = 'A'
   theme_bw(base_size = 16)
 
-Biplot_SD_27.1 <- Biplot_SD_27.1 + aes(fill = factor(km_cluster)) + 
-  geom_polygon(data = hull_km_SD_27.1, alpha = 0.5)
-
-
-#tapData_SD_27.2
-hull_km_SD_27.2 <- tapData_SD_27.2 %>%
-  group_by(km_cluster) %>%
-  slice(chull(d18O, d2H))
-
-Biplot_SD_27.2 <- ggplot(data = tapData_SD_27.2, aes(x = d18O, y = d2H)) + 
-  geom_point(aes(fill = km_cluster), shape = 21, size = 5, alpha = 0.5) +
-  geom_smooth(data = tapData_SD_27.2, aes(d18O, d2H, colour = "black"), colour = "grey", method = "lm",size = 1, se = F) + 
-  stat_poly_eq( 
-               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
-               parse = TRUE) +
-  labs(title="SD_27.2") + #tag = 'A'
-  theme_bw(base_size = 16)
-
-Biplot_SD_27.2 <- Biplot_SD_27.2 + aes(fill = factor(km_cluster)) + 
-  geom_polygon(data = hull_km_SD_27.2, alpha = 0.5)
+Biplot_SD_27 <- Biplot_SD_27 + aes(fill = factor(km_cluster)) + 
+  geom_polygon(data = hull_km_SD_27, alpha = 0.5)
 
 #tapData_SF_25.1
 hull_km_SF_25.1 <- tapData_SF_25.1 %>%

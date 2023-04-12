@@ -46,17 +46,13 @@ tapData.sf_SF_25.6 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Franci
 tapData.sf_SF_25.7 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Jul-15", ]
 
 #PHOENIX
-tapData.sf_PHO_26.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Phoenix_Mar-Ap-14", ]
-tapData.sf_PHO_26.2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Phoenix_Oct-14", ]
+tapData.sf_PHX_26 <- tapData.sf[tapData.sf$Cluster_Location == "Phoenix", ]
 
 #SAN DIEGO
-tapData.sf_SD_27.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Diego_Dic-13", ]
-tapData.sf_SD_27.2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Diego_Ap-14", ]
+tapData.sf_SD_27 <- tapData.sf[tapData.sf$Cluster_Location == "San Diego", ]
 
 #LOS ANGELES
-tapData.sf_LA_28.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Los Angeles_Dic-13", ]
-tapData.sf_LA_28.2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Los Angeles_Mar-Ap-14", ]
-tapData.sf_LA_28.3 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Los Angeles_Nov-14", ]
+tapData.sf_LA_28 <- tapData.sf[tapData.sf$Cluster_Location == "Los Angeles", ]
 
 #OAHU
 tapData.sf_Oahu_2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Oahu", ]

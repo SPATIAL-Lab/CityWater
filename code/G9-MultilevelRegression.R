@@ -1,5 +1,6 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
-library(tidyverse); library(leaps)
+
+library(tidyverse); library(leaps); library(ggpubr)                        
 
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
@@ -10,6 +11,7 @@ multivariate <- read.csv("data/multivariate.csv")
 
 df <- group_by(tapData, Cluster_Location) %>% 
   summarize(variance = var(rep(d18O)),
+            sd = sd(d18O),
             max = max(d18O), 
             min = min(d18O))
 df$range <- df$max - df$min
@@ -88,8 +90,8 @@ variancePlot
 
 p9 <- ggplot(data = multilevel, aes(x = streamflow, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
   geom_point() +  
   labs(
     x = "Streamflow (total)",
@@ -100,8 +102,8 @@ p9 <- ggplot(data = multilevel, aes(x = streamflow, y = range)) +
 
 p10 <- ggplot(data = multilevel, aes(x = precip, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
     x = "Precipitation (mean)",
@@ -111,8 +113,8 @@ p10 <- ggplot(data = multilevel, aes(x = precip, y = range)) +
 
 p11 <- ggplot(data = multilevel, aes(x = elevation_range, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
   geom_point() +  
   labs(
     x = "Elevation (range)",
@@ -122,30 +124,31 @@ p11 <- ggplot(data = multilevel, aes(x = elevation_range, y = range)) +
 
 p12 <- ggplot(data = multilevel, aes(x = total_land, y = range)) +
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
-    x = "Total Land (sq m)",
+    x = "Land Area (sq m)",
     y = "Range"
   ) +
   theme_classic()
 
 p13 <- ggplot(data = multilevel, aes(x = total_water, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
   geom_point() +
   labs(
-    x = "Total water (sq m)",
+    x = "Water Area (sq m)",
     y = ""
   ) +
+  xlim(0, 3e+09) + 
   theme_classic()
 
 p14 <- ggplot(data = multilevel, aes(x = total_area, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
   geom_point() +
   labs(
     x = "Total area (sq m)",
@@ -155,8 +158,8 @@ p14 <- ggplot(data = multilevel, aes(x = total_area, y = range)) +
 
 p15 <- ggplot(data = multilevel, aes(x = popdensity, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
     x = "Population Density",
@@ -166,8 +169,8 @@ p15 <- ggplot(data = multilevel, aes(x = popdensity, y = range)) +
 
 p16 <- ggplot(data = multilevel, aes(x = medincome, y = range)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
+#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
+  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
     x = "Median Income",
@@ -277,71 +280,11 @@ summary(best.model)
 #compare to all predictors, there's only a difference of 0.0004 in R2
 summary(lm(d_ex ~ landlog + waterlog + elevation_range + streamflow + 
              precip + Lat + popdensity + medincome, data = model))
-# Code Graveyard, Ignore --------------------------------------------------
 
-#fixed effects modelling. currently broken
-
-M2 <- plm(d18O ~ elevation + streamflow + precip + landlog + waterlog + medincome +
-            popdensity,
-                    data = multilevel,
-                    index = Cluster_Location, 
-                    model = "within")
-
-require(car)
-summary(M2)
-summary(Anova(M2))
-residM1 <- resid(M1)
-#produce residual vs. fitted plot
-plot(fitted(M1), residM1)
-
-#add a horizontal line at 0 
-abline(0,0)
-#create Q-Q plot for residuals
-qqnorm(residM1)
-
-#add a straight diagonal line to the plot
-qqline(residM1) 
-
-#Create density plot of residuals
-plot(density(residM1))
-
-
-summary(M2)
-summary(Anova(M2))
-residM2 <- resid(M2)
-#produce residual vs. fitted plot
-plot(fitted(M2), residM2)
-#add a horizontal line at 0 
-abline(0,0)
-#create Q-Q plot for residuals
-qqnorm(residM2)
-
-#add a straight diagonal line to the plot
-qqline(residM2) 
-
-#Create density plot of residuals
-plot(density(residM2))
-
-M3 <- update(M1, . ~ . - medincome - popdensity)
-anova(M1, M3)
-# Okay so removing median income and pop density gives us a significantly different model
-# suggesting that these are pretty important factors actually
-
-
-# stepwise to help deal with the linearly dependant columns? 
-# Fit the full model 
-full.model <- lm(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome + popdensity,
-                 data = model)
-library(MASS)
-# Stepwise regression model
-step.model <- stepAIC(full.model, direction = "both", 
-                      trace = FALSE)
-summary(step.model)
-
-
-ggplot() + 
-  geom_point(data = tapData, aes(x = d18O, y = d2H, color = Elevation)) + 
-  theme_classic()
-
-
-
+# Model comparison
+res.sum <- summary(Best_Subset)
+data.frame(
+  Adj.R2 = which.max(res.sum$adjr2),
+  CP = which.min(res.sum$cp),
+  BIC = which.min(res.sum$bic)
+)

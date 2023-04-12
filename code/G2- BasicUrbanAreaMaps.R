@@ -102,33 +102,20 @@ intMap_SF_25.1 + intMap_SF_25.2 + intMap_SF_25.3 + intMap_SF_25.4 +
 
 # Phoenix -----------------------------------------------------------------
 
-intMap_PHO_26.1 <- mapview(tapData.sf_PHO_26.1, 
+intMap_PHX_26 <- mapview(tapData.sf_PHO_26, 
                            col.regions = "red", # fill color
                            color = "gray",          # outline color
                            alpha.regions = 0.5,     # fill transparency
                            alpha = 0.5)
-intMap_PHO_26.2 <- mapview(tapData.sf_PHO_26.2, 
-                           col.regions = "blue", # fill color
-                           color = "gray",          # outline color
-                           alpha.regions = 0.5,     # fill transparency
-                           alpha = 0.5)
-
-intMap_PHO_26.1 + intMap_PHO_26.2
 
 # San Diego ---------------------------------------------------------------
 
-intMap_SD_27.1 <- mapview(tapData.sf_SD_27.1, 
+intMap_SD_27 <- mapview(tapData.sf_SD_27, 
                           col.regions = "blue", # fill color
                           color = "gray",          # outline color
                           alpha.regions = 0.5,     # fill transparency
                           alpha = 0.5)
-intMap_SD_27.2 <- mapview(tapData.sf_SD_27.2, 
-                          col.regions = "red", # fill color
-                          color = "gray",          # outline color
-                          alpha.regions = 0.5,     # fill transparency
-                          alpha = 0.5)
 
-intMap_SD_27.1 + intMap_SD_27.2
 
 
 # Los Angeles -------------------------------------------------------------

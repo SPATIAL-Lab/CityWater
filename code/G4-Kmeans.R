@@ -11,22 +11,18 @@ tapData_DF_6 <- st_set_geometry(tapData.sf_DF_6, NULL)
 tapData_Flag_10 <- st_set_geometry(tapData.sf_Flag_10, NULL)
 tapData_Gaines_4 <- st_set_geometry(tapData.sf_Gaines_4, NULL)
 tapData_Haw_24 <- st_set_geometry(tapData.sf_Haw_24, NULL)
-tapData_LA_28.1 <- st_set_geometry(tapData.sf_LA_28.1, NULL)
-tapData_LA_28.2 <- st_set_geometry(tapData.sf_LA_28.2, NULL)
-tapData_LA_28.3 <- st_set_geometry(tapData.sf_LA_28.3, NULL)
+tapData_LA_28 <- st_set_geometry(tapData.sf_LA_28, NULL)
 tapData_LaCro_20 <- st_set_geometry(tapData.sf_LaCro_20, NULL)
 tapData_Law_14 <- st_set_geometry(tapData.sf_Law_14, NULL)
 tapData_MBS_16 <- st_set_geometry(tapData.sf_Morristown_16, NULL)
 tapData_MPLS_21 <- st_set_geometry(tapData.sf_MPLS_21, NULL)
 tapData_Nashv_11 <- st_set_geometry(tapData.sf_Nashv_11, NULL)
 tapData_Oahu_2 <- st_set_geometry(tapData.sf_Oahu_2, NULL)
-tapData_PHO_26.1 <- st_set_geometry(tapData.sf_PHO_26.1, NULL)
-tapData_PHO_26.2 <- st_set_geometry(tapData.sf_PHO_26.2, NULL)
+tapData_PHX_26 <- st_set_geometry(tapData.sf_PHX_26, NULL)
 tapData_Port_23 <- st_set_geometry(tapData.sf_Port_23, NULL)
 tapData_SanPete_3 <- st_set_geometry(tapData.sf_SanPete_3, NULL)
 tapData_SC_17 <- st_set_geometry(tapData.sf_SC_17, NULL)
-tapData_SD_27.1 <- st_set_geometry(tapData.sf_SD_27.1, NULL)
-tapData_SD_27.2 <- st_set_geometry(tapData.sf_SD_27.2, NULL)
+tapData_SD_27 <- st_set_geometry(tapData.sf_SD_27, NULL)
 tapData_SF_25.1 <- st_set_geometry(tapData.sf_SF_25.1, NULL)
 tapData_SF_25.2 <- st_set_geometry(tapData.sf_SF_25.2, NULL)
 tapData_SF_25.3 <- st_set_geometry(tapData.sf_SF_25.3, NULL)
@@ -134,26 +130,12 @@ km_Haw_24 <- tapData_Haw_24 %>%
 tapData_Haw_24$km_cluster <- km_Haw_24$cluster
 tapData_Haw_24$km_cluster <- factor(tapData_Haw_24$km_cluster)
 
-#tapData_LA_28.1
-km_LA_28.1 <- tapData_LA_28.1 %>%
+#tapData_LA_28
+km_LA_28 <- tapData_LA_28 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
-tapData_LA_28.1$km_cluster <- km_LA_28.1$cluster
-tapData_LA_28.1$km_cluster <- factor(tapData_LA_28.1$km_cluster)
-
-#tapData_LA_28.2
-km_LA_28.2 <- tapData_LA_28.2 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-tapData_LA_28.2$km_cluster <- km_LA_28.2$cluster
-tapData_LA_28.2$km_cluster <- factor(tapData_LA_28.2$km_cluster)
-
-#tapData_LA_28.3
-km_LA_28.3 <- tapData_LA_28.3 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-tapData_LA_28.3$km_cluster <- km_LA_28.3$cluster
-tapData_LA_28.3$km_cluster <- factor(tapData_LA_28.3$km_cluster)
+tapData_LA_28$km_cluster <- km_LA_28$cluster
+tapData_LA_28$km_cluster <- factor(tapData_LA_28$km_cluster)
 
 #tapData_LaCro_20
 km_LaCro_20 <- tapData_LaCro_20 %>%
@@ -197,19 +179,12 @@ km_Oahu_2 <- tapData_Oahu_2 %>%
 tapData_Oahu_2$km_cluster <- km_Oahu_2$cluster
 tapData_Oahu_2$km_cluster <- factor(tapData_Oahu_2$km_cluster)
 
-#tapData_PHO_26.1
-km_PHO_26.1 <- tapData_PHO_26.1 %>%
+#tapData_PHX_26
+km_PHX_26 <- tapData_PHX_26 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
-tapData_PHO_26.1$km_cluster <- km_PHO_26.1$cluster
-tapData_PHO_26.1$km_cluster <- factor(tapData_PHO_26.1$km_cluster)
-
-#tapData_PHO_26.2
-km_PHO_26.2 <- tapData_PHO_26.2 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-tapData_PHO_26.2$km_cluster <- km_PHO_26.2$cluster
-tapData_PHO_26.2$km_cluster <- factor(tapData_PHO_26.2$km_cluster)
+tapData_PHX_26$km_cluster <- km_PHX_26$cluster
+tapData_PHX_26$km_cluster <- factor(tapData_PHX_26$km_cluster)
 
 #tapData_Port_23
 km_Port_23 <- tapData_Port_23 %>%
@@ -232,19 +207,12 @@ km_SC_17 <- tapData_SC_17 %>%
 tapData_SC_17$km_cluster <- km_SC_17$cluster
 tapData_SC_17$km_cluster <- factor(tapData_SC_17$km_cluster)
 
-#tapData_SD_27.1
-km_SD_27.1 <- tapData_SD_27.1 %>%
+#tapData_SD_27
+km_SD_27 <- tapData_SD_27 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
-tapData_SD_27.1$km_cluster <- km_SD_27.1$cluster
-tapData_SD_27.1$km_cluster <- factor(tapData_SD_27.1$km_cluster)
-
-#tapData_SD_27.2
-km_SD_27.2 <- tapData_SD_27.2 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-tapData_SD_27.2$km_cluster <- km_SD_27.2$cluster
-tapData_SD_27.2$km_cluster <- factor(tapData_SD_27.2$km_cluster)
+tapData_SD_27$km_cluster <- km_SD_27$cluster
+tapData_SD_27$km_cluster <- factor(tapData_SD_27$km_cluster)
 
 #tapData_SF_25.1
 km_SF_25.1 <- tapData_SF_25.1 %>%
@@ -393,10 +361,9 @@ kmeans <- list(tapData_ABQ_9, tapData_Ann_19, tapData_Ath_8,
                tapData_Atl_7,  tapData_Bell_22, tapData_Cedar_12, 
                tapData_ColoSp_13, tapData_Denv_15, tapData_DF_6,
                tapData_Flag_10, tapData_Gaines_4, tapData_Haw_24,
-               tapData_LA_28.1, tapData_LA_28.2, tapData_LA_28.3,
-               tapData_LaCro_20, tapData_Law_14, tapData_MBS_16, 
-               tapData_MPLS_21, tapData_Nashv_11, tapData_Oahu_2, 
-               tapData_PHO_26.1, tapData_PHO_26.2, tapData_Port_23, 
+               tapData_LA_28, tapData_LaCro_20, tapData_Law_14, 
+               tapData_MBS_16, tapData_MPLS_21, tapData_Nashv_11, 
+               tapData_Oahu_2, tapData_PHX_26, tapData_Port_23, 
                tapData_SanPete_3, tapData_SC_17,  tapData_SD_27.1, 
                tapData_SD_27.2, tapData_SF_25.1, tapData_SF_25.2, 
                tapData_SF_25.3, tapData_SF_25.4, tapData_SF_25.5,

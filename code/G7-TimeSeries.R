@@ -1,8 +1,19 @@
 ###BOXPLOTS time slices for SLC and SF####
+###Data import & prep###
+tapData <- read_csv("data/cityWater.csv", 
+                    col_types = cols(Cluster_ID = col_character()))
 
-names(tapData.sf)
-unique(tapData.sf$Cluster_ID)
-unique(tapData.sf$Cluster_Location)
+#names(tapData)
+tapData$Cluster_ID <- factor(tapData$Cluster_ID)
+tapData$Cluster_Location <- factor(tapData$Cluster_Location)
+tapData$Cluster_Location_Time <- factor(tapData$Cluster_Location_Time)
+tapData$Cluster_State <- factor(tapData$Cluster_State)
+tapData$Project_ID <- factor(tapData$Project_ID)
+
+#going spatial
+tapData.sf <- st_as_sf(tapData, 
+                       coords = c("Long", "Lat"),
+                       crs = 4326) #EPSG code for WGS84
 
 #Boxplot SLC and SF time slices...
 Aboxtest_SLC.SF <- tapData.sf %>%
@@ -13,15 +24,18 @@ Aboxtest_SLC.SF <- tapData.sf %>%
                        "1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
                            "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.4","25.5","25.6","25.7")) %>%
-  ggplot(aes(y = Cluster_ID, x = d18O)) + 
+  ggplot(aes(y = Cluster_ID, x = d18O, fill = Cluster_Location)) + 
+  stat_boxplot(geom = "errorbar",
+               width = 0.15) + 
   geom_boxplot() +
-  stat_summary(fun="mean", fill="blue", shape=23) +
-  theme_bw(base_size = 16) + 
+#  stat_summary(fun="mean", fill="blue", shape=23) +
+  theme_classic() + 
+  scale_fill_manual(values = c("#0073a7", "#ffa600")) + 
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)")), 
     y = "Cluster ID"
-  ) +
-  theme(axis.text.x = element_text(angle = 90))
+  ) + 
+  theme(legend.position = 'none')
 
 Aboxtest_SLC.SF
 ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
@@ -31,6 +45,8 @@ ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300
 
 SLC_timeseries <- group_by(subset(tapData, Cluster_Location == "Salt Lake City"), 
                            Cluster_ID) 
+
+summary(aov(SLC_timeseries$d18O ~ SLC_timeseries$Cluster_ID))
 
 tally(SLC_timeseries)
 
@@ -56,6 +72,9 @@ timeseriessummarySLC <- timeseriessummarysLC %>%
 
 SF_timeseries <- group_by(subset(tapData, Cluster_Location == "San Francisco"), 
                            Cluster_ID) 
+
+summary(aov(SF_timeseries$d18O ~ SF_timeseries$Cluster_ID))
+
 tally(SF_timeseries)
 timeseriessummarySF <- subset(tapData, Cluster_Location == "San Francisco") %>%
   group_by(Cluster_ID) %>%
