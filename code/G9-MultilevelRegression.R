@@ -20,7 +20,7 @@ multilevel <- left_join(multivariate, df, by = "Cluster_Location")
 multilevel <- left_join(multilevel, datasummary, by = 'Cluster_Location')
 
 #huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_area)
+multilevel$landlog <- log(multilevel$total_land)
 multilevel$waterlog <- log(multilevel$total_water)
 
 # Summarized Data ---------------------------------------------------------
