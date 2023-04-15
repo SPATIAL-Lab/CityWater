@@ -44,7 +44,7 @@ acs_simple <- getCensus(
 # Jeff Davis County, Texas has an odd glitch right now with the census, showing median income as -666666666.
 # Let's fix that. 
 
-#acs_simple$medincome[acs_simple$GEOID == '48243'] <- 38659
+acs_simple$medincome[acs_simple$GEOID == '48243'] <- 38659
 # quick test of medincome
 hist(acs_simple$medincome)
 
@@ -69,6 +69,7 @@ ggplot() +
 #okay, so now we have a sf with land area, water area, pop density, and median income
 # let's check all the projections are correct. Matching to precip crs
 landarea <- rasterize(conus, precip, conus$landlog)
+# PEACH Water area seems to have some missing data- look closer
 waterarea <- rasterize(conus, precip, conus$waterlog)
 medincome <- rasterize(conus, precip, conus$medincome)
 popdensity <- rasterize(conus, precip, conus$popdensity)
@@ -102,16 +103,25 @@ tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Haw
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
+multivariate <- subset(multivariate, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 multivariate$landlog <- log(multivariate$total_land)
 multivariate$waterlog <- log(multivariate$total_water)
 
-model <- left_join(tapData, multivariate, by = "Cluster_Location") %>% 
-select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome, Elevation) %>% 
-  rename(elevation = Elevation, 
-         lat = Lat)
+df <- group_by(tapData, Cluster_Location) %>% 
+  summarize(variance = var(rep(d18O)),
+            sd = sd(d18O),
+            max = max(d18O), 
+            min = min(d18O))
+df$range <- df$max - df$min
 
-best.model <- lm(d18O ~ landlog + waterlog + elevation + streamflow + 
+multivariate <- left_join(multivariate, df, by = "Cluster_Location")
+
+model <- left_join(tapData, multivariate, by = "Cluster_Location") %>% 
+  dplyr::select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
+         Lat, popdensity, medincome, Elevation, sd) %>% 
+  rename(elevation = Elevation, lat = Lat)
+
+best.model <- lm(sd ~ landlog + waterlog + elevation + streamflow + 
                    precip + popdensity + lat + medincome, data = model)
 
 predictedO_model <- predict(s, best.model, progress='text')
@@ -121,10 +131,8 @@ plot(predictedO_model,
 O_hist <- hist(predictedO_model)
 O_hist$breaks
 O_hist$counts
-#should we cut data above 14 per mill or so?
 
-#therer's one cell that's 20 per mill. It looks to be around New York County NY- 
-# how can I zoom in on a raster?
+# New York County being odd
 plot(predictedO_model, axes = FALSE, 
      xlim = c(-74.72127 ,-72.75382), ylim = c(39.82881 , 41.11662))
 

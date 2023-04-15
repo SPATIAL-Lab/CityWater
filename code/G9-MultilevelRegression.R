@@ -244,8 +244,32 @@ cor(model[, c('lat', 'elevation_range', "streamflow", "precip", "landlog", "wate
 
 
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(d18O ~ landlog + waterlog + elevation_range + streamflow + 
-                            precip + Lat + popdensity + medincome,
+tapData <- read.csv("data/cityWater.csv") 
+tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
+datasummary <- read.csv("data/datasummary.csv")
+datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
+multivariate <- read.csv("data/multivariate.csv")
+multivariate <- subset(multivariate, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
+multivariate$landlog <- log(multivariate$total_land)
+multivariate$waterlog <- log(multivariate$total_water)
+
+df <- group_by(tapData, Cluster_Location) %>% 
+  summarize(variance = var(rep(d18O)),
+            sd = sd(d18O),
+            max = max(d18O), 
+            min = min(d18O))
+df$range <- df$max - df$min
+
+multivariate <- left_join(multivariate, df, by = "Cluster_Location")
+
+model <- left_join(tapData, multivariate, by = "Cluster_Location") %>% 
+  dplyr::select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
+                Lat, popdensity, medincome, Elevation, sd) %>% 
+  rename(elevation = Elevation, lat = Lat)
+
+
+Best_Subset <- regsubsets(sd ~ landlog + waterlog + elevation_range + streamflow + 
+                            precip + lat + popdensity + medincome,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -257,6 +281,7 @@ as.data.frame(summary_best_subset$outmat)
 
 summary_best_subset$which[which.max(summary_best_subset$adjr2),]
 
+# GRAPE this model below is for d18O values, not sd 
 best.model <- lm(d18O ~ landlog + waterlog + elevation_range + streamflow + 
                    precip + Lat + popdensity + medincome, data = model)
 summary(best.model)
