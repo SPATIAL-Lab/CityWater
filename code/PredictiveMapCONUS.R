@@ -14,6 +14,10 @@ conus <- subset(conus, STATEFP != 02)
 conus <- subset(conus, STATEFP != 15)
 conus$landlog <- log(conus$ALAND)
 conus$waterlog <- log(conus$AWATER)
+# Greeley County, Kansas, has no water in the whole county and so an ALAND of 0. 
+# Converting waterlog to 0 rather than the -Inf it currently is. 
+conus$waterlog[conus$GEOID == '20071'] <- 0
+
 #elevation
 elevation <- get_elev_raster(conus, z= 5)
 
