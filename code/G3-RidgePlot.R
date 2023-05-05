@@ -1,4 +1,8 @@
 ###RIDGE PLOT
+library(tidyverse); library(ggridges); library(patchwork)
+
+tapData <- read_csv("data/cityWater.csv", 
+                    col_types = cols(Cluster_ID = col_character()))
 
 #Oxygen Latitude North-South
 density <- tapData %>%
@@ -14,7 +18,7 @@ density <- tapData %>%
                                         "La Crosse","Minneapolis","Portland","Bellingham")) 
 
 
-DensPlot_d18O <- ggplot(tapData_1_ridge, 
+DensPlot_d18O <- ggplot(density, 
                         aes(x = `d18O`, y = `Cluster_Location`, fill = ..x..)) + 
   geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
   scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
@@ -29,7 +33,7 @@ DensPlot_d18O <- ggplot(tapData_1_ridge,
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   ) 
 
-DensPlot_d_ex <- ggplot(tapData_1_ridge, aes(x = d_ex, y = Cluster_Location, fill = ..x..)) +
+DensPlot_d_ex <- ggplot(density, aes(x = d_ex, y = Cluster_Location, fill = ..x..)) +
   geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
   scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
   #labs(title = 'Cities') +
@@ -41,7 +45,8 @@ DensPlot_d_ex <- ggplot(tapData_1_ridge, aes(x = d_ex, y = Cluster_Location, fil
     x = "Deuterium Excess"
   )
 
-DensPlot_d18O+DensPlot_d_ex  
+DensPlot_d18O + DensPlot_d_ex  
+ggsave("figures/densityRidges.pdf", width=12, height=5, units="in", dpi=300)
 
 # Fixing bins -------------------------------------------------------------
 tapData.sf_Atl_7

@@ -1,275 +1,108 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
 
-library(tidyverse); library(leaps); library(ggpubr)                        
+library(tidyverse); library(leaps); library(ggpubr); library(car)                        
 
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
+datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
-#Okay first what do we want from tapData
+multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
+  rename('sd' = 'd18O_sd')
 
-df <- group_by(tapData, Cluster_Location) %>% 
-  summarize(variance = var(rep(d18O)),
-            sd = sd(d18O),
-            max = max(d18O), 
-            min = min(d18O))
-df$range <- df$max - df$min
-
-multilevel <- left_join(multivariate, df, by = "Cluster_Location")
-multilevel <- left_join(multilevel, datasummary, by = 'Cluster_Location')
-
-#huge variation in values ALAND and AWATER, so doing a log transformation to normalize the data. 
-multilevel$landlog <- log(multilevel$total_land)
-multilevel$waterlog <- log(multilevel$total_water)
-
+# now we want to examine the following variables: streamflow, precip, elevation_range, 
+# perc_water, total_area, popdensity, medincome
 # Summarized Data ---------------------------------------------------------
 
-# looking at d18O variance and relationship to different variables
+# looking at d18O sd and relationship to different variables
 
-p1 <- ggplot(data = multilevel, aes(x = streamflow, y = variance)) + 
+p1 <- ggplot(data = multilevel, aes(x = streamflow, y = sd)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p2 <- ggplot(data = multilevel, aes(x = precip, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p4 <- ggplot(data = multilevel, aes(x = total_land, y = variance)) +
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p5 <- ggplot(data = multilevel, aes(x = total_water, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p6 <- ggplot(data = multilevel, aes(x = total_area, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p7 <- ggplot(data = multilevel, aes(x = popdensity, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-p8 <- ggplot(data = multilevel, aes(x = medincome, y = variance)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 10, aes(label = ..rr.label..)) +
-  geom_point() +                                     
-  theme_classic()
-
-variancePlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7, p8)
-variancePlot
-
-# now let's compared d18O range to different variables
-
-p9 <- ggplot(data = multilevel, aes(x = streamflow, y = range)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
-  geom_point() +  
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() + 
   labs(
-    x = "Streamflow (total)",
-    y = "Range"
+    x = "Streamflow",
+    y = "Standard Deviation"
   ) +
   theme_classic()
 
-
-p10 <- ggplot(data = multilevel, aes(x = precip, y = range)) + 
+p2 <- ggplot(data = multilevel, aes(x = precip, y = sd)) + 
   stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
-  geom_point() + 
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() +    
   labs(
     x = "Precipitation (mean)",
     y = ""
   ) +
   theme_classic()
 
-p11 <- ggplot(data = multilevel, aes(x = elevation_range, y = range)) + 
+p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = sd)) + 
   stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() +       labs(
+    x = "Elevation Range (m)",
+    y = ""
+  ) +                                
+  theme_classic()
+
+p4 <- ggplot(data = multilevel, aes(x = perc_water, y = sd)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() +    
+  labs(
+    x = "% Water",
+    y = "Standard Deviation"
+  ) +
+  theme_classic()
+
+p5 <- ggplot(data = multilevel, aes(x = total_area, y = sd)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() + 
+  labs(
+    x = "Total area (km2)",
+    y = ""
+  ) +
+  theme_classic()
+
+p6 <- ggplot(data = multilevel, aes(x = popdensity, y = sd)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +  
   labs(
-    x = "Elevation (range)",
-    y = ""
-  ) +
-  theme_classic()
-
-p12 <- ggplot(data = multilevel, aes(x = total_land, y = range)) +
-  stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
-    x = "Land Area (sq m)",
-    y = "Range"
-  ) +
-  theme_classic()
-
-p13 <- ggplot(data = multilevel, aes(x = total_water, y = range)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
-  geom_point() +
-  labs(
-    x = "Water Area (sq m)",
-    y = ""
-  ) +
-  xlim(0, 3e+09) + 
-  theme_classic()
-
-p14 <- ggplot(data = multilevel, aes(x = total_area, y = range)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
-  geom_point() +
-  labs(
-    x = "Total area (sq m)",
-    y = ""
-  ) +
-  theme_classic()
-
-p15 <- ggplot(data = multilevel, aes(x = popdensity, y = range)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 13, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
     x = "Population Density",
-    y = "Range"
+    y = ""
   ) +
   theme_classic()
 
-p16 <- ggplot(data = multilevel, aes(x = medincome, y = range)) + 
+p7 <- ggplot(data = multilevel, aes(x = medincome, y = sd)) + 
   stat_smooth(method = "lm", formula= y~x) +
-#  stat_regline_equation(label.y = 12, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 15, aes(label = ..rr.label..)) +
-  geom_point() + 
+  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  geom_point() +
   labs(
     x = "Median Income",
-    y = ""
+    y = "Standard Deviation"
   ) +
   theme_classic()
 
-rangePlot <- ggarrange(p9, p10, p11, p12, p13, p14, p15, p16)
-rangePlot
-
-ggplot(data = df, aes(x = range, y = variance, label = Cluster_Location)) + 
-  geom_point() + 
- # geom_text(nudge_y = -0.5) + 
-  theme_classic()
-multilevel <- subset(multilevel, Cluster_Location != "San Francisco")
-
+sdPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7)
+sdPlot
 
 # Modelling ---------------------------------------------------------------
 
 model <- left_join(tapData, multilevel, by = "Cluster_Location")
 
 model <- model %>% 
-  select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome, Elevation)
-
-shapiro.test(model$d18O)
-shapiro.test(model$d_ex)
-# neither of our dependent variables are normally distributed. 
-
-lm1 <- lm(model,formula = d18O ~.)
-summary(lm1)
+  select(sd, total_area, perc_water, elevation_range, streamflow, precip, 
+         Lat, popdensity, medincome)
 
 
-cor.test(model$elevation_range, model$landlog)
-cor(model[, c('elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
-
-summary(manova(cbind(d_ex, d18O) ~ elevation_range + streamflow + precip + waterlog + medincome,
-               data = model))
-
-M1 <- lm(cbind(d_ex, d18O) ~ .,
-         data = model)
-summary(M1)
-
-# To absolutely no one's surprise, the major factors in d_ex values are: elevation, streamflow, precipitation, 
-# and amount of water. The median income and population density is a slight surprise, but that's probably just because it's correlated with 
-# water in the area. 
-
-ggplot(data = model2, aes(x = medincome, y = d_ex)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 20, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 18, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
-    x = "Median Income",
-    y = "d-excess"
-  ) +
-  theme_classic()
-
-ggplot(data = model2, aes(x = popdensity, y = d_ex)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 20, aes(label = ..eq.label..)) +
-  stat_regline_equation(label.y = 18, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
-    x = "Population Density",
-    y = "d-excess"
-  ) +
-  theme_classic()
-
-cor(model[, c('lat', 'elevation_range', "streamflow", "precip", "landlog", "waterlog", "popdensity", "medincome")])
+shapiro.test(model$sd) #not normally distributed
 
 
 # Choosing best predictors ------------------------------------------------
-tapData <- read.csv("data/cityWater.csv") 
-tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
-datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
-multivariate <- read.csv("data/multivariate.csv")
-multivariate <- subset(multivariate, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
-multivariate$landlog <- log(multivariate$total_land)
-multivariate$waterlog <- log(multivariate$total_water)
-
-df <- group_by(tapData, Cluster_Location) %>% 
-  summarize(variance = var(rep(d18O)),
-            sd = sd(d18O),
-            max = max(d18O), 
-            min = min(d18O))
-df$range <- df$max - df$min
-
-multivariate <- left_join(multivariate, df, by = "Cluster_Location")
-
-model <- left_join(tapData, multivariate, by = "Cluster_Location") %>% 
-  dplyr::select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-                Lat, popdensity, medincome, Elevation, sd) %>% 
-  rename(elevation = Elevation, lat = Lat)
-
-
-Best_Subset <- regsubsets(sd ~ landlog + waterlog + elevation_range + streamflow + 
-                            precip + lat + popdensity + medincome,
+Best_Subset <- regsubsets(sd ~ total_area + perc_water + elevation_range + 
+                          streamflow + precip + Lat + popdensity + medincome,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -280,36 +113,23 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(summary_best_subset$outmat)
 
 summary_best_subset$which[which.max(summary_best_subset$adjr2),]
-
-# GRAPE this model below is for d18O values, not sd 
-best.model <- lm(d18O ~ landlog + waterlog + elevation_range + streamflow + 
-                   precip + Lat + popdensity + medincome, data = model)
-summary(best.model)
 # okay, leaps loves all the predictor variables I threw at it. 
-Best_Subset <- regsubsets(d_ex ~ landlog + waterlog + elevation_range + streamflow + 
-                            precip + Lat + popdensity + medincome,
-                          data = model,
-                          nbest = 1,      # 1 best model for each number of predictors
-                          nvmax = NULL,    # NULL for no limit on number of variables
-                          force.in = NULL,
-                          force.out = NULL,
-                          method = "exhaustive")
-summary_best_subset <- summary(Best_Subset)
-as.data.frame(summary_best_subset$outmat)
 
-summary_best_subset$which[which.max(summary_best_subset$adjr2),]
+best_model <- lm(sd ~ total_area + perc_water + elevation_range + 
+                streamflow + precip + Lat + popdensity + medincome,
+                 data = model)
+summary(best_model)
 
-best.model <- lm(d_ex ~ landlog + elevation_range + streamflow + 
-                   precip + Lat + popdensity, data = model)
-summary(best.model)
-#compare to all predictors, there's only a difference of 0.0004 in R2
-summary(lm(d_ex ~ landlog + waterlog + elevation_range + streamflow + 
-             precip + Lat + popdensity + medincome, data = model))
+#checking variance inflation factors for these independent variables 
+vif(best_model) 
+# total_area, elevation, and popdensity are highly correlated to other predictors, but not so much that we need to re-assess our model.
 
-# Model comparison
+# Model comparison just to check it out
 res.sum <- summary(Best_Subset)
 data.frame(
   Adj.R2 = which.max(res.sum$adjr2),
   CP = which.min(res.sum$cp),
   BIC = which.min(res.sum$bic)
 )
+plot(res.sum$adjr2)
+plot(res.sum$bic)

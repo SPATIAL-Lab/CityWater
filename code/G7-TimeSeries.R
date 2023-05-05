@@ -1,5 +1,6 @@
 ###BOXPLOTS time slices for SLC and SF####
 ###Data import & prep###
+library(tidyverse) 
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(Cluster_ID = col_character()))
 
@@ -10,13 +11,8 @@ tapData$Cluster_Location_Time <- factor(tapData$Cluster_Location_Time)
 tapData$Cluster_State <- factor(tapData$Cluster_State)
 tapData$Project_ID <- factor(tapData$Project_ID)
 
-#going spatial
-tapData.sf <- st_as_sf(tapData, 
-                       coords = c("Long", "Lat"),
-                       crs = 4326) #EPSG code for WGS84
-
-#Boxplot SLC and SF time slices...
-Aboxtest_SLC.SF <- tapData.sf %>%
+#Boxplot SLC and SF time slices
+timeSlice <- tapData %>%
   filter(Cluster_ID %in% c("1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
                            "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.3","25.4","25.5","25.6","25.7")) %>%
@@ -28,17 +24,16 @@ Aboxtest_SLC.SF <- tapData.sf %>%
   stat_boxplot(geom = "errorbar",
                width = 0.15) + 
   geom_boxplot() +
-#  stat_summary(fun="mean", fill="blue", shape=23) +
   theme_classic() + 
-  scale_fill_manual(values = c("#0073a7", "#ffa600")) + 
+  scale_fill_manual(values = c("#006a9b", "#d2042d")) + #this blue is lighter than the normal palette
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)")), 
     y = "Cluster ID"
   ) + 
   theme(legend.position = 'none')
 
-Aboxtest_SLC.SF
-ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
+timeSlice
+ggsave("figures/boxplot_time_slice.tiff", width=7, height=5, units="in", dpi=300)
 
 # Let's look a little more in-depth for time series 
 #First, create a grouped dataframe for quickly looking at things by time

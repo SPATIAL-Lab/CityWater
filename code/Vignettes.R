@@ -1,5 +1,6 @@
 # Here we'll explore the four vignette cities only. Have to run 1 and 4 before this
 library(ggpubr)
+mapviewOptions(fgb = F)
 # Atlanta, which has small ranges and is multimodal
 
 hull_km_Atl_7 <- tapData_Atl_7 %>%
@@ -93,10 +94,8 @@ Atlmap <- mapview(tapData.sf_Atl_7,
         col.regions = c("#003f5c", "#d2042d"), 
         layer.name = "Cluster")
 
-
-mapviewOptions(fgb = FALSE)
-mapshot(Atlmap, url = paste0(getwd(), "/ATL.html"),
-        file = paste0(getwd(), "/ATL.png"))
+mapshot(Atlmap, 
+        file = "figures/ATLmap.png")
 
 #Lawrence municipal water treatment centers include: 
 # Kaw River Water Treatment Plant (38.9808, -95.2408)
@@ -119,38 +118,48 @@ mapview(lawrenceWaterSources,
         pch = c(17),
         layer.name = "Municipal Water Source")
 
-mapshot(lawrence, url = paste0(getwd(), "/figures/lawrence.html"))
+Lawmap <- mapview(tapData.sf_Law_14, 
+                  zcol= 'km_cluster',
+                  color = "gray",          # outline color
+                  alpha.regions = 0.8,     # fill transparency
+                  alpha = 0.5, 
+                  col.regions = c("#003f5c", "#d2042d"), 
+                  layer.name = "Cluster")
+
+mapshot(Lawmap, 
+        file = "figures/LAWmap.png")
 
 # Minneapolis
 # Note: ~18 miles from Brooklyn Park (North) to Bloomington (South)
 tapData.sf_MPLS_21$km_cluster <- tapData_MPLS_21$km_cluster
-mapview(tapData.sf_MPLS_21, 
+MSPmap <- mapview(tapData.sf_MPLS_21, 
         zcol= 'km_cluster',
         color = "gray",          # outline color
         alpha.regions = 0.8,     # fill transparency
         alpha = 0.5, 
-        col.regions = c("#003f5c", "#d2042d"))
+        col.regions = c("#003f5c", "#d2042d"), 
+        layer.name = "Cluster")
 
+mapshot(MSPmap, 
+        file = "figures/MSPmap.png")
 # Denver
 # Note: ~30 miles at the widest distance between points (Boulder to Centennial)
 tapData.sf_Denv_15$km_cluster <- tapData_Denv_15$km_cluster
-mapview(tapData.sf_Denv_15, 
-        zcol= 'd18O',
+
+DENmap <- mapview(tapData.sf_Denv_15, 
+        zcol= 'km_cluster',
         color = "gray",          # outline color
         alpha.regions = 0.8,     # fill transparency
         alpha = 0.5, 
-        col.regions = c("#003f5c", "#d2042d")) + 
-mapview(tapData.sf_Denv_15, 
-          zcol= 'd2H',
-          color = "gray",          # outline color
-          alpha.regions = 0.8,     # fill transparency
-          alpha = 0.5, 
-          col.regions = c("#003f5c", "#d2042d"))
+        col.regions = c("#003f5c", "#d2042d"), 
+        layer.name = "Cluster")
 
+mapshot(DENmap, 
+        file = "figures/DENmap.png")
 
 # Putting It All Together -------------------------------------------------
 
 ggarrange(p1, p2, p3, p4, 
- #         labels = c('Atlanta', 'Lawrence', 'Minneapolis', 'Denver'), 
+#         labels = c('Atlanta', 'Lawrence', 'Minneapolis', 'Denver'), 
           ncol = 2, nrow = 2)
 
