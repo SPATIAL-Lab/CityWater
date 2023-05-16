@@ -1,3 +1,5 @@
+# These are maps of each area. Exploratory only. Run G1 first. 
+
 intMap_SLC_1.01 <- mapview(tapData.sf_SLC_1.01, 
                            col.regions = "red", # fill color
                            color = "gray",          # outline color

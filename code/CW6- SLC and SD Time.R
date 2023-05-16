@@ -1,3 +1,5 @@
+# This script sets up everything for the following scripts, run completely. 
+library(raster); library(sf); library(tidyverse)
 ###BOXPLOTS time slices for SLC and SF####
 ###Data import & prep###
 tapData <- read_csv("data/cityWater.csv", 
@@ -30,7 +32,7 @@ Aboxtest_SLC.SF <- tapData.sf %>%
   geom_boxplot() +
 #  stat_summary(fun="mean", fill="blue", shape=23) +
   theme_classic() + 
-  scale_fill_manual(values = c("#0073a7", "#ffa600")) + 
+  scale_fill_manual(values = c("#0073a7", "#d2042d")) + 
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)")), 
     y = "Cluster ID"
@@ -38,7 +40,7 @@ Aboxtest_SLC.SF <- tapData.sf %>%
   theme(legend.position = 'none')
 
 Aboxtest_SLC.SF
-ggsave("figures/boxplot_time_slice.tiff", width=6, height=4, units="in", dpi=300)
+ggsave("figures/boxplot_time_slice.pdf", width=6, height=4, units="in", dpi=300)
 
 # Let's look a little more in-depth for time series 
 #First, create a grouped dataframe for quickly looking at things by time
