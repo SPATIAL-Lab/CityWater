@@ -1,4 +1,7 @@
-# Plot of Modality and Standard Deviation Across US. Run 1 first
+# Plots of Modality and Standard Deviation Across US. Figure 1 in manuscript
+library(tidyverse); library(usmap); library(ggrepel)
+
+datasummary <- read.csv("data/datasummary.csv")
 
 transformed_data <- usmap_transform(datasummary)
 
@@ -7,7 +10,7 @@ plot_usmap(regions = "states", fill = 'grey90') +
   geom_point(data = transformed_data, aes(x = x, y = y, size = d18O_sd, fill = Modality), shape = 21) + 
   labs(color = "Modality",
        size = "Standard Deviation") + 
-  scale_fill_manual(values = c("#003f5c", "#ffa600")) + 
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   scale_size_continuous(range = c(1, 10)) + 
   theme_void() + 
   theme(legend.position = 'top')
@@ -33,7 +36,12 @@ plot_usmap(regions = "states", fill = 'grey90') +
   theme(legend.position = 'top',
         legend.text=element_text(size=rel(1)))
 
-ggsave("figures/sdplot.pdf")
+ggsave("figures/sdplot.pdf", 
+       units = c('in'), 
+       dpi = 600, 
+       width = 6, 
+       height = 3
+)
 
 # Sample Size
 plot_usmap(regions = "states", fill = 'grey90') + 

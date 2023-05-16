@@ -12,8 +12,9 @@ conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
 conus <- subset(conus, STATEFP != 02)
 conus <- subset(conus, STATEFP != 15)
-conus$landlog <- log(conus$ALAND)
-conus$waterlog <- log(conus$AWATER)
+conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
+conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
+
 #elevation
 elevation <- get_elev_raster(conus, z= 5)
 
@@ -23,7 +24,7 @@ precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 # streamflow
 streamflow <- raster("data/fa_qs_ann.tif")
 
-# latitude is hopeful part of the projection so that's easy...
+# latitude is hopefully part of the projection so that's easy...
 
 # median income
 Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
@@ -68,9 +69,8 @@ ggplot() +
   scale_fill_viridis(discrete = F)
 #okay, so now we have a sf with land area, water area, pop density, and median income
 # let's check all the projections are correct. Matching to precip crs
-landarea <- rasterize(conus, precip, conus$landlog)
-# PEACH Water area seems to have some missing data- look closer
-waterarea <- rasterize(conus, precip, conus$waterlog)
+total_area <- rasterize(conus, precip, conus$total_area)
+perc_water <- rasterize(conus, precip, conus$perc_water)
 medincome <- rasterize(conus, precip, conus$medincome)
 popdensity <- rasterize(conus, precip, conus$popdensity)
 
@@ -87,57 +87,101 @@ elevation2 <- projectRaster(elevation2, precip)
 extent(elevation2) <- extent(precip)
 elevation2 <- resample(elevation2, precip)
 elevation2 <- mask(elevation2, precip)
-lat <- init(precip, 'y')
+lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
-# grab latitude as data
 
 #stack rasters
-s <- stack(landarea, waterarea, medincome, popdensity, precip, streamflow2, 
+s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, 
            elevation2, lat)
-names(s) <- c("landlog", "waterlog", "medincome", "popdensity", "precip", 
+names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
               "streamflow", "elevation", "lat")
 
 # okay call the model that we want now
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:14, 17, 18)]
+datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
-multivariate <- subset(multivariate, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
-multivariate$landlog <- log(multivariate$total_land)
-multivariate$waterlog <- log(multivariate$total_water)
+multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
+  rename('sd' = 'd18O_sd')
 
-df <- group_by(tapData, Cluster_Location) %>% 
-  summarize(variance = var(rep(d18O)),
-            sd = sd(d18O),
-            max = max(d18O), 
-            min = min(d18O))
-df$range <- df$max - df$min
-
-multivariate <- left_join(multivariate, df, by = "Cluster_Location")
-
-model <- left_join(tapData, multivariate, by = "Cluster_Location") %>% 
-  dplyr::select(d18O, d_ex, landlog, waterlog, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome, Elevation, sd) %>% 
+model <- left_join(tapData, multilevel, by = "Cluster_Location") %>% 
+  dplyr::select(sd, total_area, perc_water, elevation_range, streamflow, precip, 
+         Lat, popdensity, medincome, Elevation) %>% 
   rename(elevation = Elevation, lat = Lat)
 
-best.model <- lm(sd ~ landlog + waterlog + elevation + streamflow + 
+best_model <- lm(sd ~ total_area + perc_water + elevation + streamflow + 
                    precip + popdensity + lat + medincome, data = model)
 
-predictedO_model <- predict(s, best.model, progress='text')
+predictedO_model <- predict(s, best_model)
 
 plot(predictedO_model, 
-     col = viridis(100))
+     col = viridis(100), 
+     axes = F, 
+     box = F)
+
 O_hist <- hist(predictedO_model)
 O_hist$breaks
 O_hist$counts
+
+#drop median income
+model2 <- lm(sd ~ total_area + perc_water + elevation + streamflow + 
+               precip + popdensity + lat, data = model)
+model2O <- predict(s, model2)
+summary(model2)
+plot(model2O, 
+     col = viridis(100), 
+     axes = F, 
+     box = F)
+
+O_hist <- hist(model2O)
+O_hist$breaks
+O_hist$counts
+
+model_log <- lm(log(sd) ~ total_area + perc_water + elevation + streamflow + 
+               precip + popdensity + lat, data = model)
+model2O <- exp(predict(s, model_log))
+summary(model_log)
+plot(model2O, 
+     col = viridis(100), 
+     axes = F, 
+     box = F)
+
+O_hist <- hist(model2O)
+O_hist$breaks
+O_hist$counts
+
+
+# Density Plot
+library(ggridges)
+
+ggplot(densityO_model, aes(x = stdDev, y = name, fill = ..x..)) + 
+  geom_density_ridges_gradient(
+    #jittered_points = TRUE,vposition = position_points_jitter(width = 0.05, height = 0), point_shape = '|', point_size = 3, point_alpha = 1, alpha = 0.7
+    )+
+  scale_fill_viridis() + 
+  labs(x = "") + 
+  theme(axis.line.y=element_blank(),
+        #axis.text.x=element_blank(),
+        #axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+       # axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position="none",
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank()) +
+  theme_classic()
 
 # New York County being odd
 plot(predictedO_model, axes = FALSE, 
      xlim = c(-74.72127 ,-72.75382), ylim = c(39.82881 , 41.11662))
 
 plot(predictedO_model, axes = FALSE, 
-     xlim = c(-75.59569, -71.07785), ylim = c(39.04493, 41.62054 ))
+     xlim = c(-75.59569, -71.07785), ylim = c(39.04493, 41.62054), 
+     col = viridis(100))
 
 
 NewYorkCounty <- subset(conus, NAMELSAD == "New York County")
@@ -145,7 +189,7 @@ NewYorkCounty <- subset(conus, NAMELSAD == "New York County")
 
 ggplot()+ 
   geom_point(data = conus, aes(x = popdensity, y = medincome), color = 'bisque', size = 3) + 
-  geom_point(data = NewYorkCounty, aes(x = popdensity, y = medincome), color = 'hotpink', size = 3) + 
+  geom_point(data = NewYorkCounty, aes(x = popdensity, y = medincome), color = '#003f5c', size = 3) + 
   theme_classic()
 
 # well we know what to blame- NYCounty. It's the densest part of the US by far, with high medincome

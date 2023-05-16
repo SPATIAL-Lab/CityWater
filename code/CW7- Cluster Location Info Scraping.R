@@ -162,41 +162,41 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
   st_union() %>% 
   as_Spatial(IDs = "Wooster")
 
-clusterLocations <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
+expandedArea <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
                          GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
                          SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
 
-#convert clusterLocations from degress to meters for expanding the borders of the metro areas
-clusterLocations <- spTransform(clusterLocations, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +datum=WGS84 +units=m +no_defs")) %>% 
+#convert clusterLocations from degrees to meters for expanding the borders of the metro areas
+expandedArea <- spTransform(expandedArea, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +datum=WGS84 +units=m +no_defs")) %>% 
   gBuffer(width = 20000, byid = T )
 
-elevation <- get_elev_raster(clusterLocations, z = 7)
+elevation <- get_elev_raster(expandedArea, z = 7)
 
-clusterLocations$elevation_min <- raster::extract(elevation, clusterLocations,
+expandedArea$elevation_min <- raster::extract(elevation, expandedArea,
                                                   weights = F, fun = min)
-clusterLocations$elevation_min[clusterLocations$elevation_min <0] <- 0
-clusterLocations$elevation_max <- raster::extract(elevation, clusterLocations,
+expandedArea$elevation_min[expandedArea$elevation_min <0] <- 0
+expandedArea$elevation_max <- raster::extract(elevation, expandedArea,
                                                   weights = F, fun = max)
-clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
-clusterLocations$elevation_max <- c(clusterLocations$elevation_max)
+expandedArea$elevation_max <- c(expandedArea$elevation_max)
+expandedArea$elevation_min <- c(expandedArea$elevation_min)
 
 #read in raster
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 streamflow <- raster("data/fa_qs_ann.tif")
 
 #some empty data in the tif, and so na.rm = T
-clusterLocations$streamflow <- raster::extract(streamflow, clusterLocations,
+expandedArea$streamflow <- raster::extract(streamflow, expandedArea,
                                                weights = F, fun = sum, 
                                                na.rm = T)
-clusterLocations$streamflow <- c(clusterLocations$streamflow)
-clusterLocations$streamflow <- c(clusterLocations$streamflow)
-clusterLocations$precip <- raster::extract(precip, clusterLocations, 
+expandedArea$streamflow <- c(expandedArea$streamflow)
+
+expandedArea$precip <- raster::extract(precip, expandedArea, 
                                            weights = F, fun = mean, 
                                            na.rm = T)
-clusterLocations$precip <- c(clusterLocations$precip)
+expandedArea$precip <- c(expandedArea$precip)
 
-multivariate <- as.data.frame(clusterLocations)
-multivariate$Cluster_Location <- getSpPPolygonsIDSlots(clusterLocations)
+multivariate <- as.data.frame(expandedArea)
+multivariate$Cluster_Location <- getSpPPolygonsIDSlots(expandedArea)
 
 ############
 # ALAND AND AWATER SUMS
@@ -650,12 +650,15 @@ clusterLocations <- rbind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG,
 
 clusterLocations$total_area <- (clusterLocations$total_land + 
                                   clusterLocations$total_water)*0.000001
+
+clusterLocations$perc_water <- round(((clusterLocations$total_water*0.000001)/clusterLocations$total_area)*100, 2)
 #we want to create a population density instead of just population, 
 #so can do pop/(total_land/1000) for sqkm- bodies of water in regions generally aren't counted towards land total
 multivariate <- left_join(multivariate, clusterLocations, by = "Cluster_Location")
 multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
 multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevation_min
-multivariate$elevation_range <- c(multivariate$elevation_range)
-multivariate <- multivariate[ -c(1, 2, 10) ]
+multivariate <- multivariate[ -c(1, 2, 6, 7, 10) ]
 
 write.csv(multivariate, "data/multivariate.csv")
+
+# Try creating vector point of each raster to pull min and max elevation

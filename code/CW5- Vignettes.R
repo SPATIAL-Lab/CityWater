@@ -154,3 +154,34 @@ ggarrange(p1, p2, p3, p4,
  #         labels = c('Atlanta', 'Lawrence', 'Minneapolis', 'Denver'), 
           ncol = 2, nrow = 2)
 
+# Let's try making better inset maps --------------------------------------
+
+cities <- read_sf("data/cb_2018_us_ua10_500k.shp")
+
+mapATL <- ggplot() + 
+  geom_sf(data = subset(cities, NAME10 == "Atlanta, GA")) + 
+  geom_sf(data = tapData.sf_Atl_7, aes(color = km_cluster)) +
+  scale_color_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() +
+  theme(legend.position = "none")
+
+ggplot() + 
+  geom_sf(data = subset(cities, NAME10 == "Denver--Aurora, CO")) + 
+  geom_sf(data = tapData.sf_Denv_15, aes(color = km_cluster)) +
+  scale_color_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() + 
+  theme(legend.position = "none")
+
+ggplot() + 
+  geom_sf(data = subset(cities, NAME10 == "Minneapolis--St. Paul, MN--WI")) + 
+  geom_sf(data = tapData.sf_MPLS_21, aes(color = km_cluster)) +
+  scale_color_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() + 
+  theme(legend.position = "none")
+
+ggplot() + 
+  geom_sf(data = subset(cities, NAME10 == "Lawrence, KS")) + 
+  geom_sf(data = tapData.sf_Law_14, aes(color = km_cluster)) +
+  scale_color_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() + 
+  theme(legend.position = "none")
