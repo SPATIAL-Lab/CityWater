@@ -158,13 +158,18 @@ ggarrange(p1, p2, p3, p4,
 
 cities <- read_sf("data/cb_2018_us_ua10_500k.shp")
 
+tapData.sf_Atl_7$km_cluster <- tapData_Atl_7$km_cluster
+
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Atlanta, GA")) + 
   geom_sf(data = tapData.sf_Atl_7, aes(color = km_cluster)) +
   scale_color_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
   theme(legend.position = "none")
+
 ggsave('figures/ATLmap.pdf')
+
+tapData.sf_Denv_15$km_cluster <- tapData_Denv_15$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Denver--Aurora, CO")) + 
   geom_sf(data = tapData.sf_Denv_15, aes(color = km_cluster)) +
@@ -172,6 +177,8 @@ ggplot() +
   theme_void() + 
   theme(legend.position = "none")
 ggsave('figures/DENmap.pdf')
+
+tapData.sf_MPLS_21$km_cluster <- tapData_MPLS_21$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Minneapolis--St. Paul, MN--WI")) + 
   geom_sf(data = tapData.sf_MPLS_21, aes(color = km_cluster)) +
@@ -179,6 +186,8 @@ ggplot() +
   theme_void() + 
   theme(legend.position = "none")
 ggsave('figures/MSPmap.pdf')
+
+tapData.sf_Law_14$km_cluster <- tapData_Law_14$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Lawrence, KS")) + 
   geom_sf(data = tapData.sf_Law_14, aes(color = km_cluster)) +
