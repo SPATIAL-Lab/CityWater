@@ -20,30 +20,55 @@ elevation <- raster("data/elevationRaster.tif")
 e <- rasterToPoints(elevation)
 e <- as.data.frame(e) %>% 
   rename(elevation = layer)
+#define number of data frames to split into
+smol <- head(e, 60000)
 
-e_spdf <- SpatialPointsDataFrame(e[,1:2], proj4string = elevation@crs, e)
+e_spdf <- SpatialPointsDataFrame(smol[,1:2], proj4string = elevation@crs, smol)
 
-#this is taking 2+ hours, might want to do overnight
+#doing this in a smol chunk is working, may need to think about splitting and then recombining if parallel processing isn't working. 
+e_spdf$elevation_min <- 0
 e_spdf$elevation_min <- raster::extract(elevation, e_spdf,
-                                   buffer = 20, #20m I think?
+                                   buffer = 2000, #2k I think?
                                    weights = F, 
                                    fun = min)
 
 e_spdf$elevation_min[e_spdf$elevation_min <0] <- 0
 
+e_spdf$elevation_max <- 0
 e_spdf$elevation_max <- raster::extract(elevation, e_spdf,
-                                        buffer = 20,
+                                        buffer = 2000,
                                         weights = F, 
                                         fun = max)
 
-e$elevation_range <- e$elevation_max - e$elevation_min
+e_spdf$elevation_range <- e_spdf$elevation_max - e_spdf$elevation_min
 
 # Terra might be faster??
 elevation <- rast("data/elevationRaster.tif")
 e <- as.points(elevation)
 #convert to points
-sp <- SpatialPoints(e)
+sp <- SpatialPoints(e) # broken
 #create a buffer around the points
-sp_buffer <-st_buffer(st_as_sf(e),2000) #this...is not any faster. Just getting the buffer is taking forever. 
+sp_buffer <-st_buffer(st_as_sf(e),2000) #sf package 
+sp_buffer <- buffer(e, 2000) # terra
+# trying parallel processing
 
+library(parallel)
+# Detect the number of available cores and create cluster
+cl <- parallel::makeCluster(detectCores())
+# Run parallel computation. This uhhhh might not be the correct way to write this
+sp_buffer <- parLapply(cl = cl, fun = terra::buffer(e, 2000))
 
+# Close cluster
+parallel::stopCluster(cl)
+
+# furrr????
+# there is a StackOverflow specifically about raster::extract using furrr https://stackoverflow.com/questions/74739153/how-to-use-parallelization-with-rasterextract-in-r-using-furrr
+
+library(furrr)
+furrr::furrr_options(packages = ("raster"))
+future_map(1:2, function(x) {
+  raster::extract(elevation, e_spdf,
+                  buffer = 2000,
+                  weights = F, 
+                  fun = max)
+})
