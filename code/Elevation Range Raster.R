@@ -1,5 +1,5 @@
 library(raster); library(viridis);library(ggplot2); library(dplyr); 
-library(tidyr); library(sf); library(terra)
+library(tidyr); library(sf); library(terra); library(tictoc)
 
 # setup, skip now
 #library(censusapi);library(elevatr);library(tigris, options(tigris_use_cache = TRUE)) 
@@ -17,26 +17,69 @@ library(tidyr); library(sf); library(terra)
 # Elevation min max range -------------------------------------------------
 
 elevation <- raster("data/elevationRaster.tif")
-e <- rasterToPoints(elevation)
-e <- as.data.frame(e) %>% 
-  rename(elevation = layer)
+#e <- rasterToPoints(elevation)
+#e <- as.data.frame(e) %>% 
+#  rename(elevation = layer)
 #define number of data frames to split into
-e$group <- sample(10, size = nrow(e), replace = TRUE)
+# e$group <- sample(10, size = nrow(e), replace = TRUE)
+
 split_names <- c("e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10")
+#mysplits <- split(e, e$group)
 
-mysplits <- split(e, e$group)
-
-
+#save(mysplits, file = "mysplits.Rda")
+load("mysplits.Rda")
 for (i in 1:length(mysplits)) {        # Run for-loop
    assign(split_names[i], mysplits[[i]])
 }
 
-for (i in 1:length(split_names)) {
-  paste0(i, "_spdf") <- SpatialPointsDataFrame(i[,1:2], proj4string = "+proj=longlat +datum=NAD83 +no_defs", i)
-}
+
+# e1
 
 e1_spdf <- SpatialPointsDataFrame(e1[,1:2], proj4string = elevation@crs, e1)
+
+#start here 
+rasterOptions()
+# default max memory is 5e+09
+rasterOptions(maxmemory = 5e+12)
+
+e1_spdf$elevation_min <- 0
+# if smol took 178.66 sec to process 6000 points, this should take about...5 hours. 
+e1_spdf$elevation_min <- raster::extract(elevation, e1_spdf,
+                                         buffer = 2000,
+                                         weights = F, 
+                                         fun = min)
+
+e1_spdf$elevation_min[e1_spdf$elevation_min <0] <- 0
+
+e1 <- as.data.frame(e1_spdf)
+save(e1, file = "data/e1.Rda")
+
+load(e1)
+e1_spdf <- SpatialPointsDataFrame(e1[,1:2], proj4string = elevation@crs, e1)
+e1_spdf$elevation_max <- 0
+e1_spdf$elevation_max <- raster::extract(elevation, e1_spdf,
+                                         buffer = 2000,
+                                         weights = F,
+                                         fun = max)
+e1_spdf$elevation_max[e1_spdf$elevation_max <0] <- 0
+e1_spdf$elevation_range <- e1_spdf$elevation_max - e1_spdf$elevation_min
+
+e1finished <- as.data.frame(e1_spdf)
+save(e1finished, file = "data/e1finished.Rda")
+
+# redoing e2
 e2_spdf <- SpatialPointsDataFrame(e2[,1:2], proj4string = elevation@crs, e2)
+e2_spdf$elevation_min <- raster::extract(elevation, e2_spdf,
+                                         buffer = 2000,
+                                         weights = F, 
+                                         fun = min)
+
+e2_spdf$elevation_min[e2_spdf$elevation_min <0] <- 0
+
+e2 <- as.data.frame(e2_spdf)
+save(e2, file = "data/e2.Rda")
+
+
 e3_spdf <- SpatialPointsDataFrame(e3[,1:2], proj4string = elevation@crs, e3)
 e4_spdf <- SpatialPointsDataFrame(e4[,1:2], proj4string = elevation@crs, e4)
 e5_spdf <- SpatialPointsDataFrame(e5[,1:2], proj4string = elevation@crs, e5)
@@ -46,33 +89,58 @@ e8_spdf <- SpatialPointsDataFrame(e8[,1:2], proj4string = elevation@crs, e8)
 e9_spdf <- SpatialPointsDataFrame(e9[,1:2], proj4string = elevation@crs, e9)
 e10_spdf <- SpatialPointsDataFrame(e10[,1:2], proj4string = elevation@crs, e10)
 
+for(i in 1:length(split_names)) {
+expression(paste(i, "_rda"))  <- as.data.frame(i,"_spdf")
+}
+
+
+#start here 
+rasterOptions()
+# default max memory is 5e+09
+rasterOptions(maxmemory = 5e+12)
+
+e2_spdf$elevation_min <- 0
+# if smol took 178.66 sec to process 6000 points, this should take about...5 hours. 
+e2_spdf$elevation_min <- raster::extract(elevation, e2_spdf,
+                                         buffer = 2000,
+                                         weights = F, 
+                                         fun = min)
+
+e2_spdf$elevation_min[e2_spdf$elevation_min <0] <- 0
+
+e3_spdf$elevation_max <- 0
+e3_spdf$elevation_max <- raster::extract(elevation, e3_spdf,
+                                         buffer = 2000,
+                                         fun = max)
+e3_spdf$elevation_max[e3_spdf$elevation_max <0] <- 0
+e3a <- as.data.frame(e3_spdf) 
+
+e3b <- cbind(e3, e3a)
+
+e1_spdf$elevation_range <- e2_spdf$elevation_max - e2_spdf$elevation_min
+
+
+e2 <- as.data.frame(e2_spdf)
+save(e2, file = "data/e2.Rda")
+
+# experiment in allocating more memory to raster functions
 # Let's do a smol one too to test
 smol <- head(e, 6000)
 smol_spdf <- SpatialPointsDataFrame(smol[,1:2], proj4string = elevation@crs, smol)
-#doing this in a smol chunk is working, may need to think about splitting and then recombining if parallel processing isn't working. 
-spdf_names <- c("e1_spdf", "e2_spdf", "e3_spdf", "e4_spdf", "e5_spdf", "e6_spdf", "e7_spdf", "e8_spdf", "e9_spdf", "e10_spdf")
-
-for(i in 1:length(spdf_names)) {
-  i$elevation_min <- 0
-  i$elevation_max <- 0
-
-}
-
-e1_spdf$elevation_min <- 0
-e1_spdf$elevation_min <- raster::extract(elevation, e1_spdf,
-                                   buffer = 2000, #2k I think?
-                                   weights = F, 
-                                   fun = min)
-
-e1_spdf$elevation_min[e1_spdf$elevation_min <0] <- 0
-
-e1_spdf$elevation_max <- 0
-e1_spdf$elevation_max <- raster::extract(elevation, e1_spdf,
-                                        buffer = 2000,
-                                        weights = F, 
-                                        fun = max)
-
-e1_spdf$elevation_range <- e1_spdf$elevation_max - e1_spdf$elevation_min
+# what if we check rasterOptions() and then allot more memory? 
+rasterOptions()
+# default max memory is 5e+09
+rasterOptions(maxmemory = 5e+10)
+tic()
+smol_spdf$elevation_max = 0
+smol_spdf$elevation_max <- raster::extract(elevation, smol_spdf,
+                                           buffer = 2000,
+                                           weights = F, 
+                                           fun = max)
+toc()
+e1 <- as.data.frame(e1_spdf)
+save(e1, file = "e1.Rda")
+#comparing base code to expanded memory run on my netbook, we're going from 259 to 152 seconds. 
 
 # Terra might be faster??
 elevation <- rast("data/elevationRaster.tif")
