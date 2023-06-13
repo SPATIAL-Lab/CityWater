@@ -13,7 +13,7 @@ library(tidyr); library(sf); library(terra); library(tictoc)
 #writeRaster(elevation, "data/elevationRaster.tif", overwrite = T)
 # e <- rasterToPolygons(elevation) # Four hours and counting...
 
-
+# Current Setup
 # Elevation min max range -------------------------------------------------
 
 elevation <- raster("data/elevationRaster.tif")
@@ -32,28 +32,21 @@ for (i in 1:length(mysplits)) {        # Run for-loop
    assign(split_names[i], mysplits[[i]])
 }
 
-
-# e1
-
-e1_spdf <- SpatialPointsDataFrame(e1[,1:2], proj4string = elevation@crs, e1)
-
-#start here 
 rasterOptions()
 # default max memory is 5e+09
-rasterOptions(maxmemory = 5e+12)
+rasterOptions(maxmemory = 5e+20)
+
+# e1 DONE
+e1_spdf <- SpatialPointsDataFrame(e1[,1:2], proj4string = elevation@crs, e1)
 
 e1_spdf$elevation_min <- 0
-# if smol took 178.66 sec to process 6000 points, this should take about...5 hours. 
 e1_spdf$elevation_min <- raster::extract(elevation, e1_spdf,
                                          buffer = 2000,
                                          weights = F, 
                                          fun = min)
-
 e1_spdf$elevation_min[e1_spdf$elevation_min <0] <- 0
-
 e1 <- as.data.frame(e1_spdf)
 save(e1, file = "data/e1.Rda")
-
 load(e1)
 e1_spdf <- SpatialPointsDataFrame(e1[,1:2], proj4string = elevation@crs, e1)
 e1_spdf$elevation_max <- 0
@@ -63,24 +56,42 @@ e1_spdf$elevation_max <- raster::extract(elevation, e1_spdf,
                                          fun = max)
 e1_spdf$elevation_max[e1_spdf$elevation_max <0] <- 0
 e1_spdf$elevation_range <- e1_spdf$elevation_max - e1_spdf$elevation_min
-
 e1finished <- as.data.frame(e1_spdf)
 save(e1finished, file = "data/e1finished.Rda")
 
-# redoing e2
+# e2 MAX WEIRD RE-RUN LATER
+load("data/e2.Rda")
 e2_spdf <- SpatialPointsDataFrame(e2[,1:2], proj4string = elevation@crs, e2)
-e2_spdf$elevation_min <- raster::extract(elevation, e2_spdf,
+e2_spdf$elevation_max <- 0
+e2_spdf$elevation_max <- raster::extract(elevation, e2_spdf,
+                                         buffer = 2000,
+                                         fun = max)
+e2_spdf$elevation_max[e2_spdf$elevation_max <0] <- 0
+e2_spdf$elevation_range <- e2_spdf$elevation_max - e2_spdf$elevation_min #RERUN THIS, ERROR BEFORE
+e2 <- as.data.frame(e2_spdf)
+save(e2, file = "data/e2finished.Rda")
+
+#e3Start here
+e3_spdf <- SpatialPointsDataFrame(e3[,1:2], proj4string = elevation@crs, e3)
+e3_spdf$elevation_min <- 0
+e3_spdf$elevation_min <- raster::extract(elevation, e3_spdf,
                                          buffer = 2000,
                                          weights = F, 
                                          fun = min)
+e3_spdf$elevation_min[e3_spdf$elevation_min <0] <- 0
+e3 <- as.data.frame(e3_spdf)
+save(e3, file = "data/e3wip.Rda")
+e3_spdf$elevation_max <- 0
+e3_spdf$elevation_max <- raster::extract(elevation, e3_spdf,
+                                         buffer = 2000,
+                                         weights = F,
+                                         fun = max)
+e3_spdf$elevation_max[e3_spdf$elevation_max <0] <- 0
+e3_spdf$elevation_range <- e3_spdf$elevation_max - e3_spdf$elevation_min
+e3 <- as.data.frame(e3_spdf)
+save(e3, file = "data/e3finished.Rda")
 
-e2_spdf$elevation_min[e2_spdf$elevation_min <0] <- 0
 
-e2 <- as.data.frame(e2_spdf)
-save(e2, file = "data/e2.Rda")
-
-
-e3_spdf <- SpatialPointsDataFrame(e3[,1:2], proj4string = elevation@crs, e3)
 e4_spdf <- SpatialPointsDataFrame(e4[,1:2], proj4string = elevation@crs, e4)
 e5_spdf <- SpatialPointsDataFrame(e5[,1:2], proj4string = elevation@crs, e5)
 e6_spdf <- SpatialPointsDataFrame(e6[,1:2], proj4string = elevation@crs, e6)
@@ -197,3 +208,6 @@ smol_spdf$elevation_max <- raster::extract(elevation, smol_spdf,
 endCluster()
 toc()
 # 195.29 sec elapsed
+
+plot(elevation)
+plot(e2_spdf)
