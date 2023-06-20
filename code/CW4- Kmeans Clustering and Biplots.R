@@ -397,7 +397,7 @@ datasummary <- tapData %>%
     min = min, 
     max = max, 
     mean = mean,
-    tenninety = abs(diff(quantile(tapData$d18O, c(0.1, 0.9), names = F)))
+    abs(diff(quantile(tapData$d18O, c(0.1, 0.9), names = F))) = tenninety
   )))
 
 datasummary2 <- tapData %>%
