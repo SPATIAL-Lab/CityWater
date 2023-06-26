@@ -26,18 +26,18 @@ plot_usmap(regions = "states", fill = 'grey90') +
   theme_void() + 
   theme(legend.position = 'top')
 
-# Deuterium excess SD
+# Deuterium excess IDR
 plot_usmap(regions = "states", fill = 'grey90') + 
-  geom_point(data = transformed_data, aes(x = x, y = y, size = d_ex_sd, fill = Modality), shape = 21) + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = IDR_d_ex, fill = Modality), shape = 21) + 
   labs(color = "Modality",
-       size = "Standard Deviation") + 
+       size = "Interdecile Range") + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   scale_size_continuous(range = c(1, 10)) + 
   theme_void() + 
   theme(legend.position = 'top',
         legend.text=element_text(size=rel(1)))
 
-ggsave("figures/sdplot.pdf", 
+ggsave("figures/idrplot.pdf", 
        units = c('in'), 
        dpi = 600, 
        width = 6, 

@@ -396,8 +396,8 @@ datasummary <- tapData %>%
   summarize(across(c(d18O, d2H, d_ex), list(
     min = min, 
     max = max, 
-    mean = mean,
-    abs(diff(quantile(tapData$d18O, c(0.1, 0.9), names = F))) = tenninety
+    mean = mean, 
+    sd = sd
   )))
 
 datasummary2 <- tapData %>%
@@ -408,8 +408,16 @@ datasummary2 <- tapData %>%
             lon = mean(Long), 
             )
 
+datasummary3 <- tapData %>% 
+  group_by(Cluster_Location) %>% 
+  summarize(
+    IDR_O = abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 
+    IDR_d_ex = abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 
+  )
+
 datasummary <- datasummary %>% 
   left_join(datasummary2) %>% 
+  left_join(datasummary3) %>% 
   mutate_at(2:13, round, 2)
 
 write.csv(datasummary, "data/datasummary.csv")

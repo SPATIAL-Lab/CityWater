@@ -1,4 +1,5 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
+# We're changing from idr to IDR. 
 
 library(tidyverse); library(leaps); library(ggpubr); library(car)                        
 
@@ -8,15 +9,16 @@ datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
-  rename('sd' = 'd18O_sd')
+  rename('sd' = 'd18O_sd', 
+         'idr' = 'IDR_O')
 
 # now we want to examine the following variables: streamflow, precip, elevation_range, 
 # perc_water, total_area, popdensity, medincome
 # Summarized Data ---------------------------------------------------------
 
-# looking at d18O sd and relationship to different variables
+# looking at d18O IDR and relationship to different variables
 
-p1 <- ggplot(data = multilevel, aes(x = streamflow, y = sd)) + 
+p1 <- ggplot(data = multilevel, aes(x = streamflow, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() + 
@@ -26,7 +28,7 @@ p1 <- ggplot(data = multilevel, aes(x = streamflow, y = sd)) +
   ) +
   theme_classic()
 
-p2 <- ggplot(data = multilevel, aes(x = precip, y = sd)) + 
+p2 <- ggplot(data = multilevel, aes(x = precip, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +    
@@ -36,7 +38,7 @@ p2 <- ggplot(data = multilevel, aes(x = precip, y = sd)) +
   ) +
   theme_classic()
 
-p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = sd)) + 
+p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +       labs(
@@ -45,7 +47,7 @@ p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = sd)) +
   ) +                                
   theme_classic()
 
-p4 <- ggplot(data = multilevel, aes(x = perc_water, y = sd)) + 
+p4 <- ggplot(data = multilevel, aes(x = perc_water, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +    
@@ -55,7 +57,7 @@ p4 <- ggplot(data = multilevel, aes(x = perc_water, y = sd)) +
   ) +
   theme_classic()
 
-p5 <- ggplot(data = multilevel, aes(x = total_area, y = sd)) + 
+p5 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() + 
@@ -65,7 +67,7 @@ p5 <- ggplot(data = multilevel, aes(x = total_area, y = sd)) +
   ) +
   theme_classic()
 
-p6 <- ggplot(data = multilevel, aes(x = popdensity, y = sd)) + 
+p6 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +  
@@ -75,7 +77,7 @@ p6 <- ggplot(data = multilevel, aes(x = popdensity, y = sd)) +
   ) +
   theme_classic()
 
-p7 <- ggplot(data = multilevel, aes(x = medincome, y = sd)) + 
+p7 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
   geom_point() +
@@ -85,23 +87,23 @@ p7 <- ggplot(data = multilevel, aes(x = medincome, y = sd)) +
   ) +
   theme_classic()
 
-sdPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7)
-sdPlot
+idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7)
+idrPlot
 
 # Modelling ---------------------------------------------------------------
 
 model <- left_join(tapData, multilevel, by = "Cluster_Location")
 
 model <- model %>% 
-  select(sd, total_area, perc_water, elevation_range, streamflow, precip, 
+  select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
          Lat, popdensity, medincome)
 
 
-shapiro.test(model$sd) #not normally distributed
+shapiro.test(model$idr) #not normally distributed
 
 
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(sd ~ total_area + perc_water + elevation_range + 
+Best_Subset <- regsubsets(idr ~ total_area + perc_water + elevation_range + 
                           streamflow + precip + Lat + popdensity + medincome,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -115,7 +117,7 @@ as.data.frame(summary_best_subset$outmat)
 summary_best_subset$which[which.max(summary_best_subset$adjr2),]
 # okay, leaps loves all the predictor variables I threw at it. 
 
-best_model <- lm(sd ~ total_area + perc_water + elevation_range + 
+best_model <- lm(idr ~ total_area + perc_water + elevation_range + 
                 streamflow + precip + Lat + popdensity + medincome,
                  data = model)
 summary(best_model)
