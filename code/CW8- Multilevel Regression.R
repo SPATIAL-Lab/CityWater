@@ -20,17 +20,17 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
 
 p1 <- ggplot(data = multilevel, aes(x = streamflow, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
     x = "Streamflow",
-    y = "Standard Deviation"
+    y = "Interdecile Range"
   ) +
   theme_classic()
 
 p2 <- ggplot(data = multilevel, aes(x = precip, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +    
   labs(
     x = "Precipitation (mean)",
@@ -40,7 +40,7 @@ p2 <- ggplot(data = multilevel, aes(x = precip, y = idr)) +
 
 p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +       labs(
     x = "Elevation Range (m)",
     y = ""
@@ -49,17 +49,17 @@ p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = idr)) +
 
 p4 <- ggplot(data = multilevel, aes(x = perc_water, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +    
   labs(
     x = "% Water",
-    y = "Standard Deviation"
+    y = "Interdecile Range"
   ) +
   theme_classic()
 
 p5 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() + 
   labs(
     x = "Total area (km2)",
@@ -69,7 +69,7 @@ p5 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) +
 
 p6 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +  
   labs(
     x = "Population Density",
@@ -79,11 +79,11 @@ p6 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) +
 
 p7 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 5, aes(label = ..rr.label..)) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +
   labs(
     x = "Median Income",
-    y = "Standard Deviation"
+    y = "Interdecile Range"
   ) +
   theme_classic()
 

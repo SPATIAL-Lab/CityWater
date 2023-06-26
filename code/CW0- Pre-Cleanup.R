@@ -3,7 +3,8 @@ library(tidyverse);library(readxl);library(sp);library(maps);library(maptools);
 library(elevatr)
 
 ###Data import & prep###
-tapData <- read.csv("data/tapData.csv", na.strings = "NA")
+tapData <- read.csv("data/tapData.csv", na.strings = "NA") 
+tapData <- subset(tapData, Project_ID != "p65")
 
 #update some names
 tapData$Cluster_Location = gsub("Ann_Arbor", "Ann Arbor", tapData$Cluster_Location)
@@ -38,7 +39,6 @@ tapData$Cluster_State = gsub("NC", NA, tapData$Cluster_State)
 tapData$Sample_Comments = gsub("temporarily", "temporally", tapData$Sample_Comments)
 
 # Changing Cluster_ID 1.1.0 to 1.10
-# ARGH FIX THISSSSS
 tapData$Cluster_ID = gsub("1.1.0", "1.10", tapData$Cluster_ID)
 tapData$Cluster_ID = gsub("1.2", "1.02", tapData$Cluster_ID)
 tapData$Cluster_ID = gsub("1.3", "1.03", tapData$Cluster_ID)
@@ -51,8 +51,6 @@ tapData$Cluster_ID = gsub("1.8", "1.08", tapData$Cluster_ID)
 tapData$Cluster_ID = gsub("1.9", "1.09", tapData$Cluster_ID)
 tapData = mutate(tapData, Cluster_ID = ifelse(Cluster_Location_Time == "Salt Lake City_Ap-13",
                                               "1.01", Cluster_ID))
-tapData <- subset(tapData, Cluster_ID != "NC")
-
 tapData <- subset(tapData, Cluster_ID != "NC")
 
 # Let's create d-excess for tapData
