@@ -3,7 +3,7 @@ library(tigris, options(tigris_use_cache = TRUE)); library(viridis);
 library(ggplot2); library(dplyr); library(tidyr); library(sf)
 
 # I suspect the first step is to build rasters of the predictive variables. 
-# we want all eight variables for d18O
+# we want total_area, perc_water, streamflow, popdensity, and medincome
 
 # pulling shapefile from census of counties and paring down to CONUS. 
 # ALAND and AWATER in this list
@@ -14,9 +14,6 @@ conus <- subset(conus, STATEFP != 02)
 conus <- subset(conus, STATEFP != 15)
 conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
 conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
-
-#elevation
-elevation <- get_elev_raster(conus, z= 5)
 
 #precipitation 
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
@@ -82,17 +79,11 @@ extent(streamflow) <- extent(precip)
 streamflow2 <- resample(streamflow, precip)
 streamflow2 <- mask(streamflow2, precip)
 
-elevation2 <- elevation
-elevation2 <- projectRaster(elevation2, precip)
-extent(elevation2) <- extent(precip)
-elevation2 <- resample(elevation2, precip)
-elevation2 <- mask(elevation2, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
 #stack rasters
-s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, 
-           elevation2, lat)
+s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
               "streamflow", "elevation", "lat")
 
@@ -103,15 +94,14 @@ datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
-  rename('sd' = 'd18O_sd')
+  rename('idr' = 'IDR_O')
 
 model <- left_join(tapData, multilevel, by = "Cluster_Location") %>% 
-  dplyr::select(sd, total_area, perc_water, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome, Elevation) %>% 
-  rename(elevation = Elevation, lat = Lat)
+  dplyr::select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
+         Lat, popdensity, medincome)
 
-best_model <- lm(sd ~ total_area + perc_water + elevation + streamflow + 
-                   precip + popdensity + lat + medincome, data = model)
+best_model <- lm(idr ~ total_area + perc_water + streamflow + 
+                   popdensity + medincome, data = model)
 
 predictedO_model <- predict(s, best_model)
 

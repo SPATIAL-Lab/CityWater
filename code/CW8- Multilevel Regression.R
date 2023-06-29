@@ -90,21 +90,24 @@ p7 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) +
 idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7)
 idrPlot
 
-# Modelling ---------------------------------------------------------------
-
-model <- left_join(tapData, multilevel, by = "Cluster_Location")
+# Modelling IDR--------------------------------------------------------------
 
 model <- model %>% 
   select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome)
+         lat, popdensity, medincome)
 
 
 shapiro.test(model$idr) #not normally distributed
+shapiro.test(log(model$idr))
 
+all_model <- lm(idr ~ total_area + perc_water + elevation_range + 
+                   streamflow + precip + lat + popdensity + medincome,
+                 data = model)
 
+summary(all_model)
 # Choosing best predictors ------------------------------------------------
 Best_Subset <- regsubsets(idr ~ total_area + perc_water + elevation_range + 
-                          streamflow + precip + Lat + popdensity + medincome,
+                          streamflow + precip + lat + popdensity + medincome,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -115,16 +118,17 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(summary_best_subset$outmat)
 
 summary_best_subset$which[which.max(summary_best_subset$adjr2),]
-# okay, leaps loves all the predictor variables I threw at it. 
+# okay, leaps suggests we drop elevation_range, precip, and lat 
 
-best_model <- lm(idr ~ total_area + perc_water + elevation_range + 
-                streamflow + precip + Lat + popdensity + medincome,
+best_model <- lm(idr ~ total_area + perc_water + 
+                streamflow + popdensity + medincome,
                  data = model)
+
 summary(best_model)
 
 #checking variance inflation factors for these independent variables 
 vif(best_model) 
-# total_area, elevation, and popdensity are highly correlated to other predictors, but not so much that we need to re-assess our model.
+# So for popdensity especially there is moderate correlation between it and other factors, but not so much that we need to re-assess our model.
 
 # Model comparison just to check it out
 res.sum <- summary(Best_Subset)
@@ -135,3 +139,4 @@ data.frame(
 )
 plot(res.sum$adjr2)
 plot(res.sum$bic)
+

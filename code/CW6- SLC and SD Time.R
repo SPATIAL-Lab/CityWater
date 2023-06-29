@@ -70,7 +70,7 @@ timeseriessummarySLC2 <- subset(tapData, Cluster_Location == "Salt Lake City") %
   group_by(Cluster_ID) %>%
   summarize(n = n())
 
-timeseriessummarySLC <- timeseriessummarysLC %>% 
+timeseriessummarySLC <- timeseriessummarySLC %>% 
   left_join(timeseriessummarySLC2) %>% 
   mutate_at(2:13, round, 2)
 

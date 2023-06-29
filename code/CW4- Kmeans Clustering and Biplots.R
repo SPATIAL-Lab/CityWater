@@ -397,7 +397,8 @@ datasummary <- tapData %>%
     min = min, 
     max = max, 
     mean = mean, 
-    sd = sd
+    sd = sd, 
+    median = median
   )))
 
 datasummary2 <- tapData %>%
@@ -413,6 +414,7 @@ datasummary3 <- tapData %>%
   summarize(
     IDR_O = abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 
     IDR_d_ex = abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 
+    IDR_H = abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))),
   )
 
 datasummary <- datasummary %>% 
