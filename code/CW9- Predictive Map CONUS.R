@@ -85,7 +85,7 @@ lat <- mask(lat, precip)
 #stack rasters
 s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
-              "streamflow", "elevation", "lat")
+              "streamflow", "lat")
 
 # okay call the model that we want now
 tapData <- read.csv("data/cityWater.csv") 
@@ -96,9 +96,9 @@ multivariate <- read.csv("data/multivariate.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
   rename('idr' = 'IDR_O')
 
-model <- left_join(tapData, multilevel, by = "Cluster_Location") %>% 
+model <- multilevel %>% 
   dplyr::select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
-         Lat, popdensity, medincome)
+         popdensity, medincome)
 
 best_model <- lm(idr ~ total_area + perc_water + streamflow + 
                    popdensity + medincome, data = model)
@@ -106,41 +106,19 @@ best_model <- lm(idr ~ total_area + perc_water + streamflow +
 predictedO_model <- predict(s, best_model)
 
 plot(predictedO_model, 
-     col = viridis(100), 
+     col = viridis(9), 
      axes = F, 
-     box = F)
+     box = F
+     )
 
 O_hist <- hist(predictedO_model)
 O_hist$breaks
 O_hist$counts
 
-#drop median income
-model2 <- lm(sd ~ total_area + perc_water + elevation + streamflow + 
-               precip + popdensity + lat, data = model)
-model2O <- predict(s, model2)
-summary(model2)
-plot(model2O, 
-     col = viridis(100), 
-     axes = F, 
-     box = F)
+modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>% 
+  rename(idr = layer)
 
-O_hist <- hist(model2O)
-O_hist$breaks
-O_hist$counts
-
-model_log <- lm(log(sd) ~ total_area + perc_water + elevation + streamflow + 
-               precip + popdensity + lat, data = model)
-model2O <- exp(predict(s, model_log))
-summary(model_log)
-plot(model2O, 
-     col = viridis(100), 
-     axes = F, 
-     box = F)
-
-O_hist <- hist(model2O)
-O_hist$breaks
-O_hist$counts
-
+modelsf <- st_as_sf(modeldf)
 
 # Density Plot
 library(ggridges)

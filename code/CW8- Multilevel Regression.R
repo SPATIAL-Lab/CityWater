@@ -92,7 +92,7 @@ idrPlot
 
 # Modelling IDR--------------------------------------------------------------
 
-model <- model %>% 
+model <- multilevel %>% 
   select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
          lat, popdensity, medincome)
 
