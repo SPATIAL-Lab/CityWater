@@ -106,7 +106,7 @@ best_model <- lm(idr ~ total_area + perc_water + streamflow +
 predictedO_model <- predict(s, best_model)
 
 plot(predictedO_model, 
-     col = viridis(9), 
+     col = viridis(100), 
      axes = F, 
      box = F
      )
@@ -118,30 +118,26 @@ O_hist$counts
 modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>% 
   rename(idr = layer)
 
-modelsf <- st_as_sf(modeldf)
+#converts negative to zero
+nonzero <- reclassify(predictedO_model, cbind(-Inf, 0, 0), right=FALSE)
+plot(nonzero, 
+     col = viridis(100), 
+     axes = F, 
+     box = F
+)
 
-# Density Plot
-library(ggridges)
+# or we could simply do exp(log(IDR))
+log_model <- lm(exp(log(idr)) ~ total_area + perc_water + streamflow + 
+                   popdensity + medincome, data = model)
 
-ggplot(densityO_model, aes(x = stdDev, y = name, fill = ..x..)) + 
-  geom_density_ridges_gradient(
-    #jittered_points = TRUE,vposition = position_points_jitter(width = 0.05, height = 0), point_shape = '|', point_size = 3, point_alpha = 1, alpha = 0.7
-    )+
-  scale_fill_viridis() + 
-  labs(x = "") + 
-  theme(axis.line.y=element_blank(),
-        #axis.text.x=element_blank(),
-        #axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-       # axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        legend.position="none",
-        panel.background=element_blank(),
-        panel.border=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank(),
-        plot.background=element_blank()) +
-  theme_classic()
+predicted_log_model <- predict(s, log_model)
+
+plot(predicted_log_model, 
+     col = viridis(100), 
+     axes = F, 
+     box = F
+)
+
 
 # New York County being odd
 plot(predictedO_model, axes = FALSE, 

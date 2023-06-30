@@ -7,15 +7,15 @@ tapData <- read_csv("data/cityWater.csv",
 #Oxygen Latitude North-South
 density <- tapData %>%
   mutate(Cluster_Location = fct_relevel(Cluster_Location, 
-                                        levels = "Hawaii","Oahu","St Petersburg",
-                                        "Gainesville","San Marcos","San Diego",
-                                        "Dallas Fort Worth","Phoenix","Atlanta","Athens",
-                                        "Los Angeles","Albuquerque",
-                                        "Flagstaff","Nashville","San Francisco","Cedar City",
-                                        "Colorado Springs","Lawrence",
-                                        "Denver","Salt Lake City","State College","Morristown",
-                                        "Wooster","Ann Arbor",
-                                        "La Crosse","Minneapolis","Portland","Bellingham")) 
+                                        "Hawaii","Oahu","St Petersburg",
+                                        "Gainesville","San Marcos","Dallas Fort Worth",
+                                        "San Diego", "Phoenix","Atlanta","Athens",
+                                        "Los Angeles","Albuquerque", "Flagstaff",
+                                        "Nashville","Cedar City", "San Francisco",
+                                        "Colorado Springs","Lawrence","Denver",
+                                        "Salt Lake City","Morristown","State College",
+                                        "Wooster","Ann Arbor","La Crosse","Minneapolis",
+                                        "Portland","Bellingham")) 
 
 
 DensPlot_d18O <- ggplot(density, 
