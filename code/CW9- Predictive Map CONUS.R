@@ -97,19 +97,22 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
+  dplyr::select(idr, total_area, perc_water, streamflow, 
          popdensity, medincome)
 
-best_model <- lm(idr ~ total_area + perc_water + streamflow + 
+best_model <- lm(sqrt(idr) ~ total_area + perc_water + streamflow + 
                    popdensity + medincome, data = model)
 
-predictedO_model <- predict(s, best_model)
+predictedO_model <- predict(s, best_model)^2
 
-plot(predictedO_model, 
+library(terra)
+predproj = rast(predictedO_model)
+predproj = project(predproj, "EPSG:5070")
+
+plot(min(predproj, 10), 
      col = viridis(100), 
      axes = F, 
-     box = F
-     )
+     box = F)
 
 O_hist <- hist(predictedO_model)
 O_hist$breaks
@@ -119,6 +122,7 @@ modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>%
   rename(idr = layer)
 
 #converts negative to zero
+##GJB: not needed
 nonzero <- reclassify(predictedO_model, cbind(-Inf, 0, 0), right=FALSE)
 plot(nonzero, 
      col = viridis(100), 
@@ -127,6 +131,7 @@ plot(nonzero,
 )
 
 # or we could simply do exp(log(IDR))
+## GJB: not needed. Also note that exp(log(x)) = x ;-)
 log_model <- lm(exp(log(idr)) ~ total_area + perc_water + streamflow + 
                    popdensity + medincome, data = model)
 

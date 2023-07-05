@@ -47,17 +47,7 @@ p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = idr)) +
   ) +                                
   theme_classic()
 
-p4 <- ggplot(data = multilevel, aes(x = perc_water, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +    
-  labs(
-    x = "% Water",
-    y = "Interdecile Range"
-  ) +
-  theme_classic()
-
-p5 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) + 
+p4 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() + 
@@ -67,7 +57,7 @@ p5 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) +
   ) +
   theme_classic()
 
-p6 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) + 
+p5 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +  
@@ -77,7 +67,7 @@ p6 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) +
   ) +
   theme_classic()
 
-p7 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) + 
+p6 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +
@@ -87,7 +77,7 @@ p7 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) +
   ) +
   theme_classic()
 
-idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7)
+idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6)
 idrPlot
 
 # Modelling IDR--------------------------------------------------------------
@@ -98,15 +88,15 @@ model <- multilevel %>%
 
 
 shapiro.test(model$idr) #not normally distributed
-shapiro.test(log(model$idr))
+shapiro.test(sqrt(model$idr))
 
-all_model <- lm(idr ~ total_area + perc_water + elevation_range + 
+all_model <- lm(idr ~ total_area + elevation_range + perc_water +
                    streamflow + precip + lat + popdensity + medincome,
                  data = model)
 
 summary(all_model)
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(idr ~ total_area + perc_water + elevation_range + 
+Best_Subset <- regsubsets(sqrt(idr) ~ total_area + elevation_range + perc_water +
                           streamflow + precip + lat + popdensity + medincome,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -115,12 +105,14 @@ Best_Subset <- regsubsets(idr ~ total_area + perc_water + elevation_range +
                           force.out = NULL,
                           method = "exhaustive")
 summary_best_subset <- summary(Best_Subset)
-as.data.frame(summary_best_subset$outmat)
+as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
+                    "adjr2" = round(summary_best_subset$adjr2, 2)))
 
-summary_best_subset$which[which.max(summary_best_subset$adjr2),]
+
+summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, leaps suggests we drop elevation_range, precip, and lat 
 
-best_model <- lm(idr ~ total_area + perc_water + 
+best_model <- lm(sqrt(idr) ~ total_area + perc_water + 
                 streamflow + popdensity + medincome,
                  data = model)
 
@@ -139,4 +131,4 @@ data.frame(
 )
 plot(res.sum$adjr2)
 plot(res.sum$bic)
-
+plot(density(best_model$residuals))
