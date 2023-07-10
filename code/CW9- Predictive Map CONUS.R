@@ -2,11 +2,7 @@ library(raster); library(censusapi);library(elevatr);
 library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
 library(ggplot2); library(dplyr); library(tidyr); library(sf)
 
-# I suspect the first step is to build rasters of the predictive variables. 
-# we want total_area, perc_water, streamflow, popdensity, and medincome
 
-# pulling shapefile from census of counties and paring down to CONUS. 
-# ALAND and AWATER in this list
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
@@ -121,29 +117,6 @@ O_hist$counts
 modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>% 
   rename(idr = layer)
 
-#converts negative to zero
-##GJB: not needed
-nonzero <- reclassify(predictedO_model, cbind(-Inf, 0, 0), right=FALSE)
-plot(nonzero, 
-     col = viridis(100), 
-     axes = F, 
-     box = F
-)
-
-# or we could simply do exp(log(IDR))
-## GJB: not needed. Also note that exp(log(x)) = x ;-)
-log_model <- lm(exp(log(idr)) ~ total_area + perc_water + streamflow + 
-                   popdensity + medincome, data = model)
-
-predicted_log_model <- predict(s, log_model)
-
-plot(predicted_log_model, 
-     col = viridis(100), 
-     axes = F, 
-     box = F
-)
-
-
 # New York County being odd
 plot(predictedO_model, axes = FALSE, 
      xlim = c(-74.72127 ,-72.75382), ylim = c(39.82881 , 41.11662))
@@ -168,4 +141,13 @@ conus %>%                                      # Top N highest values by group
   select(NAME.y, popdensity) %>% 
   slice(1:5)
 
-
+subset <- predictedO_model
+subset[subset<100] <- NA
+O_hist <- hist(subset)
+O_hist$breaks
+O_hist$counts
+plot(subset, 
+     col = viridis(100), 
+     axes = F, 
+     box = F)
+# New York is still the hilarious outlier even with sqrt, good to know. 
