@@ -11,12 +11,21 @@ conus <- subset(conus, STATEFP != 15)
 
 elevation <- get_elev_raster(conus, z = 5, neg_to_na = T)
 writeRaster(elevation, "data/elevationRaster2.tif", overwrite = T)
-# e <- rasterToPolygons(elevation) # Four hours and counting...
+saveRDS(object,"data/elevation.rds")
 
 # Current Setup
 # Elevation min max range -------------------------------------------------
 
-elevation <- raster("data/elevationRaster.tif")
+elevation <- raster("data/elevationRaster2.tif")
+precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+crs(elevation) <- "EPSG:9822"
+crs(precip) <- "EPSG:9822"
+elevation <- raster::resample(elevation, precip)
+elevation <- mask(elevation, precip)
+plot(elevation)
+save(elevation, file = "data/elevationRaster2.tif")
+
+
 #e <- rasterToPoints(elevation)
 #e <- as.data.frame(e) %>% 
 #  rename(elevation = layer)
