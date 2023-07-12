@@ -659,6 +659,8 @@ multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
 multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevation_min
 multivariate <- multivariate[ -c(1, 2, 6, 7, 10) ]
 
+# USGS Water can go here if we want it
+
 write.csv(multivariate, "data/multivariate.csv")
 
 # Try creating vector point of each raster to pull min and max elevation

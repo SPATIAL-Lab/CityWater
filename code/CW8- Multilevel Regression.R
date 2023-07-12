@@ -77,13 +77,33 @@ p6 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) +
   ) +
   theme_classic()
 
-idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6)
+p7 <- ggplot(data = multilevel, aes(x = water_use, y = idr)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
+  geom_point() +
+  labs(
+    x = "Water Use",
+    y = "Interdecile Range"
+  ) +
+  theme_classic()
+
+p8 <- ggplot(data = multilevel, aes(x = perc_water, y = idr)) + 
+  stat_smooth(method = "lm", formula= y~x) +
+  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
+  geom_point() +
+  labs(
+    x = "Percent Water",
+    y = "Interdecile Range"
+  ) +
+  theme_classic()
+
+idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7,p8)
 idrPlot
 
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
+  select(idr, total_area, perc_water, elevation_range, streamflow, precip, water_use, 
          lat, popdensity, medincome)
 
 
@@ -112,7 +132,7 @@ as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subse
 summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, leaps suggests we drop elevation_range, precip, and lat 
 
-best_model <- lm(sqrt(idr) ~ total_area + perc_water + 
+best_model <- lm(sqrt(idr) ~ total_area + water_use + 
                 streamflow + popdensity + medincome,
                  data = model)
 
