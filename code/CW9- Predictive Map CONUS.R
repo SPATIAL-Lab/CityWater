@@ -1,6 +1,7 @@
 library(raster); library(censusapi);library(elevatr);
 library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
-library(ggplot2); library(dplyr); library(tidyr); library(sf)
+library(ggplot2); library(dplyr); library(tidyr); library(sf); library(terra); library(readxl)
+
 
 
 conus <- counties(cb = TRUE)
@@ -45,21 +46,13 @@ hist(acs_simple$medincome)
 conus <- inner_join(conus, acs_simple, by = c("GEOID"))
 conus$popdensity <- conus$pop/(conus$ALAND*0.000001)
 
-# this doesn't matter, but create breaks to plot population density
-conus$densitybreaks <- cut(conus$popdensity, breaks = c(0, 1, 10, 25, 100, 500, 1000, Inf), 
-                        labels = c("0 - 1", "1.1 - 10", "10.1 - 25",
-                                   "25.1 - 100", "100.1 - 500", "500.1 - 1000", "> 1000")
-)
 
-ggplot() + 
-  geom_sf(data = conus, aes(fill = densitybreaks)) + 
-  theme_void() + 
-  scale_fill_viridis(discrete = T)
-
-ggplot() + 
-  geom_sf(data = conus, aes(fill = medincome)) + 
-  theme_void() + 
-  scale_fill_viridis(discrete = F)
+# water use
+water <- read_excel("data/water.xlsx")%>% 
+  rename(GEOID = FIPS, 
+         water_use = 'TO-WFrTo')
+conus <- inner_join(conus, water, by = c("GEOID"))
+water_use <- rasterize(conus, precip, conus$water_use)
 #okay, so now we have a sf with land area, water area, pop density, and median income
 # let's check all the projections are correct. Matching to precip crs
 total_area <- rasterize(conus, precip, conus$total_area)
@@ -79,13 +72,11 @@ lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
 #stack rasters
-s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat)
+s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
-              "streamflow", "lat")
+              "streamflow", "lat", "water_use")
 
 # okay call the model that we want now
-tapData <- read.csv("data/cityWater.csv") 
-tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
@@ -93,15 +84,28 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, streamflow, 
-         popdensity, medincome)
+  dplyr::select(idr, total_area, perc_water, streamflow, popdensity, medincome)
 
-best_model <- lm(sqrt(idr) ~ total_area + perc_water + streamflow + 
-                   popdensity + medincome, data = model)
+best_model <- lm(sqrt(idr) ~ ., data = model)
 
 predictedO_model <- predict(s, best_model)^2
 
-library(terra)
+predproj = rast(predictedO_model)
+predproj = project(predproj, "EPSG:5070")
+
+plot(min(predproj, 10), 
+     col = viridis(100), 
+     axes = F, 
+     box = F)
+
+# what about a sensical model? 
+sensical <- multilevel %>% 
+  dplyr::select(idr, streamflow, precip, perc_water,
+                popdensity, medincome, water_use)
+sensical_model <- lm(sqrt(idr) ~ ., data = sensical)
+
+predictedO_model <- predict(s, sensical_model)^2
+
 predproj = rast(predictedO_model)
 predproj = project(predproj, "EPSG:5070")
 
@@ -113,6 +117,10 @@ plot(min(predproj, 10),
 O_hist <- hist(predictedO_model)
 O_hist$breaks
 O_hist$counts
+
+
+
+# Graveyard, ignore -------------------------------------------------------
 
 modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>% 
   rename(idr = layer)

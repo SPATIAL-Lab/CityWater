@@ -13,7 +13,7 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
          'idr' = 'IDR_O')
 
 # now we want to examine the following variables: streamflow, precip, elevation_range, 
-# perc_water, total_area, popdensity, medincome
+# perc_water, total_area, popdensity, medincome, surfacewater_total
 # Summarized Data ---------------------------------------------------------
 
 # looking at d18O IDR and relationship to different variables
@@ -77,12 +77,12 @@ p6 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) +
   ) +
   theme_classic()
 
-p7 <- ggplot(data = multilevel, aes(x = water_use, y = idr)) + 
+p7 <- ggplot(data = multilevel, aes(x = surfacewater_total, y = idr)) + 
   stat_smooth(method = "lm", formula= y~x) +
   stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
   geom_point() +
   labs(
-    x = "Water Use",
+    x = "Water Use (surfacewater, MGal/day)",
     y = "Interdecile Range"
   ) +
   theme_classic()
@@ -103,21 +103,19 @@ idrPlot
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  select(idr, total_area, perc_water, elevation_range, streamflow, precip, water_use, 
-         lat, popdensity, medincome)
+  dplyr::select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
+         lat, popdensity, medincome, water_use)
 
 
 shapiro.test(model$idr) #not normally distributed
 shapiro.test(sqrt(model$idr))
 
-all_model <- lm(idr ~ total_area + elevation_range + perc_water +
-                   streamflow + precip + lat + popdensity + medincome,
+all_model <- lm(sqrt(idr) ~ .,
                  data = model)
 
 summary(all_model)
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(sqrt(idr) ~ total_area + elevation_range + perc_water +
-                          streamflow + precip + lat + popdensity + medincome,
+Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -128,12 +126,10 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
-
 summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, leaps suggests we drop elevation_range, precip, and lat 
 
-best_model <- lm(sqrt(idr) ~ total_area + water_use + 
-                streamflow + popdensity + medincome,
+best_model <- lm(sqrt(idr) ~ total_area + perc_water + streamflow + popdensity + medincome,
                  data = model)
 
 summary(best_model)
@@ -152,3 +148,16 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 plot(density(best_model$residuals))
+
+
+# No leaps just vibes -----------------------------------------------------
+# what model makes the most sense to us? 
+
+sensical_model <- multilevel %>% 
+  dplyr::select(idr, streamflow, precip, perc_water,
+                popdensity, medincome, water_use)
+sensical_glm <- lm(sqrt(idr) ~ .,
+                data = sensical_model)
+
+summary(sensical_glm)
+

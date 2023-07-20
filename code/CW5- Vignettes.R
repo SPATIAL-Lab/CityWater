@@ -16,7 +16,10 @@ p1 <- ggplot(data = tapData_Atl_7, aes(x = d18O, y = d2H)) +
   ) + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_classic() + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'none', 
+        axis.ticks = element_blank(), 
+        axis.text = element_blank(), 
+        axis.title = element_text(size = 16))
 
 # Lawrence, which has wider d2H ranges and is multimodal
 
@@ -34,7 +37,10 @@ p2 <- ggplot(data = tapData_Law_14, aes(x = d18O, y = d2H)) +
   ) + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_classic() + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'none', 
+        axis.ticks = element_blank(), 
+        axis.text = element_blank(), 
+        axis.title = element_text(size = 16))
 
 # Minneapolis, with small range and unimodal
 
@@ -52,7 +58,10 @@ p3 <- ggplot(data = tapData_MPLS_21, aes(x = d18O, y = d2H)) +
   ) + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_classic() + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'none', 
+        axis.ticks = element_blank(), 
+        axis.text = element_blank(), 
+        axis.title = element_text(size = 16))
 
 # Denver, with large range and unimodal
 
@@ -70,7 +79,10 @@ p4 <- ggplot(data = tapData_Denv_15, aes(x = d18O, y = d2H)) +
   ) + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_classic() + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'none', 
+        axis.ticks = element_blank(), 
+        axis.text = element_blank(), 
+        axis.title = element_text(size = 16))
 
 # Maps --------------------------------------------------------------------
 
@@ -162,8 +174,8 @@ tapData.sf_Atl_7$km_cluster <- tapData_Atl_7$km_cluster
 
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Atlanta, GA")) + 
-  geom_sf(data = tapData.sf_Atl_7, aes(color = km_cluster)) +
-  scale_color_manual(values = c("#003f5c", "#d2042d")) +
+  geom_sf(data = tapData.sf_Atl_7, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
   theme(legend.position = "none")
 
@@ -172,26 +184,26 @@ ggsave('figures/ATLmap.pdf')
 tapData.sf_Denv_15$km_cluster <- tapData_Denv_15$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Denver--Aurora, CO")) + 
-  geom_sf(data = tapData.sf_Denv_15, aes(color = km_cluster)) +
-  scale_color_manual(values = c("#003f5c", "#d2042d")) +
-  theme_void() + 
+  geom_sf(data = tapData.sf_Denv_15, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() +
   theme(legend.position = "none")
 ggsave('figures/DENmap.pdf')
 
 tapData.sf_MPLS_21$km_cluster <- tapData_MPLS_21$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Minneapolis--St. Paul, MN--WI")) + 
-  geom_sf(data = tapData.sf_MPLS_21, aes(color = km_cluster)) +
-  scale_color_manual(values = c("#003f5c", "#d2042d")) +
-  theme_void() + 
+  geom_sf(data = tapData.sf_MPLS_21, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() +
   theme(legend.position = "none")
 ggsave('figures/MSPmap.pdf')
 
 tapData.sf_Law_14$km_cluster <- tapData_Law_14$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Lawrence, KS")) + 
-  geom_sf(data = tapData.sf_Law_14, aes(color = km_cluster)) +
-  scale_color_manual(values = c("#003f5c", "#d2042d")) +
-  theme_void() + 
+  geom_sf(data = tapData.sf_Law_14, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) +
+  theme_void() +
   theme(legend.position = "none")
 ggsave('figures/LAWmap.pdf')

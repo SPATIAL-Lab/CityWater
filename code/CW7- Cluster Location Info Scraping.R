@@ -659,7 +659,10 @@ multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
 multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevation_min
 multivariate <- multivariate[ -c(1, 2, 6, 7, 10) ]
 
-# USGS Water can go here if we want it
+# DRAFT: USGS Water can go here if we want it
+# data from https://www.sciencebase.gov/catalog/item/get/5af3311be4b0da30c1b245d8, lightly cleaned
+water <- read_excel("data/water.xlsx")
+
 
 write.csv(multivariate, "data/multivariate.csv")
 
