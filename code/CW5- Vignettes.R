@@ -1,5 +1,36 @@
-# Here we'll explore the four vignette cities only. Have to run 1 and 4 before this
+# Here we'll explore the four vignette cities only. Have to run 1 before this
 library(ggpubr)
+
+
+# Setup -------------------------------------------------------------------
+tapData_Atl_7 <- st_set_geometry(tapData.sf_Atl_7, NULL)
+km_Atl_7 <- tapData_Atl_7 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+tapData_Atl_7$km_cluster <- km_Atl_7$cluster
+tapData_Atl_7$km_cluster <- factor(tapData_Atl_7$km_cluster)
+
+tapData_Law_14 <- st_set_geometry(tapData.sf_Law_14, NULL)
+km_Law_14 <- tapData_Law_14 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+tapData_Law_14$km_cluster <- km_Law_14$cluster
+tapData_Law_14$km_cluster <- factor(tapData_Law_14$km_cluster)
+
+tapData_MPLS_21 <- st_set_geometry(tapData.sf_MPLS_21, NULL)
+km_MPLS_21 <- tapData_MPLS_21 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+tapData_MPLS_21$km_cluster <- km_MPLS_21$cluster
+tapData_MPLS_21$km_cluster <- factor(tapData_MPLS_21$km_cluster)
+
+tapData_Denv_15 <- st_set_geometry(tapData.sf_Denv_15, NULL)
+km_Denv_15 <- tapData_Denv_15 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+tapData_Denv_15$km_cluster <- km_Denv_15$cluster
+tapData_Denv_15$km_cluster <- factor(tapData_Denv_15$km_cluster)
+
 # Atlanta, which has small ranges and is multimodal
 
 hull_km_Atl_7 <- tapData_Atl_7 %>%

@@ -1,11 +1,8 @@
-# This script sets up everything for the following scripts, run completely. 
+# This script is for the boxplots of Figure 4. Some post-processing was done in Adobe Illustrator
 library(raster); library(sf); library(tidyverse)
-###BOXPLOTS time slices for SLC and SF####
-###Data import & prep###
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(Cluster_ID = col_character()))
 
-#names(tapData)
 tapData$Cluster_ID <- factor(tapData$Cluster_ID)
 tapData$Cluster_Location <- factor(tapData$Cluster_Location)
 tapData$Cluster_Location_Time <- factor(tapData$Cluster_Location_Time)
