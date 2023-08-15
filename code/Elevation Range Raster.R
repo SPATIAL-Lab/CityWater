@@ -3,17 +3,11 @@ library(raster); library(viridis);library(ggplot2); library(dplyr);
 library(tidyr); library(sf); library(terra); library(tictoc)
 
 # setup, skip now
-library(censusapi);library(elevatr);library(tigris, options(tigris_use_cache = TRUE)) 
-conus <- counties(cb = TRUE)
-conus$STATEFP <- as.numeric(conus$STATEFP)
-conus <- subset(conus, STATEFP < 60)
-conus <- subset(conus, STATEFP != 02)
-conus <- subset(conus, STATEFP != 15)
+library(elevatr)
 
-# Setup, skip now ---------------------------------------------------------
-
-elevation <- get_elev_raster(conus, z = 5, neg_to_na = T)
 precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+elevation2 <- get_elev_raster(precip, z = 5, neg_to_na = T)
+
 crs(elevation) <- "EPSG:9822"
 crs(precip) <- "EPSG:9822"
 elevation <- raster::resample(elevation, precip)
@@ -24,17 +18,23 @@ writeRaster(elevation, file = "data/elevationRaster.tif", overwrite = T)
 
 # Trying to get min-max ---------------------------------------------------
 
-elevation <- raster("data/elevationRaster.tif")
+library(terra); library(tidyr); library(dplyr)
+elevation <- rast("data/elevationRaster2.tif")
 
-crs(elevation) <- "EPSG:9822"
-plot(elevation)
-e <- rasterToPoints(elevation)
-e <- as.data.frame(e) %>% 
-  rename(elevation = elevationRaster)
+e <- terra::as.data.frame(elevation, xy = TRUE, na.rm = T)
 
-e <- SpatialPointsDataFrame(e[,1:2], proj4string = elevation@crs, e)
-e$elevation_min <- 0
-e$elevation_min <- raster::extract(elevation, e,
-                                         buffer = 2000,
-                                         weights = F, 
-                                         fun = min)
+evect <- vect(e, geom=c("x", "y"), crs = elevation)
+
+b <- buffer(evect, 2)
+e_min <- extract(elevation, b, min, na.rm=TRUE)
+emin <- e_min %>% 
+  rename(e_min = elevationRaster2)
+a <- cbind(e, emin)
+write.csv(a,file = 'data/elevation_min')
+
+
+e_max <- extract(elevation, b, max, na.rm=TRUE)
+e_max <- e_max %>% 
+  rename(e_max = elevationRaster2)
+a <- cbind(e, e_max)
+write.csv(a,file = 'data/elevation_max')

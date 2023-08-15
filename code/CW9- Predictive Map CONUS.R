@@ -2,8 +2,6 @@ library(raster); library(censusapi);library(elevatr);
 library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
 library(ggplot2); library(dplyr); library(tidyr); library(sf); library(terra); library(readxl)
 
-
-
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
@@ -117,45 +115,3 @@ plot(min(predproj, 10),
 O_hist <- hist(predictedO_model)
 O_hist$breaks
 O_hist$counts
-
-
-
-# Graveyard, ignore -------------------------------------------------------
-
-modeldf <- as.data.frame(predictedO_model, xy=TRUE) %>% 
-  rename(idr = layer)
-
-# New York County being odd
-plot(predictedO_model, axes = FALSE, 
-     xlim = c(-74.72127 ,-72.75382), ylim = c(39.82881 , 41.11662))
-
-plot(predictedO_model, axes = FALSE, 
-     xlim = c(-75.59569, -71.07785), ylim = c(39.04493, 41.62054), 
-     col = viridis(100))
-
-
-NewYorkCounty <- subset(conus, NAMELSAD == "New York County")
-#did the demographic factors throw Manhattan way out of whack? 
-
-ggplot()+ 
-  geom_point(data = conus, aes(x = popdensity, y = medincome), color = 'bisque', size = 3) + 
-  geom_point(data = NewYorkCounty, aes(x = popdensity, y = medincome), color = '#003f5c', size = 3) + 
-  theme_classic()
-
-# well we know what to blame- NYCounty. It's the densest part of the US by far, with high medincome
-# though these two factors don't do much in the linear model, it still nudged it way up
-conus %>%                                      # Top N highest values by group
-  arrange(desc(popdensity)) %>% 
-  select(NAME.y, popdensity) %>% 
-  slice(1:5)
-
-subset <- predictedO_model
-subset[subset<100] <- NA
-O_hist <- hist(subset)
-O_hist$breaks
-O_hist$counts
-plot(subset, 
-     col = viridis(100), 
-     axes = F, 
-     box = F)
-# New York is still the hilarious outlier even with sqrt, good to know. 
