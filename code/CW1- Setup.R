@@ -3,7 +3,7 @@ library(raster); library(sf); library(viridis);library(rgdal);library(mapview);
 library(leaflet); library(spData);library(ggpmisc);library(usmap);
 library(tidyverse); library(magrittr);library(rio);library(rstatix);
 library(diptest); library(multimode);library(factoextra)
-library(hrbrthemes); library(tmap); library(ggrepel)
+library(hrbrthemes); library(ggrepel)
 
 ###Data import & prep###
 tapData <- read_csv("data/cityWater.csv", 

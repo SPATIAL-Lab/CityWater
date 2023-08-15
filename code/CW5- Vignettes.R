@@ -206,6 +206,7 @@ tapData.sf_Atl_7$km_cluster <- tapData_Atl_7$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Atlanta, GA")) + 
   geom_sf(data = tapData.sf_Atl_7, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
+  geom_sf(data = atlantaWaterSources, fill = 'lightblue', color = "black", size = 4, shape = 21) +
   scale_fill_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
   theme(legend.position = "none")
@@ -233,6 +234,7 @@ ggsave('figures/MSPmap.pdf')
 tapData.sf_Law_14$km_cluster <- tapData_Law_14$km_cluster
 ggplot() + 
   geom_sf(data = subset(cities, NAME10 == "Lawrence, KS")) + 
+  geom_sf(data = lawrenceWaterSources, fill = 'lightblue', color = "black", size = 4, shape = 21) +
   geom_sf(data = tapData.sf_Law_14, aes(fill = km_cluster), color = "black", size = 4, shape = 21) +
   scale_fill_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
