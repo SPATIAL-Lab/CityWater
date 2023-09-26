@@ -25,7 +25,7 @@ e <- terra::as.data.frame(elevation, xy = TRUE, na.rm = T)
 
 evect <- vect(e, geom=c("x", "y"), crs = elevation)
 
-b <- buffer(evect, 2)
+b <- buffer(evect, 20000)
 e_min <- extract(elevation, b, min, na.rm=TRUE)
 emin <- e_min %>% 
   rename(e_min = elevationRaster2)
@@ -33,7 +33,8 @@ a <- cbind(e, emin)
 write.csv(a,file = 'data/elevation_min')
 
 
-e_max <- extract(elevation, b, max, na.rm=TRUE)
+e_max <- terra::extract(elevation, b, max, na.rm=TRUE)
+
 e_max <- e_max %>% 
   rename(e_max = elevationRaster2)
 a <- cbind(e, e_max)
