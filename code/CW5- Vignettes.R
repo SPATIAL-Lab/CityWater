@@ -121,9 +121,9 @@ p4 <- ggplot(data = tapData_Denv_15, aes(x = d18O, y = d2H)) +
 #Chattahoochee Water Treatment Plant (33.822, -84.4527)
 #Hemphill Water Treatment Plant (33.7893, -84.4084)
 #North Area Water Treatment Plant (34.0210, -84.2254??? hard to find this one on Google)
-atlantaWaterSources <- data.frame("name" = c("Chattahoochee", "Hemphill", "North Area"), 
-                                   "lat" = c(33.822, 33.7893, 34.0210), 
-                                   "lon" = c(-84.4527, -84.4084, -84.2254))
+atlantaWaterSources <- data.frame("name" = c("Chattahoochee", "Hemphill"), 
+                                   "lat" = c(33.822, 33.7893), 
+                                   "lon" = c(-84.4527, -84.4084))
 atlantaWaterSources <- st_as_sf(atlantaWaterSources, coords = c("lon", "lat"), 
                                  crs = 4326)
 
@@ -240,3 +240,7 @@ ggplot() +
   theme_void() +
   theme(legend.position = "none")
 ggsave('figures/LAWmap.pdf')
+
+# Calculate IDR for the four cities ---------------------------------------
+
+#something something quantile
