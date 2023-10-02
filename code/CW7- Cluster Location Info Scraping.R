@@ -156,15 +156,22 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
   st_union() %>% 
   as_Spatial(IDs = "Wooster")
 
+WOO2 <- counties("OH", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Wayne")) %>% 
+  vect()
+SC2 <- counties("PA", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Centre")) %>% 
+  vect()
+
 expandedArea <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
                          GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
                          SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
 
 #convert clusterLocations from degrees to meters for expanding the borders of the metro areas
-expandedArea <- spTransform(expandedArea, CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +datum=WGS84 +units=m +no_defs")) %>% 
+expandedArea <- spTransform(expandedArea, CRS("+proj=lcc +lat_0=42 +lon_0=3 +lat_1=41.25 +lat_2=42.75 +x_0=1700000 +y_0=1200000 +ellps=GRS80 +units=m +no_defs")) %>% 
   gBuffer(width = 20000, byid = T )
 
-elevation <- get_elev_raster(expandedArea, z = 7)
+elevation <- raster("data/elevationRaster.tif")
 
 expandedArea$elevation_min <- raster::extract(elevation, expandedArea,
                                                   weights = F, fun = min)

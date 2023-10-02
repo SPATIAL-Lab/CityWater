@@ -1,6 +1,5 @@
-library(raster); library(censusapi);library(elevatr);
-library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
-library(ggplot2); library(dplyr); library(tidyr); library(sf); library(terra); library(readxl)
+library(censusapi);library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
+library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl)
 
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
@@ -11,10 +10,10 @@ conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
 conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
 
 #precipitation 
-precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+precip <- rast("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 
 # streamflow
-streamflow <- raster("data/fa_qs_ann.tif")
+streamflow <- rast("data/fa_qs_ann.tif")
 
 # latitude is hopefully part of the projection so that's easy...
 
@@ -44,7 +43,6 @@ hist(acs_simple$medincome)
 conus <- inner_join(conus, acs_simple, by = c("GEOID"))
 conus$popdensity <- conus$pop/(conus$ALAND*0.000001)
 
-
 # water use
 water <- read_excel("data/water.xlsx")%>% 
   rename(GEOID = FIPS, 
@@ -58,21 +56,19 @@ perc_water <- rasterize(conus, precip, conus$perc_water)
 medincome <- rasterize(conus, precip, conus$medincome)
 popdensity <- rasterize(conus, precip, conus$popdensity)
 
-#crs <- "+proj=longlat +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"
-# precip <- projectRaster(precip, crs = crs)
 # we also have rasters of precip, elevation, and streamflow
-streamflow <- projectRaster(streamflow, precip)
-extent(streamflow) <- extent(precip)
-streamflow2 <- resample(streamflow, precip)
-streamflow2 <- mask(streamflow2, precip)
+streamflow <- project(streamflow, precip)
 
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
+# wait fuck what if I use terra's built in TRI/roughness indices
+e1 <- terrain(elevation, "roughness")
+
 #stack rasters
-s <- stack(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use)
+s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use, e1)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
-              "streamflow", "lat", "water_use")
+              "streamflow", "lat", "water_use", "elevation_range")
 
 # okay call the model that we want now
 datasummary <- read.csv("data/datasummary.csv")
@@ -82,16 +78,15 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, streamflow, popdensity, medincome)
+  dplyr::select(idr, total_area, perc_water, streamflow, 
+                popdensity, 
+                medincome)
 
 best_model <- lm(sqrt(idr) ~ ., data = model)
 
 predictedO_model <- predict(s, best_model)^2
 
-predproj = rast(predictedO_model)
-predproj = project(predproj, "EPSG:5070")
-
-plot(min(predproj, 10), 
+plot(min(predictedO_model, 10), 
      col = viridis(100), 
      axes = F, 
      box = F)
@@ -99,15 +94,12 @@ plot(min(predproj, 10),
 # what about a sensical model? 
 sensical <- multilevel %>% 
   dplyr::select(idr, streamflow, precip, perc_water,
-                popdensity, medincome, water_use)
+                popdensity, medincome, water_use, elevation_range)
 sensical_model <- lm(sqrt(idr) ~ ., data = sensical)
 
 predictedO_model <- predict(s, sensical_model)^2
 
-predproj = rast(predictedO_model)
-predproj = project(predproj, "EPSG:5070")
-
-plot(min(predproj, 10), 
+plot(min(predictedO_model, 10), 
      col = viridis(100), 
      axes = F, 
      box = F)

@@ -1,7 +1,6 @@
 # Here we'll explore the four vignette cities only. Have to run 1 before this
 library(ggpubr)
 
-
 # Setup -------------------------------------------------------------------
 tapData_Atl_7 <- st_set_geometry(tapData.sf_Atl_7, NULL)
 km_Atl_7 <- tapData_Atl_7 %>%
@@ -240,7 +239,3 @@ ggplot() +
   theme_void() +
   theme(legend.position = "none")
 ggsave('figures/LAWmap.pdf')
-
-# Calculate IDR for the four cities ---------------------------------------
-
-#something something quantile

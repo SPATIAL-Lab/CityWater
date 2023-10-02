@@ -103,7 +103,8 @@ summary(aov(SLC_timeseries$d18O~ SLC_timeseries$Cluster_ID))
 summary(aov(SF_timeseries$d18O~ SF_timeseries$Cluster_ID))
 
 # Density Plots? ----------------------------------------------------------
-tapData.sf %>%
+library(ggridges)
+timeDensity <- tapData.sf %>%
   filter(Cluster_ID %in% c("1.01","1.02","1.03","1.04","1.05","1.06","1.07","1.08",
                            "1.09","1.10","1.11","25.1","25.2","25.3",
                            "25.3","25.4","25.5","25.6","25.7")) %>%
@@ -113,9 +114,9 @@ tapData.sf %>%
                                   #                  "25.4","25.5","25.6","25.7")) %>%
                                   "25.7", "25.6", "25.5", "25.4", "25.3", "25.2", "25.1", "1.11", "1.10", "1.09", 
                                   "1.08", "1.07", "1.06", "1.05", "1.04", "1.03", "1.02", "1.01")) %>% 
-  ggplot(aes(y = Cluster_ID, x = d18O, fill = ..x..)) + 
-  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
-  scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
+  ggplot(aes(y = Cluster_ID, x = d18O, fill = Cluster_Location)) + 
+  geom_density_ridges(scale = 3, rel_min_height = 0.01, stat = "density_ridges") +
+  scale_fill_manual(values = c("#0073a7", "#d2042d")) + 
   #scale_fill_gradient(low = "#003f5c", high = "#84edff", na.value = NA) +
   theme_bw(base_size = 16) +
   theme(
@@ -127,4 +128,28 @@ tapData.sf %>%
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   ) 
+timeDensity
+ggsave("figures/density_time_slice.pdf", width=6, height=5, units="in", dpi=300)
 
+
+# Comparing IDR -----------------------------------------------------------
+
+IDRtableSF <- SF_timeseries %>% 
+  group_by(Cluster_ID) %>% 
+  summarize(
+    IDR_O = abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 
+    IDR_d_ex = abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 
+    IDR_H = abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))),
+  )
+
+
+IDRtableSLC <- SLC_timeseries %>% 
+  group_by(Cluster_ID) %>% 
+  summarize(
+    IDR_O = abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 
+    IDR_d_ex = abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 
+    IDR_H = abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))),
+  )
+
+mean(IDRtableSLC$IDR_O)
+mean(IDRtableSF$IDR_O)

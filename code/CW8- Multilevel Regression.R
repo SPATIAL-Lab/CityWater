@@ -1,6 +1,5 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
-# We're changing from idr to IDR. 
-
+# We're changing from SD to IDR. 
 library(tidyverse); library(leaps); library(ggpubr); library(car)                        
 
 tapData <- read.csv("data/cityWater.csv") 
@@ -13,101 +12,14 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
          'idr' = 'IDR_O')
 
 # now we want to examine the following variables: streamflow, precip, elevation_range, 
-# perc_water, total_area, popdensity, medincome, surfacewater_total
-# Summarized Data ---------------------------------------------------------
-
-# looking at d18O IDR and relationship to different variables
-
-p1 <- ggplot(data = multilevel, aes(x = streamflow, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
-    x = "Streamflow",
-    y = "Interdecile Range"
-  ) +
-  theme_classic()
-
-p2 <- ggplot(data = multilevel, aes(x = precip, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +    
-  labs(
-    x = "Precipitation (mean)",
-    y = ""
-  ) +
-  theme_classic()
-
-p3 <- ggplot(data = multilevel, aes(x = elevation_range, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +       labs(
-    x = "Elevation Range (m)",
-    y = ""
-  ) +                                
-  theme_classic()
-
-p4 <- ggplot(data = multilevel, aes(x = total_area, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() + 
-  labs(
-    x = "Total area (km2)",
-    y = ""
-  ) +
-  theme_classic()
-
-p5 <- ggplot(data = multilevel, aes(x = popdensity, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +  
-  labs(
-    x = "Population Density",
-    y = ""
-  ) +
-  theme_classic()
-
-p6 <- ggplot(data = multilevel, aes(x = medincome, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +
-  labs(
-    x = "Median Income",
-    y = "Interdecile Range"
-  ) +
-  theme_classic()
-
-p7 <- ggplot(data = multilevel, aes(x = surfacewater_total, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +
-  labs(
-    x = "Water Use (surfacewater, MGal/day)",
-    y = "Interdecile Range"
-  ) +
-  theme_classic()
-
-p8 <- ggplot(data = multilevel, aes(x = perc_water, y = idr)) + 
-  stat_smooth(method = "lm", formula= y~x) +
-  stat_regline_equation(label.y = 7.5, aes(label = ..rr.label..)) +
-  geom_point() +
-  labs(
-    x = "Percent Water",
-    y = "Interdecile Range"
-  ) +
-  theme_classic()
-
-idrPlot <- ggarrange(p1, p2, p3, p4, p5, p6, p7,p8)
-idrPlot
+# total_area, popdensity, medincome, surfacewater_total, perc_water and water_use
 
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, elevation_range, streamflow, precip, 
+  dplyr::select(idr, total_area, elevation_range, streamflow, precip, 
          lat, popdensity, medincome, water_use)
 
-
-shapiro.test(model$idr) #not normally distributed
 shapiro.test(sqrt(model$idr))
 
 all_model <- lm(sqrt(idr) ~ .,
@@ -127,9 +39,9 @@ as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subse
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
 summary_best_subset$which[which.min(summary_best_subset$bic),]
-# okay, leaps suggests we drop elevation_range, precip, and lat 
+# okay, leaps suggests we drop precip, lat, popdensity, and water_use
 
-best_model <- lm(sqrt(idr) ~ total_area + perc_water + streamflow + popdensity + medincome,
+best_model <- lm(sqrt(idr) ~ total_area + streamflow + medincome + elevation_range,
                  data = model)
 
 summary(best_model)
@@ -154,10 +66,11 @@ plot(density(best_model$residuals))
 # what model makes the most sense to us? 
 
 sensical_model <- multilevel %>% 
-  dplyr::select(idr, streamflow, precip, perc_water,
+  dplyr::select(idr, streamflow, precip, elevation_range,
                 popdensity, medincome, water_use)
 sensical_glm <- lm(sqrt(idr) ~ .,
                 data = sensical_model)
 
 summary(sensical_glm)
+
 
