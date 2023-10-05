@@ -62,9 +62,8 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-# wait fuck what if I use terra's built in TRI/roughness indices
-e1 <- terrain(elevation, "roughness")
-
+eleVect <- project(eleVect, precip)
+eleRast <- rasterize(eleVect, precip)
 #stack rasters
 s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use, e1)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
