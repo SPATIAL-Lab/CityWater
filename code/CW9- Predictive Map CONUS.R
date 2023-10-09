@@ -62,10 +62,11 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-eleVect <- project(eleVect, precip)
-eleRast <- rasterize(eleVect, precip)
+eleRast <- rast("data/eleRast.tif")
+eleRast <- project(eleRast, precip)
+eleRast <- mask(eleRast, precip)
 #stack rasters
-s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use, e1)
+s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use, eleRast)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
               "streamflow", "lat", "water_use", "elevation_range")
 
@@ -77,8 +78,7 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, streamflow, 
-                popdensity, 
+  dplyr::select(idr, total_area, elevation_range, streamflow, 
                 medincome)
 
 best_model <- lm(sqrt(idr) ~ ., data = model)
