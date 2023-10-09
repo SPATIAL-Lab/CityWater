@@ -102,6 +102,8 @@ plot(min(predictedO_model, 10),
      col = viridis(100), 
      axes = F, 
      box = F)
+north(type = 2, label = '', xy = 'bottomleft') #testing north and scale
+sbar(500, 'bottomleft', type="bar", below="km", label=c(0,250,500), cex=.8)
 
 O_hist <- hist(predictedO_model)
 O_hist$breaks
