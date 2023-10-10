@@ -1,3 +1,6 @@
+
+# Predictive map of contiguous US. Note: you'll need a Census API  --------
+
 library(censusapi);library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
 library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl)
 
@@ -15,10 +18,8 @@ precip <- rast("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 # streamflow
 streamflow <- rast("data/fa_qs_ann.tif")
 
-# latitude is hopefully part of the projection so that's easy...
-
 # median income
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
+Sys.setenv(CENSUS_KEY = "Your key here")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console
@@ -62,10 +63,11 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-eleVect <- project(eleVect, precip)
-eleRast <- rasterize(eleVect, precip)
+eleRast <- rast("data/eleRast.tif")
+eleRast <- project(eleRast, precip)
+eleRast <- mask(eleRast, precip)
 #stack rasters
-s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow2, lat, water_use, e1)
+s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use, eleRast)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
               "streamflow", "lat", "water_use", "elevation_range")
 
@@ -77,8 +79,7 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, perc_water, streamflow, 
-                popdensity, 
+  dplyr::select(idr, total_area, elevation_range, streamflow, 
                 medincome)
 
 best_model <- lm(sqrt(idr) ~ ., data = model)
@@ -102,6 +103,8 @@ plot(min(predictedO_model, 10),
      col = viridis(100), 
      axes = F, 
      box = F)
+north(type = 2, label = '', xy = 'bottomleft') #testing north and scale
+sbar(500, 'bottomleft', type="bar", below="km", label=c(0,250,500), cex=.8)
 
 O_hist <- hist(predictedO_model)
 O_hist$breaks

@@ -60,17 +60,3 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 plot(density(best_model$residuals))
-
-
-# No leaps just vibes -----------------------------------------------------
-# what model makes the most sense to us? 
-
-sensical_model <- multilevel %>% 
-  dplyr::select(idr, streamflow, precip, elevation_range,
-                popdensity, medincome, water_use)
-sensical_glm <- lm(sqrt(idr) ~ .,
-                data = sensical_model)
-
-summary(sensical_glm)
-
-

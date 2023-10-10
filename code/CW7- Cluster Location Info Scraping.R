@@ -1,3 +1,4 @@
+# Scraping information to build predictive models. Note you'll need a Census API key to query some of this info. 
 library(tidyverse);library(tigris, options(tigris_use_cache = TRUE))
 library(viridis);library(raster);library(sf);library(maps);library(maptools); 
 library(censusapi);library(elevatr);library(rgeos); library(readxl)
@@ -199,7 +200,6 @@ expandedArea$precip <- c(expandedArea$precip)
 multivariate <- as.data.frame(expandedArea)
 multivariate$Cluster_Location <- getSpPPolygonsIDSlots(expandedArea)
 
-
 # Land and water area totals ----------------------------------------------
 
 AA <- counties("MI", cb = T, resolution = "20m") %>% 
@@ -392,7 +392,7 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
 
 # Census demographic info -------------------------------------------------
 
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
+Sys.setenv(CENSUS_KEY = "Your Key Here")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console
