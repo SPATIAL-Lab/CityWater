@@ -1,3 +1,6 @@
+
+# Predictive map of contiguous US. Note: you'll need a Census API  --------
+
 library(censusapi);library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
 library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl)
 
@@ -15,10 +18,8 @@ precip <- rast("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 # streamflow
 streamflow <- rast("data/fa_qs_ann.tif")
 
-# latitude is hopefully part of the projection so that's easy...
-
 # median income
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
+Sys.setenv(CENSUS_KEY = "Your key here")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console

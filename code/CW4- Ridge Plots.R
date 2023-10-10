@@ -1,4 +1,5 @@
-###RIDGE PLOT
+# Ridge Plots for Figure 2 ------------------------------------------------
+
 library(tidyverse); library(ggridges); library(patchwork)
 
 tapData <- read_csv("data/cityWater.csv", 
