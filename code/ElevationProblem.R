@@ -96,4 +96,4 @@ plot(elev_diff)
 lines(s)
 
 ## Write
-writeRaster(elev_diff, "out/elev_diff.tif")
+writeRaster(elev_diff, "data/elev_diff.tif")
