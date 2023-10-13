@@ -1,5 +1,4 @@
-# Run CW1 before this. 
-
+# Run 01 before this. 
 # K-means Clustering Setup ------------------------------------------------
 
 # Conversion from spatial objects (sf) to non-spatial objects -Kmeans doesnt like sf-#######
@@ -360,6 +359,15 @@ km_Woo_18 <- tapData_Woo_18 %>%
 tapData_Woo_18$km_cluster <- km_Woo_18$cluster
 tapData_Woo_18$km_cluster <- factor(tapData_Woo_18$km_cluster)
 
+# SF all together
+SF <- tapData.sf[tapData.sf$Cluster_Location == "San Francisco", ]
+SF <- st_set_geometry(SF, NULL)
+SF_cluster <- SF %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+SF$km_cluster <- SF_cluster$cluster
+SF$km_cluster <- factor(SF$km_cluster)
+
 # Modality ----------------------------------------------------------------
 
 #Let's count the number of clusters and report modality in a reproducible table. 
@@ -371,13 +379,11 @@ kmeans <- list(tapData_ABQ_9, tapData_Ann_19, tapData_Ath_8,
                tapData_MBS_16, tapData_MPLS_21, tapData_Nashv_11, 
                tapData_Oahu_2, tapData_PHX_26, tapData_Port_23, 
                tapData_SanPete_3, tapData_SC_17,  tapData_SD_27, 
-               tapData_SD_27, tapData_SF_25.1, tapData_SF_25.2, 
-               tapData_SF_25.3, tapData_SF_25.4, tapData_SF_25.5,
-               tapData_SF_25.6, tapData_SF_25.7, tapData_SLC_1.01, 
+               tapData_SD_27, tapData_SLC_1.01, 
                tapData_SLC_1.10, tapData_SLC_1.11, tapData_SLC_1.02, 
                tapData_SLC_1.03, tapData_SLC_1.04, tapData_SLC_1.05, 
                tapData_SLC_1.06, tapData_SLC_1.07, tapData_SLC_1.08, 
-               tapData_SLC_1.09,  tapData_SM_5,   tapData_Woo_18
+               tapData_SLC_1.09,  tapData_SM_5,   tapData_Woo_18, SF
                 )
 
 modality <- data.frame(matrix(ncol = 0, nrow = 48))
