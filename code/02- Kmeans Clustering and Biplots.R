@@ -367,7 +367,7 @@ SF_cluster <- SF %>%
   eclust("kmeans", nboot = 500)
 SF$km_cluster <- SF_cluster$cluster
 SF$km_cluster <- factor(SF$km_cluster)
-
+SF$Cluster_ID <- 25
 # Modality ----------------------------------------------------------------
 
 #Let's count the number of clusters and report modality in a reproducible table. 
@@ -379,23 +379,26 @@ kmeans <- list(tapData_ABQ_9, tapData_Ann_19, tapData_Ath_8,
                tapData_MBS_16, tapData_MPLS_21, tapData_Nashv_11, 
                tapData_Oahu_2, tapData_PHX_26, tapData_Port_23, 
                tapData_SanPete_3, tapData_SC_17,  tapData_SD_27, 
-               tapData_SD_27, tapData_SLC_1.01, 
-               tapData_SLC_1.10, tapData_SLC_1.11, tapData_SLC_1.02, 
-               tapData_SLC_1.03, tapData_SLC_1.04, tapData_SLC_1.05, 
-               tapData_SLC_1.06, tapData_SLC_1.07, tapData_SLC_1.08, 
-               tapData_SLC_1.09,  tapData_SM_5,   tapData_Woo_18, SF
+               tapData_SLC_1.01, tapData_SLC_1.02, tapData_SLC_1.03,
+               tapData_SLC_1.04, tapData_SLC_1.05, tapData_SLC_1.06, 
+               tapData_SLC_1.07, tapData_SLC_1.08, tapData_SLC_1.09, 
+               tapData_SLC_1.10, tapData_SLC_1.11,  tapData_SM_5,   
+               tapData_Woo_18, SF
                 )
 
-modality <- data.frame(matrix(ncol = 0, nrow = 48))
+modality <- data.frame(matrix(ncol = 0, nrow = 37))
 for (i in kmeans) {
   Clusters = n_distinct(i$km_cluster)
   Cluster_ID = unique(c(as.character(i$Cluster_ID)))
   modality = rbind(modality, data.frame(Clusters, Cluster_ID))
 }
 
-tapData <- left_join(tapData, modality) %>% 
-  group_by(Cluster_Location) %>% 
-  mutate(Modality = ifelse(mean(Clusters) <= 1, "Uni", "Multi"))
+tapData <- tapData %>% 
+  mutate(Cluster_ID = str_replace(Cluster_ID, "25.*", "25"))
+
+df <- left_join(tapData, modality, by = "Cluster_ID") %>% 
+  count(Cluster_Location, Clusters) %>% 
+  summarise(majority_vote = Clusters[n > sum(n / 2)][1])
 
 datasummary <- tapData %>%
   group_by(Cluster_Location) %>%
