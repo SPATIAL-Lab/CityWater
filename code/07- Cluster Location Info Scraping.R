@@ -1,6 +1,6 @@
 # Scraping information to build predictive models. Note you'll need a Census API key to query some of this info. 
 library(tidyverse);library(tigris, options(tigris_use_cache = TRUE))
-library(viridis);library(raster);library(sf);library(maps);library(maptools); 
+library(viridis);library(raster);library(sf); 
 library(censusapi);library(elevatr);library(rgeos); library(readxl)
 
 #using only those counties we have data for
@@ -162,24 +162,20 @@ expandedArea <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG,
                          GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
                          SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
 
+ruggedness <- raster("maps/elev_diff.tif")
+expandedArea$ruggedness <- raster::extract(ruggedness, expandedArea, 
+                                           weights = F, fun = max, 
+                                           na.rm = T)
+expandedArea$ruggedness <- c(expandedArea$ruggedness)
+
 #convert clusterLocations from degrees to meters for expanding the borders of the metro areas
 expandedArea <- spTransform(expandedArea, CRS("+proj=lcc +lat_0=42 +lon_0=3 +lat_1=41.25 +lat_2=42.75 +x_0=1700000 +y_0=1200000 +ellps=GRS80 +units=m +no_defs")) %>% 
   gBuffer(width = 20000, byid = T )
 
-elevation <- raster("data/elevationRaster.tif")
-
-expandedArea$elevation_min <- raster::extract(elevation, expandedArea,
-                                                  weights = F, fun = min)
-expandedArea$elevation_min[expandedArea$elevation_min <0] <- 0
-expandedArea$elevation_max <- raster::extract(elevation, expandedArea,
-                                                  weights = F, fun = max)
-expandedArea$elevation_max <- c(expandedArea$elevation_max)
-expandedArea$elevation_min <- c(expandedArea$elevation_min)
-
 #read in raster
 precip <- raster("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 streamflow <- raster("maps/fa_qs_ann.tif")
-ruggedness <- raster("maps/elev_diff.tif")
+
 #some empty data in the tif, and so na.rm = T
 expandedArea$streamflow <- raster::extract(streamflow, expandedArea,
                                                weights = F, fun = sum, 
@@ -191,10 +187,7 @@ expandedArea$precip <- raster::extract(precip, expandedArea,
                                            na.rm = T)
 expandedArea$precip <- c(expandedArea$precip)
 
-expandedArea$ruggedness <- raster::extract(ruggedness, expandedArea, 
-                                       weights = F, fun = max, 
-                                       na.rm = T)
-expandedArea$ruggedness <- c(expandedArea$ruggedness)
+
 #elevation difference 100km
 
 multivariate <- as.data.frame(expandedArea)
@@ -391,7 +384,7 @@ WOO <- counties("OH", cb = T, resolution = "20m") %>%
 
 # Census demographic info -------------------------------------------------
 
-Sys.setenv(CENSUS_KEY = "Your Key Here")
+Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console

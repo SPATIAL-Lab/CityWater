@@ -1,6 +1,6 @@
 # Run 01 before this. 
 # K-means Clustering Setup ------------------------------------------------
-
+library(factoextra)
 # Conversion from spatial objects (sf) to non-spatial objects -Kmeans doesnt like sf-#######
 tapData_ABQ_9 <- st_set_geometry(tapData.sf_ABQ_9, NULL)
 tapData_Ann_19 <- st_set_geometry(tapData.sf_Ann_19, NULL)

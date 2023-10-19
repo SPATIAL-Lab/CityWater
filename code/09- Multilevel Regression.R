@@ -1,12 +1,12 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
 # We're changing from SD to IDR. 
-library(tidyverse); library(leaps); library(ggpubr); library(car)                        
+library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                        
 
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
-multivariate <- read.csv("data/multivariate.csv")
+multivariate <- read.csv("data/multivariate_test.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
   rename('sd' = 'd18O_sd', 
          'idr' = 'IDR_O')
@@ -17,10 +17,8 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, elevation_range, streamflow, precip, 
-         lat, popdensity, medincome, water_use)
-
-shapiro.test(sqrt(model$idr))
+  dplyr::select(idr, total_area, streamflow, precip, 
+         lat, popdensity, medincome, water_use, ruggedness)
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
@@ -41,7 +39,7 @@ as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subse
 summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, leaps suggests we drop precip, lat, popdensity, and water_use
 
-best_model <- lm(sqrt(idr) ~ total_area + streamflow + medincome + elevation_range,
+best_model <- lm(sqrt(idr) ~ total_area + streamflow + medincome,
                  data = model)
 
 summary(best_model)

@@ -134,7 +134,6 @@ Atlmap <- mapview(tapData.sf_Atl_7,
         col.regions = c("#003f5c", "#d2042d"), 
         layer.name = "Cluster")
 
-#ARGHHHH BROKEN
 mapviewOptions(fgb = FALSE)
 mapshot(Atlmap, url = paste0(getwd(), "/ATL.html"),
         file = paste0(getwd(), "/ATL.png"))

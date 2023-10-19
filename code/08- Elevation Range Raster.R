@@ -2,7 +2,7 @@
 library(terra); library(elevatr); library(assignR)
 
 ## Get data, using precip layer as target
-precip <- rast("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+precip <- rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 elevation <- get_elev_raster(precip, z = 5)
 elev = rast(elevation)
 

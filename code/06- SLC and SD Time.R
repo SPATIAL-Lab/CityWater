@@ -1,5 +1,5 @@
-# This script is for the boxplots of Figure 4. Some post-processing was done in Adobe Illustrator
-library(raster); library(sf); library(tidyverse)
+# This script is for the density plot of Figure 1. Some post-processing was done in Adobe Illustrator
+library(raster); library(sf); library(tidyr); library(dplyr); library(factoextra)
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(Cluster_ID = col_character()))
 
@@ -14,63 +14,28 @@ tapData.sf <- st_as_sf(tapData,
                        coords = c("Long", "Lat"),
                        crs = 4326) #EPSG code for WGS84
 
-# Let's look a little more in-depth for time series 
-#First, create a grouped dataframe for quickly looking at things by time
-
-SLC_timeseries <- group_by(subset(tapData, Cluster_Location == "Salt Lake City"), 
-                           Cluster_ID) 
-
-summary(aov(SLC_timeseries$d18O ~ SLC_timeseries$Cluster_ID))
-
-tally(SLC_timeseries)
-
-timeseriessummarySLC <- subset(tapData, Cluster_Location == "Salt Lake City") %>%
-  group_by(Cluster_ID) %>%
-  summarize(across(c(d18O, d2H, d_ex), list(
-    min = min, 
-    max = max, 
-    mean = mean,
-    sd = sd
-  ))) %>% 
-# mutate(range = d18O_max - d18O_min)
-  mutate(across(ends_with("max"), ~ . - get(gsub( "max", "min", cur_column())), 
-                .names = '{.col}_range'))
-
-timeseriessummarySLC2 <- subset(tapData, Cluster_Location == "Salt Lake City") %>%
-  group_by(Cluster_ID) %>%
-  summarize(n = n())
-
-timeseriessummarySLC <- timeseriessummarySLC %>% 
-  left_join(timeseriessummarySLC2) %>% 
-  mutate_at(2:13, round, 2)
-
-SF_timeseries <- group_by(subset(tapData, Cluster_Location == "San Francisco"), 
-                           Cluster_ID) 
-
-summary(aov(SF_timeseries$d18O ~ SF_timeseries$Cluster_ID))
-
-tally(SF_timeseries)
-timeseriessummarySF <- subset(tapData, Cluster_Location == "San Francisco") %>%
-  group_by(Cluster_ID) %>%
-  summarize(across(c(d18O, d2H, d_ex), list(
-    min = min, 
-    max = max, 
-    mean = mean,
-    sd = sd
-  ))) %>% 
-  # mutate(range = d18O_max - d18O_min)
-  mutate(across(ends_with("max"), ~ . - get(gsub( "max", "min", cur_column())), 
-                .names = '{.col}_range'))
-
-timeseriessummarySF2 <- subset(tapData, Cluster_Location == "San Francisco") %>%
-  group_by(Cluster_ID) %>%
-  summarize(n = n())
-
-timeseriessummarySF <- timeseriessummarySF %>% 
-  left_join(timeseriessummarySF2) %>% 
-  mutate_at(2:13, round, 2)
-
 # Modality ----------------------------------------------------------------
+#SLC
+tapData.sf_SLC_1.01 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-13", ]
+tapData.sf_SLC_1.02 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Oct-13", ]
+tapData.sf_SLC_1.03 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Feb-14", ]
+tapData.sf_SLC_1.04 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-14", ]
+tapData.sf_SLC_1.05 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ag-Sep-14", ]
+tapData.sf_SLC_1.06 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-May-15", ]
+tapData.sf_SLC_1.07 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-Oct-15", ]
+tapData.sf_SLC_1.08 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-16", ]
+tapData.sf_SLC_1.09 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-16", ]
+tapData.sf_SLC_1.10 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Mar-May-17", ]
+tapData.sf_SLC_1.11 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Oct-17", ]
+
+#San Francisco
+tapData.sf_SF_25.1 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Dic-13", ]
+tapData.sf_SF_25.2 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Mar-Ap-14", ]
+tapData.sf_SF_25.3 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Jun-14", ]
+tapData.sf_SF_25.4 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Nov-14", ]
+tapData.sf_SF_25.5 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Dic-14", ]
+tapData.sf_SF_25.6 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Mar-15", ]
+tapData.sf_SF_25.7 <- tapData.sf[tapData.sf$Cluster_Location_Time == "San Francisco_Jul-15", ]
 
 tapData_SF_25.1 <- st_set_geometry(tapData.sf_SF_25.1, NULL)
 tapData_SF_25.2 <- st_set_geometry(tapData.sf_SF_25.2, NULL)
@@ -252,7 +217,7 @@ df$Cluster_ID <- fct_relevel(df$Cluster_ID, #order these temporally for plotting
 
 timeDensity <- ggplot(data = df, aes(y = Cluster_ID, x = d18O, fill = Mode)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.01, stat = "density_ridges") +
-  scale_fill_manual(values = c("#0073a7", "#d2042d")) + 
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_bw(base_size = 16) +
   theme(
     legend.position="none",

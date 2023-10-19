@@ -12,10 +12,10 @@ conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
 conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
 
 #precipitation 
-precip <- rast("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+precip <- rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
 
 # streamflow
-streamflow <- rast("data/fa_qs_ann.tif")
+streamflow <- rast("maps/fa_qs_ann.tif")
 
 # median income
 Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
@@ -62,13 +62,13 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-eleRast <- rast("data/elev_diff.tif")
-eleRast <- project(eleRast, precip)
-eleRast <- mask(eleRast, precip)
+#eleRast <- rast("data/elev_diff.tif")
+#eleRast <- project(eleRast, precip)
+#eleRast <- mask(eleRast, precip)
 #stack rasters
-s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use, eleRast)
+s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
-              "streamflow", "lat", "water_use", "elevation_range")
+              "streamflow", "lat", "water_use")
 
 # okay call the model that we want now
 datasummary <- read.csv("data/datasummary.csv")
@@ -78,18 +78,24 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, elevation_range, streamflow, 
-                medincome)
+  dplyr::select(idr, total_area, streamflow, medincome)
 
 best_model <- lm(sqrt(idr) ~ ., data = model)
 
 predictedO_model <- predict(s, best_model)^2
+st = project(states, "ESRI:102003")
+predictedO_model <- project(predictedO_model, "ESRI:102003")
 
 tiff(filename = "figures/Fig5.tif", width = 600, height = 480, units = 'px', compression = c('lzw'))
-plot(min(predictedO_model, 10), 
+
+terra::plot(min(predictedO_model, 10), 
      col = viridis(100), 
      axes = F, 
      box = F)
+terra::plot(st, col= NA, border = 'white', add = T)
 #north(type = 2, label = '', xy = 'bottomleft') #testing north and scale
 #sbar(500, 'bottomleft', type="bar", below="km", label=c(0,250,500), cex=.8)
 dev.off()
+
+
+
