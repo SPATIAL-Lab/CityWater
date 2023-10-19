@@ -1,5 +1,6 @@
 # This script is for the density plot of Figure 1. Some post-processing was done in Adobe Illustrator
-library(raster); library(sf); library(tidyr); library(dplyr); library(factoextra)
+library(raster); library(sf); library(tidyr); library(dplyr); library(factoextra); 
+library(readr)
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(Cluster_ID = col_character()))
 
