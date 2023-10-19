@@ -33,9 +33,7 @@ tapData.sf_SLC_1.06 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake
 tapData.sf_SLC_1.07 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-Oct-15", ]
 tapData.sf_SLC_1.08 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Ap-16", ]
 tapData.sf_SLC_1.09 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Sep-16", ]
-tapData.sf_SLC_1.10 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Mar-May-17", ] %>% 
-  mutate(Cluster_ID = str_replace(Cluster_ID, "1.1", "1.10"))
-
+tapData.sf_SLC_1.10 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Mar-May-17", ]
 tapData.sf_SLC_1.11 <- tapData.sf[tapData.sf$Cluster_Location_Time == "Salt Lake City_Oct-17", ]
 
 #San Francisco

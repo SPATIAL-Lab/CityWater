@@ -383,7 +383,9 @@ kmeans <- list(tapData_ABQ_9, tapData_Ann_19, tapData_Ath_8,
                tapData_SLC_1.04, tapData_SLC_1.05, tapData_SLC_1.06, 
                tapData_SLC_1.07, tapData_SLC_1.08, tapData_SLC_1.09, 
                tapData_SLC_1.10, tapData_SLC_1.11,  tapData_SM_5,   
-               tapData_Woo_18, SF
+               tapData_Woo_18, tapData_SF_25.1, 
+               tapData_SF_25.2, tapData_SF_25.3, tapData_SF_25.4, 
+               tapData_SF_25.5, tapData_SF_25.6, tapData_SF_25.7
                 )
 
 modality <- data.frame(matrix(ncol = 0, nrow = 37))
@@ -393,8 +395,8 @@ for (i in kmeans) {
   modality = rbind(modality, data.frame(Clusters, Cluster_ID))
 }
 
-tapData <- tapData %>% 
-  mutate(Cluster_ID = str_replace(Cluster_ID, "25.*", "25"))
+#tapData <- tapData %>% 
+ # mutate(Cluster_ID = str_replace(Cluster_ID, "25.*", "25"))
 
 df <- left_join(tapData, modality, by = "Cluster_ID") %>% 
   count(Cluster_Location, Clusters) %>% 

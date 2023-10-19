@@ -152,17 +152,11 @@ SC <- counties("PA", cb = T, resolution = "20m") %>%
   st_union() %>% 
   as_Spatial(IDs = "State College")
 
+
 WOO <- counties("OH", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Wayne"))%>% 
   st_union() %>% 
   as_Spatial(IDs = "Wooster")
-
-WOO2 <- counties("OH", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Wayne")) %>% 
-  vect()
-SC2 <- counties("PA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Centre")) %>% 
-  vect()
 
 expandedArea <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
                          GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
@@ -183,9 +177,9 @@ expandedArea$elevation_max <- c(expandedArea$elevation_max)
 expandedArea$elevation_min <- c(expandedArea$elevation_min)
 
 #read in raster
-precip <- raster("data/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
-streamflow <- raster("data/fa_qs_ann.tif")
-
+precip <- raster("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+streamflow <- raster("maps/fa_qs_ann.tif")
+ruggedness <- raster("maps/elev_diff.tif")
 #some empty data in the tif, and so na.rm = T
 expandedArea$streamflow <- raster::extract(streamflow, expandedArea,
                                                weights = F, fun = sum, 
@@ -197,12 +191,17 @@ expandedArea$precip <- raster::extract(precip, expandedArea,
                                            na.rm = T)
 expandedArea$precip <- c(expandedArea$precip)
 
+expandedArea$ruggedness <- raster::extract(ruggedness, expandedArea, 
+                                       weights = F, fun = max, 
+                                       na.rm = T)
+expandedArea$ruggedness <- c(expandedArea$ruggedness)
+#elevation difference 100km
+
 multivariate <- as.data.frame(expandedArea)
 multivariate$Cluster_Location <- getSpPPolygonsIDSlots(expandedArea)
-
+#ruggedness slotted in manually into the .csv for now
 # Land and water area totals ----------------------------------------------
 
-AA <- counties("MI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Washtenaw"))%>%
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
