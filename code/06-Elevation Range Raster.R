@@ -1,4 +1,4 @@
-# No previous scripts needed. Note that this takes a while (hours/a day) depending on your processing power
+# Needed for Cluster Location Info Scraping. No previous scripts needed. Note that this takes a while (hours/a day) depending on your processing power
 library(terra); library(elevatr); library(assignR)
 
 ## Get data, using precip layer as target

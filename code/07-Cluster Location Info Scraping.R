@@ -1,285 +1,290 @@
 # Scraping information to build predictive models. Note you'll need a Census API key to query some of this info. 
-library(tidyverse);library(tigris, options(tigris_use_cache = TRUE))
-library(viridis);library(raster);library(sf); 
-library(censusapi);library(elevatr);library(rgeos); library(readxl)
+library(tidyr); library(dplyr);library(tigris, options(tigris_use_cache = TRUE))
+library(censusapi); library(readxl); library(tibble); library(terra)
 
 #using only those counties we have data for
 #calculating Hawaiian data, but not including in combined datasets as streamflow is missing
+
 AA <- counties("MI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Washtenaw")) %>% 
-  st_union() %>%
-  as_Spatial(IDs = "Ann Arbor")
+  mutate(id = "Ann Arbor") %>% 
+  vect() 
 
 ABQ <- counties("NM", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Bernalillo")) %>% 
-  st_union() %>%
-  as_Spatial(IDs = "Albuquerque")
+  mutate(id = "Albuquerque") %>% 
+  vect()
 
 ATH <- counties("GA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Clarke","Oconee")) %>% 
-  st_union() %>%
-  as_Spatial(IDs = "Athens")
+  vect() %>% 
+  terra::aggregate()
+ATH$id <- "Athens"   
 
 ATL <- counties("GA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Cobb", "DeKalb", "Fulton"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Atlanta")
+  vect() %>% 
+  terra::aggregate()
+ATL$id <- "Atlanta"
 
 BEL <- counties("WA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Whatcom"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Bellingham")
+  mutate(id = "Bellingham") %>% 
+  vect()
 
 CED <- counties("UT", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Iron")) %>%
-  st_union() %>%
-  as_Spatial(IDs = "Cedar City")
+  mutate(id = "Cedar City") %>% 
+  vect()
 
 COL <- counties("CO", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("El Paso")) %>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Colorado Springs")
+  mutate(id = "Colorado Springs") %>% 
+  vect()
 
 DFW <- counties("TX", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Collin County", "Dallas", "Ellis", "Johnson",
                      "Tarrant"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Dallas Fort Worth")
+  vect()%>% 
+  terra::aggregate()
+DFW$id <- "Dallas Fort Worth"
 
 DEN <- counties("CO", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Adams", "Arapahoe", "Boulder","Broomfield",
-                     "Denver", "Jefferson"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Denver")
+                     "Denver", "Jefferson")) %>% 
+  vect() %>% 
+  terra::aggregate()
+DEN$id <- "Denver"
 
 FLG <- counties("AZ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Coconino"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Flagstaff")
+  mutate(id = "Flagstaff") %>% 
+  vect()
 
 GNV <- counties("FL", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Alachua"))%>%
-  st_union() %>%
-  as_Spatial(IDs = "Gainesville")
+  mutate(id = "Gainesville") %>% 
+  vect()
 
 HI <- counties("HI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Hawaii"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Hawaii")
+  mutate(id = "Hawaii") %>% 
+  vect()
 
-LCR <- counties("MN", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Houston", "Winona"))
+LCR1 <- counties("MN", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Houston", "Winona")) %>% 
+  vect() 
 LCR2 <- counties("WI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("La Crosse"))
-LCR3 <- st_union(LCR, LCR2)
-LCR <- st_union(LCR3)
-LCR <- as_Spatial(LCR, IDs = "La Crosse")
-rm(LCR2, LCR3)
+  filter(NAME %in% c("La Crosse"))  %>% 
+  vect()
+LCR <- terra::aggregate(terra::union(LCR1, LCR2))
+rm(LCR1, LCR2)
+LCR$id <- "La Crosse"
 
 LAW <- counties("KS", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Douglas"))%>% 
-  st_union() %>%
-  as_Spatial(IDs = "Lawrence")
+  mutate(id = "Lawrence") %>% 
+  vect()
 
 LAX <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Los Angeles", "Riverside",
-                     "San Bernardino","San Diego"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Los Angeles")
+                     "San Bernardino","San Diego"))%>%  
+  vect() %>% 
+  terra::aggregate()
+LAX$id <- "Los Angeles"
 
 MSP <- counties("MN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Anoka", "Hennepin", "Ramsey"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Minneapolis")
+  vect() %>% 
+  terra::aggregate()
+MSP$id <- "Minneapolis"
 
 MOR <- counties("NJ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Essex", "Morris", "Somerset", "Union"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Morristown")
+  vect() %>% 
+  terra::aggregate()
+MOR$id <- "Morristown"
 
 NAS <- counties("TN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Cheatham", "Davidson", "Rutherford", "Williamson"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Nashville")
+  vect() %>% 
+  terra::aggregate()
+NAS$id <- "Nashville"
 
 OA <- counties("HI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Honolulu"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Oahu")
+  mutate(id = "Oahu") %>% 
+  vect()
 
 PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Maricopa", "Pinal")) %>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Phoenix")
+  vect() %>% 
+  terra::aggregate()
+PHX$id <- "Phoenix"
 
-PTD <- counties("OR", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Clackamas", "Multnomah"))
+PTD1 <- counties("OR", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Clackamas", "Multnomah")) %>% 
+  vect()
 PTD2 <- counties("WA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Clark"))
-PTD3 <- st_union(PTD, PTD2)
-PTD <- st_union(PTD3)
-PTD <-as_Spatial(PTD, IDs = "Portland")
-rm(PTD2, PTD3)
+  filter(NAME %in% c("Clark")) %>% 
+  vect()
+PTD <- terra::aggregate(terra::union(PTD1, PTD2)) 
+rm(PTD2, PTD1)
+PTD$id <- "Portland"
 
 SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Salt Lake", "Davis")) %>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Salt Lake City")
+  vect() %>% 
+  terra::aggregate()
+SLC$id <- 'Salt Lake City'
 
 SD <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("San Diego")) %>% 
-  st_union() %>% 
-  as_Spatial(IDs = "San Diego")
+  mutate(id = "San Diego") %>% 
+  vect()
 
 SF <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Alameda","Contra Costa", "Marin", "San Francisco",
                      "San Mateo","Santa Clara")) %>% 
-  st_union() %>% 
-  as_Spatial(IDs = "San Francisco")
+  vect() %>% 
+  terra::aggregate()
+SF$id <- "San Francisco"
 
 SM <- counties("TX", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Hays"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "San Marcos")
+  mutate(id = "San Marcos") %>% 
+  vect()
 
 SP <- counties("FL", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Pinellas"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "St Petersburg")
+  mutate(id = "St Petersburg") %>% 
+  vect()
 
 SC <- counties("PA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Centre"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "State College")
-
+  mutate(id = "State College") %>% 
+  vect()
 
 WOO <- counties("OH", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Wayne"))%>% 
-  st_union() %>% 
-  as_Spatial(IDs = "Wooster")
+  mutate(id = "Wooster") %>% 
+  vect()
 
-expandedArea <- bind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
-                         GNV, LAW, LAX, LCR, HI, MSP, MOR, NAS, OA, PHX, PTD, SC, 
-                         SD, SF, SLC,  SM, SP,  WOO, keepnames = T)
+expandedArea <- rbind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, 
+                         GNV, HI, LAW, LAX, LCR, MOR, MSP,NAS, OA, PHX, PTD, SC, 
+                         SD, SF, SLC, SM, SP, WOO, keepnames = T)
 
-ruggedness <- raster("maps/elev_diff.tif")
-expandedArea$ruggedness <- raster::extract(ruggedness, expandedArea, 
-                                           weights = F, fun = max, 
-                                           na.rm = T)
-expandedArea$ruggedness <- c(expandedArea$ruggedness)
+ruggedness <- rast("maps/elev_diff.tif")
+expandedArea <- project(expandedArea, ruggedness) %>% crop(ruggedness)
+df = extract(ruggedness, expandedArea, fun = max)
+expandedArea$ruggedness <- round(df$file5c181b575a85, 0)
 
 #convert clusterLocations from degrees to meters for expanding the borders of the metro areas
-expandedArea <- spTransform(expandedArea, CRS("+proj=lcc +lat_0=42 +lon_0=3 +lat_1=41.25 +lat_2=42.75 +x_0=1700000 +y_0=1200000 +ellps=GRS80 +units=m +no_defs")) %>% 
-  gBuffer(width = 20000, byid = T )
+expandedArea <- buffer(expandedArea, width = 20000)
 
 #read in raster
-precip <- raster("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
-streamflow <- raster("maps/fa_qs_ann.tif")
+precip <- project(rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc"), ruggedness)
+streamflow <- project(rast("maps/fa_qs_ann.tif"), ruggedness)
 
 #some empty data in the tif, and so na.rm = T
-expandedArea$streamflow <- raster::extract(streamflow, expandedArea,
-                                               weights = F, fun = sum, 
-                                               na.rm = T)
-expandedArea$streamflow <- c(expandedArea$streamflow)
+df <- raster::extract(streamflow, expandedArea, weights = F, fun = sum, na.rm = T)
+expandedArea$streamflow <- c(df$layer)
 
-expandedArea$precip <- raster::extract(precip, expandedArea, 
-                                           weights = F, fun = mean, 
-                                           na.rm = T)
-expandedArea$precip <- c(expandedArea$precip)
+df<- raster::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
+expandedArea$precip <- c(df$PRISM_ppt_30yr_normal_4kmM3_annual_asc)
 
-
-#elevation difference 100km
-
-multivariate <- as.data.frame(expandedArea)
-multivariate$Cluster_Location <- getSpPPolygonsIDSlots(expandedArea)
+multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) %>% 
+  select(c(id, ruggedness, streamflow, precip)) %>% 
+  rename(cluster_location = id)
 #ruggedness slotted in manually into the .csv for now
 # Land and water area totals ----------------------------------------------
 
+AA <- counties("MI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Washtenaw"))%>%
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Ann Arbor")
+  add_column(cluster_location = "Ann Arbor")
 
 ABQ <- counties("NM", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Bernalillo"))%>%
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = 'Albuquerque')
+  add_column(cluster_location = 'Albuquerque')
 
 ATH <- counties("GA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Clarke","Oconee")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Athens")
+  add_column(cluster_location = "Athens")
 
 ATL <- counties("GA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Cobb", "DeKalb", "Fulton"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Atlanta") 
+  add_column(cluster_location = "Atlanta") 
 
 BEL <- counties("WA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Whatcom"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Bellingham") 
+  add_column(cluster_location = "Bellingham") 
 
 CED <- counties("UT", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Iron")) %>%
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Cedar City")  
+  add_column(cluster_location = "Cedar City")  
 
 COL <- counties("CO", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("El Paso")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Colorado Springs")
+  add_column(cluster_location = "Colorado Springs")
 
 DFW <- counties("TX", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Collin County", "Dallas", "Ellis", "Johnson",
                      "Tarrant"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Dallas Fort Worth") 
+  add_column(cluster_location = "Dallas Fort Worth") 
 
 DEN <- counties("CO", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Adams", "Arapahoe", "Boulder","Broomfield",
                      "Denver", "Jefferson"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Denver")
+  add_column(cluster_location = "Denver")
 
 FLG <- counties("AZ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Coconino"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Flagstaff") 
+  add_column(cluster_location = "Flagstaff") 
 
 GNV <- counties("FL", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Alachua"))%>%
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Gainesville")
+  add_column(cluster_location = "Gainesville")
 
 HI <- counties("HI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Hawaii"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Hawaii")
+  add_column(cluster_location = "Hawaii")
 
 LAW <- counties("KS", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Douglas"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Lawrence")
+  add_column(cluster_location = "Lawrence")
 
 LAX <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Los Angeles", "Riverside",
                      "San Bernardino","San Diego"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Los Angeles") 
+  add_column(cluster_location = "Los Angeles") 
 
 LCR <- counties("MN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Houston", "Winona"))%>% 
@@ -292,37 +297,37 @@ LCR2 <- counties("WI", cb = T, resolution = "20m") %>%
 LCR <- rbind(LCR, LCR2) %>% 
   summarize(total_land = sum(total_land), 
             total_water = sum(total_water))%>% 
-  add_column(Cluster_Location = "La Crosse")
+  add_column(cluster_location = "La Crosse")
 
 MOR <- counties("NJ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Essex", "Morris", "Somerset", "Union"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Morristown")
+  add_column(cluster_location = "Morristown")
 
 MSP <- counties("MN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Anoka", "Hennepin", "Ramsey"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Minneapolis")
+  add_column(cluster_location = "Minneapolis")
 
 NAS <- counties("TN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Cheatham", "Davidson", "Rutherford", "Williamson"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Nashville") 
+  add_column(cluster_location = "Nashville") 
 
 OA <- counties("HI", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Honolulu"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Oahu") 
+  add_column(cluster_location = "Oahu") 
 
 PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Maricopa", "Pinal")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Phoenix")
+  add_column(cluster_location = "Phoenix")
 
 ### This also crosses state borders. I'm dead. 
 PTD <- counties("OR", cb = T, resolution = "20m") %>% 
@@ -336,50 +341,50 @@ PTD2 <- counties("WA", cb = T, resolution = "20m") %>%
 PTD <- rbind(PTD, PTD2) %>% 
   summarize(total_land = sum(total_land), 
             total_water = sum(total_water))%>% 
-  add_column(Cluster_Location = "Portland")
+  add_column(cluster_location = "Portland")
 
 SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Salt Lake", "Davis")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Salt Lake City")
+  add_column(cluster_location = "Salt Lake City")
 
 SD <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("San Diego")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "San Diego")
+  add_column(cluster_location = "San Diego")
 
 SF <- counties("CA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Alameda","Contra Costa", "Marin", "San Francisco",
                      "San Mateo","Santa Clara")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "San Francisco") 
+  add_column(cluster_location = "San Francisco") 
 
 SM <- counties("TX", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Hays"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "San Marcos")
+  add_column(cluster_location = "San Marcos")
 
 SC <- counties("PA", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Centre"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "State College") 
+  add_column(cluster_location = "State College") 
 
 SP <- counties("FL", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Pinellas"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "St Petersburg") 
+  add_column(cluster_location = "St Petersburg") 
 
 WOO <- counties("OH", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Wayne"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
             total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(Cluster_Location = "Wooster")
+  add_column(cluster_location = "Wooster")
 
 
 # Census demographic info -------------------------------------------------
@@ -643,10 +648,8 @@ clusterLocations$total_area <- (clusterLocations$total_land +
 clusterLocations$perc_water <- round(((clusterLocations$total_water*0.000001)/clusterLocations$total_area)*100, 2)
 #we want to create a population density instead of just population, 
 #so can do pop/(total_land/1000) for sqkm- bodies of water in regions generally aren't counted towards land total
-multivariate <- left_join(multivariate, clusterLocations, by = "Cluster_Location")
+multivariate <- left_join(multivariate, clusterLocations, by = "cluster_location")
 multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
-multivariate$elevation_range <- multivariate$elevation_max - multivariate$elevation_min
-multivariate <- multivariate[ -c(1, 2, 6, 7, 10) ]
 
 # data from https://www.sciencebase.gov/catalog/item/get/5af3311be4b0da30c1b245d8, lightly cleaned
 water <- read_excel("data/water.xlsx")
@@ -662,226 +665,226 @@ df <- water %>%
   )
 
 multivariate$water_use <- NA
-multivariate$water_use[multivariate$Cluster_Location == "Ann Arbor"] <- subset(df, GEOID == "26161")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Albuquerque"] <- subset(df, GEOID == "35001")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Athens"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Ann Arbor"] <- subset(df, GEOID == "26161")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Albuquerque"] <- subset(df, GEOID == "35001")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Athens"] <- sum(subset(df, 
                                                                                 GEOID == "13219" |
                                                                                   GEOID == "13059")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Atlanta"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Atlanta"] <- sum(subset(df, 
                                                                                  GEOID == "13121" |
                                                                                    GEOID == "13089" | 
                                                                                    GEOID == "13067")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Bellingham"] <- subset(df, GEOID == "53073")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Cedar City"] <- subset(df, GEOID == "49021")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Colorado Springs"] <- subset(df, GEOID == "08041")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Denver"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Bellingham"] <- subset(df, GEOID == "53073")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Cedar City"] <- subset(df, GEOID == "49021")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Colorado Springs"] <- subset(df, GEOID == "08041")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Denver"] <- sum(subset(df, 
                                                                                 GEOID == "08005" |
                                                                                   GEOID == "08001" | 
                                                                                   GEOID == "08013" |
                                                                                   GEOID == "08014" |
                                                                                   GEOID == "08059" |
                                                                                   GEOID == "08031")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Dallas Fort Worth"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Dallas Fort Worth"] <- sum(subset(df, 
                                                                                            GEOID == "48085" |
                                                                                              GEOID == "48113" | 
                                                                                              GEOID == "48139" |
                                                                                              GEOID == "48251" |
                                                                                              GEOID == "48439")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Flagstaff"] <- subset(df, GEOID == "04005")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Gainesville"] <- subset(df, GEOID == "12001")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Lawrence"] <- subset(df, GEOID == "20045")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Los Angeles"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Flagstaff"] <- subset(df, GEOID == "04005")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Gainesville"] <- subset(df, GEOID == "12001")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Lawrence"] <- subset(df, GEOID == "20045")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Los Angeles"] <- sum(subset(df, 
                                                                                      GEOID == "06037" |
                                                                                        GEOID == "06065" | 
                                                                                        GEOID == "06071" |
                                                                                        GEOID == "06073")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "La Crosse"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "La Crosse"] <- sum(subset(df, 
                                                                                    GEOID == "55063" |
                                                                                      GEOID == "27055" | 
                                                                                      GEOID == "27169")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Morristown"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Morristown"] <- sum(subset(df, 
                                                                                     GEOID == "34013" |
                                                                                       GEOID == "34027" | 
                                                                                       GEOID == "34035" |
                                                                                       GEOID == "34039")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Minneapolis"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Minneapolis"] <- sum(subset(df, 
                                                                                      GEOID == "27003" |
                                                                                        GEOID == "27053" | 
                                                                                        GEOID == "27123")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Nashville"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Nashville"] <- sum(subset(df, 
                                                                                    GEOID == "47021" |
                                                                                      GEOID == "47037" | 
                                                                                      GEOID == "47149" |
                                                                                      GEOID == "47187")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Phoenix"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Phoenix"] <- sum(subset(df, 
                                                                                  GEOID == "04013" |GEOID == "04021")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Portland"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Portland"] <- sum(subset(df, 
                                                                                   GEOID == "41005" |
                                                                                     GEOID == "53011" | 
                                                                                     GEOID == "27123")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "State College"] <- subset(df, GEOID == "42027")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "San Diego"] <- subset(df, GEOID == "06073")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "San Francisco"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "State College"] <- subset(df, GEOID == "42027")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "San Diego"] <- subset(df, GEOID == "06073")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "San Francisco"] <- sum(subset(df, 
                                                                                        GEOID == "06001" |
                                                                                          GEOID == "06013" | 
                                                                                          GEOID == "06041" |
                                                                                          GEOID == "06075" | 
                                                                                          GEOID == "06081" | 
                                                                                          GEOID == "06085")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "Salt Lake City"] <- sum(subset(df, 
+multivariate$water_use[multivariate$cluster_location == "Salt Lake City"] <- sum(subset(df, 
                                                                                         GEOID == "49011" |
                                                                                           GEOID == "49035")$fresh_total)
-multivariate$water_use[multivariate$Cluster_Location == "San Marcos"] <- subset(df, GEOID == "48209")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "St Petersburg"] <- subset(df, GEOID == "12103")$fresh_total
-multivariate$water_use[multivariate$Cluster_Location == "Wooster"] <- subset(df, GEOID == "39169")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "San Marcos"] <- subset(df, GEOID == "48209")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "St Petersburg"] <- subset(df, GEOID == "12103")$fresh_total
+multivariate$water_use[multivariate$cluster_location == "Wooster"] <- subset(df, GEOID == "39169")$fresh_total
 
 multivariate$surfacewater_total <- NA
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Ann Arbor"] <- subset(df, GEOID == "26161")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Albuquerque"] <- subset(df, GEOID == "35001")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Athens"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Ann Arbor"] <- subset(df, GEOID == "26161")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Albuquerque"] <- subset(df, GEOID == "35001")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Athens"] <- sum(subset(df, 
                                                                                          GEOID == "13219" |
                                                                                            GEOID == "13059")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Atlanta"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Atlanta"] <- sum(subset(df, 
                                                                                           GEOID == "13121" |
                                                                                             GEOID == "13089" | 
                                                                                             GEOID == "13067")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Bellingham"] <- subset(df, GEOID == "53073")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Cedar City"] <- subset(df, GEOID == "49021")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Colorado Springs"] <- subset(df, GEOID == "08041")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Denver"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Bellingham"] <- subset(df, GEOID == "53073")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Cedar City"] <- subset(df, GEOID == "49021")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Colorado Springs"] <- subset(df, GEOID == "08041")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Denver"] <- sum(subset(df, 
                                                                                          GEOID == "08005" |
                                                                                            GEOID == "08001" | 
                                                                                            GEOID == "08013" |
                                                                                            GEOID == "08014" |
                                                                                            GEOID == "08059" |
                                                                                            GEOID == "08031")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Dallas Fort Worth"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Dallas Fort Worth"] <- sum(subset(df, 
                                                                                                     GEOID == "48085" |
                                                                                                       GEOID == "48113" | 
                                                                                                       GEOID == "48139" |
                                                                                                       GEOID == "48251" |
                                                                                                       GEOID == "48439")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Flagstaff"] <- subset(df, GEOID == "04005")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Gainesville"] <- subset(df, GEOID == "12001")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Lawrence"] <- subset(df, GEOID == "20045")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Los Angeles"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Flagstaff"] <- subset(df, GEOID == "04005")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Gainesville"] <- subset(df, GEOID == "12001")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Lawrence"] <- subset(df, GEOID == "20045")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Los Angeles"] <- sum(subset(df, 
                                                                                               GEOID == "06037" |
                                                                                                 GEOID == "06065" | 
                                                                                                 GEOID == "06071" |
                                                                                                 GEOID == "06073")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "La Crosse"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "La Crosse"] <- sum(subset(df, 
                                                                                             GEOID == "55063" |
                                                                                               GEOID == "27055" | 
                                                                                               GEOID == "27169")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Morristown"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Morristown"] <- sum(subset(df, 
                                                                                              GEOID == "34013" |
                                                                                                GEOID == "34027" | 
                                                                                                GEOID == "34035" |
                                                                                                GEOID == "34039")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Minneapolis"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Minneapolis"] <- sum(subset(df, 
                                                                                               GEOID == "27003" |
                                                                                                 GEOID == "27053" | 
                                                                                                 GEOID == "27123")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Nashville"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Nashville"] <- sum(subset(df, 
                                                                                             GEOID == "47021" |
                                                                                               GEOID == "47037" | 
                                                                                               GEOID == "47149" |
                                                                                               GEOID == "47187")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Phoenix"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Phoenix"] <- sum(subset(df, 
                                                                                           GEOID == "04013" |GEOID == "04021")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Portland"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Portland"] <- sum(subset(df, 
                                                                                            GEOID == "41005" |
                                                                                              GEOID == "53011" | 
                                                                                              GEOID == "27123")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "State College"] <- subset(df, GEOID == "42027")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "San Diego"] <- subset(df, GEOID == "06073")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "San Francisco"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "State College"] <- subset(df, GEOID == "42027")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "San Diego"] <- subset(df, GEOID == "06073")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "San Francisco"] <- sum(subset(df, 
                                                                                                 GEOID == "06001" |
                                                                                                   GEOID == "06013" | 
                                                                                                   GEOID == "06041" |
                                                                                                   GEOID == "06075" | 
                                                                                                   GEOID == "06081" | 
                                                                                                   GEOID == "06085")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Salt Lake City"] <- sum(subset(df, 
+multivariate$surfacewater_total[multivariate$cluster_location == "Salt Lake City"] <- sum(subset(df, 
                                                                                                  GEOID == "49011" |
                                                                                                    GEOID == "49035")$surfacewater_total)
-multivariate$surfacewater_total[multivariate$Cluster_Location == "San Marcos"] <- subset(df, GEOID == "48209")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "St Petersburg"] <- subset(df, GEOID == "12103")$surfacewater_total
-multivariate$surfacewater_total[multivariate$Cluster_Location == "Wooster"] <- subset(df, GEOID == "39169")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "San Marcos"] <- subset(df, GEOID == "48209")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "St Petersburg"] <- subset(df, GEOID == "12103")$surfacewater_total
+multivariate$surfacewater_total[multivariate$cluster_location == "Wooster"] <- subset(df, GEOID == "39169")$surfacewater_total
 
 multivariate$groundwater_total <- NA
-multivariate$groundwater_total[multivariate$Cluster_Location == "Ann Arbor"] <- subset(df, GEOID == "26161")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Albuquerque"] <- subset(df, GEOID == "35001")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Athens"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Ann Arbor"] <- subset(df, GEOID == "26161")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Albuquerque"] <- subset(df, GEOID == "35001")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Athens"] <- sum(subset(df, 
                                                                                         GEOID == "13219" |
                                                                                           GEOID == "13059")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Atlanta"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Atlanta"] <- sum(subset(df, 
                                                                                          GEOID == "13121" |
                                                                                            GEOID == "13089" | 
                                                                                            GEOID == "13067")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Bellingham"] <- subset(df, GEOID == "53073")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Cedar City"] <- subset(df, GEOID == "49021")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Colorado Springs"] <- subset(df, GEOID == "08041")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Denver"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Bellingham"] <- subset(df, GEOID == "53073")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Cedar City"] <- subset(df, GEOID == "49021")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Colorado Springs"] <- subset(df, GEOID == "08041")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Denver"] <- sum(subset(df, 
                                                                                         GEOID == "08005" |
                                                                                           GEOID == "08001" | 
                                                                                           GEOID == "08013" |
                                                                                           GEOID == "08014" |
                                                                                           GEOID == "08059" |
                                                                                           GEOID == "08031")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Dallas Fort Worth"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Dallas Fort Worth"] <- sum(subset(df, 
                                                                                                    GEOID == "48085" |
                                                                                                      GEOID == "48113" | 
                                                                                                      GEOID == "48139" |
                                                                                                      GEOID == "48251" |
                                                                                                      GEOID == "48439")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Flagstaff"] <- subset(df, GEOID == "04005")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Gainesville"] <- subset(df, GEOID == "12001")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Lawrence"] <- subset(df, GEOID == "20045")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Los Angeles"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Flagstaff"] <- subset(df, GEOID == "04005")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Gainesville"] <- subset(df, GEOID == "12001")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Lawrence"] <- subset(df, GEOID == "20045")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Los Angeles"] <- sum(subset(df, 
                                                                                              GEOID == "06037" |
                                                                                                GEOID == "06065" | 
                                                                                                GEOID == "06071" |
                                                                                                GEOID == "06073")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "La Crosse"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "La Crosse"] <- sum(subset(df, 
                                                                                            GEOID == "55063" |
                                                                                              GEOID == "27055" | 
                                                                                              GEOID == "27169")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Morristown"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Morristown"] <- sum(subset(df, 
                                                                                             GEOID == "34013" |
                                                                                               GEOID == "34027" | 
                                                                                               GEOID == "34035" |
                                                                                               GEOID == "34039")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Minneapolis"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Minneapolis"] <- sum(subset(df, 
                                                                                              GEOID == "27003" |
                                                                                                GEOID == "27053" | 
                                                                                                GEOID == "27123")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Nashville"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Nashville"] <- sum(subset(df, 
                                                                                            GEOID == "47021" |
                                                                                              GEOID == "47037" | 
                                                                                              GEOID == "47149" |
                                                                                              GEOID == "47187")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Phoenix"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Phoenix"] <- sum(subset(df, 
                                                                                          GEOID == "04013" |GEOID == "04021")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Portland"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Portland"] <- sum(subset(df, 
                                                                                           GEOID == "41005" |
                                                                                             GEOID == "53011" | 
                                                                                             GEOID == "27123")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "State College"] <- subset(df, GEOID == "42027")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "San Diego"] <- subset(df, GEOID == "06073")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "San Francisco"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "State College"] <- subset(df, GEOID == "42027")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "San Diego"] <- subset(df, GEOID == "06073")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "San Francisco"] <- sum(subset(df, 
                                                                                                GEOID == "06001" |
                                                                                                  GEOID == "06013" | 
                                                                                                  GEOID == "06041" |
                                                                                                  GEOID == "06075" | 
                                                                                                  GEOID == "06081" | 
                                                                                                  GEOID == "06085")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "Salt Lake City"] <- sum(subset(df, 
+multivariate$groundwater_total[multivariate$cluster_location == "Salt Lake City"] <- sum(subset(df, 
                                                                                                 GEOID == "49011" |
                                                                                                   GEOID == "49035")$groundwater_total)
-multivariate$groundwater_total[multivariate$Cluster_Location == "San Marcos"] <- subset(df, GEOID == "48209")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "St Petersburg"] <- subset(df, GEOID == "12103")$groundwater_total
-multivariate$groundwater_total[multivariate$Cluster_Location == "Wooster"] <- subset(df, GEOID == "39169")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "San Marcos"] <- subset(df, GEOID == "48209")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "St Petersburg"] <- subset(df, GEOID == "12103")$groundwater_total
+multivariate$groundwater_total[multivariate$cluster_location == "Wooster"] <- subset(df, GEOID == "39169")$groundwater_total
 
 
 write.csv(multivariate, "data/multivariate.csv")

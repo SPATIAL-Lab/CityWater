@@ -1,7 +1,8 @@
 # Predictive map of contiguous US. Note: you'll need a Census API  --------
 
 library(censusapi);library(tigris, options(tigris_use_cache = TRUE)); library(viridis); 
-library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl)
+library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl); 
+library(usmap)
 
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
@@ -62,9 +63,9 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-#eleRast <- rast("data/elev_diff.tif")
-#eleRast <- project(eleRast, precip)
-#eleRast <- mask(eleRast, precip)
+eleRast <- rast("maps/elev_diff.tif")
+eleRast <- project(eleRast, precip)
+eleRast <- mask(eleRast, precip)
 #stack rasters
 s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use)
 names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
@@ -74,7 +75,7 @@ names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip",
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
 multivariate <- read.csv("data/multivariate.csv")
-multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
+multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
@@ -83,7 +84,12 @@ model <- multilevel %>%
 best_model <- lm(sqrt(idr) ~ ., data = model)
 
 predictedO_model <- predict(s, best_model)^2
-st = project(states, "ESRI:102003")
+
+st <- vect("maps/cb_2018_us_state_5m.shp")
+st <- project(state, precip)
+st <- crop(st, precip)
+st <-  terra::project(st, "ESRI:102003")
+
 predictedO_model <- project(predictedO_model, "ESRI:102003")
 
 tiff(filename = "figures/Fig5.tif", width = 600, height = 480, units = 'px', compression = c('lzw'))
