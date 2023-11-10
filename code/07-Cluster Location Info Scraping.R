@@ -190,7 +190,7 @@ streamflow <- project(rast("maps/fa_qs_ann.tif"), ruggedness)
 df <- raster::extract(streamflow, expandedArea, weights = F, fun = sum, na.rm = T)
 expandedArea$streamflow <- c(df$layer)
 
-df<- raster::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
+df <- raster::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
 expandedArea$precip <- c(df$PRISM_ppt_30yr_normal_4kmM3_annual_asc)
 
 multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) %>% 
