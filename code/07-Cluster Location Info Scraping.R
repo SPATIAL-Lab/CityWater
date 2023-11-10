@@ -298,7 +298,7 @@ LCR <- rbind(LCR, LCR2) %>%
   summarize(total_land = sum(total_land), 
             total_water = sum(total_water))%>% 
   add_column(cluster_location = "La Crosse")
-
+rm(LCR2)
 MOR <- counties("NJ", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Essex", "Morris", "Somerset", "Union"))%>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
@@ -342,7 +342,7 @@ PTD <- rbind(PTD, PTD2) %>%
   summarize(total_land = sum(total_land), 
             total_water = sum(total_water))%>% 
   add_column(cluster_location = "Portland")
-
+rm(PTD2)
 SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Salt Lake", "Davis")) %>% 
   summarize(total_land = sum(ALAND, na.rm = T), 
@@ -886,5 +886,5 @@ multivariate$groundwater_total[multivariate$cluster_location == "San Marcos"] <-
 multivariate$groundwater_total[multivariate$cluster_location == "St Petersburg"] <- subset(df, GEOID == "12103")$groundwater_total
 multivariate$groundwater_total[multivariate$cluster_location == "Wooster"] <- subset(df, GEOID == "39169")$groundwater_total
 
-
+multivariate <- multivariate %>% select(-c(geometry))
 write.csv(multivariate, "data/multivariate.csv")

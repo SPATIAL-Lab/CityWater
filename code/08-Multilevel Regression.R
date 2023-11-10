@@ -3,11 +3,11 @@
 library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                        
 
 tapData <- read.csv("data/cityWater.csv") 
-tapData <- subset(tapData, Cluster_Location != "Oahu" & Cluster_Location != "Hawaii")
+tapData <- subset(tapData, cluster_location != "Oahu" & cluster_location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
-multivariate <- read.csv("data/multivariate_test.csv")
-multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>% 
+multivariate <- read.csv("data/multivariate.csv")
+multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
   rename('sd' = 'd18O_sd', 
          'idr' = 'IDR_O')
 
