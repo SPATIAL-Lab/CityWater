@@ -18,7 +18,11 @@ multilevel <- left_join(multivariate, datasummary, by = 'Cluster_Location') %>%
 
 model <- multilevel %>% 
   dplyr::select(idr, total_area, streamflow, precip, 
-         lat, popdensity, medincome, water_use, ruggedness)
+         lat, pop, medincome, water_use, ruggedness, popdensity)
+
+# Add precip and streamflow per person
+model$precip_pop = multilevel$precip / multilevel$pop
+model$sf_pop = multilevel$streamflow / multilevel$pop
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
@@ -37,16 +41,18 @@ as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subse
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
 summary_best_subset$which[which.min(summary_best_subset$bic),]
-# okay, leaps suggests we drop precip, lat, popdensity, and water_use
+# okay, highest w/o major BIC penalty includes:
+# streamflow, medincome, water_use, ruggedness, popdensity, precip_pop, sf_pop
 
-best_model <- lm(sqrt(idr) ~ total_area + streamflow + medincome,
+best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
+                   ruggedness + popdensity + precip_pop + sf_pop,
                  data = model)
 
 summary(best_model)
 
 #checking variance inflation factors for these independent variables 
 vif(best_model) 
-# So for popdensity especially there is moderate correlation between it and other factors, but not so much that we need to re-assess our model.
+# Up to 60% increase in coefficient std error (for precip_pop) 
 
 # Model comparison just to check it out
 res.sum <- summary(Best_Subset)
