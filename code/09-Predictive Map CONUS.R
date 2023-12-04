@@ -4,6 +4,18 @@ library(censusapi);library(tigris, options(tigris_use_cache = TRUE)); library(vi
 library(ggplot2); library(dplyr); library(tidyr); library(terra); library(readxl); 
 library(usmap)
 
+datasummary <- read.csv("data/datasummary.csv")
+datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
+multivariate <- read.csv("data/multivariate.csv")
+multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
+  rename('idr' = 'IDR_O')
+
+model <- multilevel %>% 
+  dplyr::select(idr, streamflow, medincome, water_use,
+                  ruggedness)
+model$precip_pop = multilevel$precip / multilevel$pop
+model$sf_pop = multilevel$streamflow / multilevel$pop
+
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
@@ -13,10 +25,10 @@ conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
 conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
 
 #precipitation 
-precip <- rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
+precip <- rast("maps/precip_mean.tif")
 
 # streamflow
-streamflow <- rast("maps/fa_qs_ann.tif")
+streamflow <- rast("maps/streamflow_mean.tif")
 
 # median income
 Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
@@ -49,13 +61,14 @@ water <- read_excel("data/water.xlsx")%>%
   rename(GEOID = FIPS, 
          water_use = 'TO-WFrTo')
 conus <- inner_join(conus, water, by = c("GEOID"))
-water_use <- rasterize(conus, precip, conus$water_use)
-#okay, so now we have a sf with land area, water area, pop density, and median income
-# let's check all the projections are correct. Matching to precip crs
-total_area <- rasterize(conus, precip, conus$total_area)
-perc_water <- rasterize(conus, precip, conus$perc_water)
-medincome <- rasterize(conus, precip, conus$medincome)
-popdensity <- rasterize(conus, precip, conus$popdensity)
+vect_conus <- project(vect(conus), precip)
+
+total_area <- rasterize(vect_conus, precip, vect_conus$total_area)
+water_use <- rasterize(vect_conus, precip, vect_conus$water_use)
+perc_water <- rasterize(vect_conus, precip, vect_conus$perc_water)
+medincome <- rasterize(vect_conus, precip, vect_conus$medincome)
+popdensity <- rasterize(vect_conus, precip, vect_conus$popdensity)
+pop <- rasterize(vect_conus, precip, vect_conus$pop)
 
 # we also have rasters of precip, elevation, and streamflow
 streamflow <- project(streamflow, precip)
@@ -63,30 +76,25 @@ streamflow <- project(streamflow, precip)
 lat <- init(precip, 'y')# grab latitude as data
 lat <- mask(lat, precip)
 
-eleRast <- rast("maps/elev_diff.tif")
-eleRast <- project(eleRast, precip)
-eleRast <- mask(eleRast, precip)
+ruggedness <- mask(project(rast("maps/elev_diff.tif"), precip), precip)
+precip_pop = precip/pop
+sf_pop = streamflow/pop
+
 #stack rasters
-s <- c(total_area, perc_water, medincome, popdensity, precip, streamflow, lat, water_use)
-names(s) <- c("total_area", "perc_water", "medincome", "popdensity", "precip", 
-              "streamflow", "lat", "water_use")
+s <- c(streamflow, medincome, water_use,
+         ruggedness,precip_pop,sf_pop)
+names(s) <- c("streamflow", "medincome", "water_use", 
+              "ruggedness", "precip_pop", "sf_pop")
 
 # okay call the model that we want now
-datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
-multivariate <- read.csv("data/multivariate.csv")
-multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
-  rename('idr' = 'IDR_O')
 
-model <- multilevel %>% 
-  dplyr::select(idr, total_area, streamflow, medincome)
 
 best_model <- lm(sqrt(idr) ~ ., data = model)
 
 predictedO_model <- predict(s, best_model)^2
 
 st <- vect("maps/cb_2018_us_state_5m.shp")
-st <- project(state, precip)
+st <- project(st, precip)
 st <- crop(st, precip)
 st <-  terra::project(st, "ESRI:102003")
 

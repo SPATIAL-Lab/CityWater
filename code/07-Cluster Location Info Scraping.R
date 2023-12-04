@@ -180,14 +180,14 @@ df = extract(ruggedness, expandedArea, fun = max)
 expandedArea$ruggedness <- round(df$file5c181b575a85, 0)
 
 #convert clusterLocations from degrees to meters for expanding the borders of the metro areas
-expandedArea <- buffer(expandedArea, width = 20000)
+#expandedArea <- buffer(expandedArea, width = 20000)
 
 #read in raster
-precip <- project(rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc"), ruggedness)
-streamflow <- project(rast("maps/fa_qs_ann.tif"), ruggedness)
+precip <- project(rast("maps/precip_mean.tif"), ruggedness)
+streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
 
 #some empty data in the tif, and so na.rm = T
-df <- raster::extract(streamflow, expandedArea, weights = F, fun = sum, na.rm = T)
+df <- raster::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = T)
 expandedArea$streamflow <- c(df$layer)
 
 df <- raster::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)

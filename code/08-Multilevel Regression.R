@@ -11,9 +11,6 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('sd' = 'd18O_sd', 
          'idr' = 'IDR_O')
 
-# now we want to examine the following variables: streamflow, precip, elevation_range, 
-# total_area, popdensity, medincome, surfacewater_total, perc_water and water_use
-
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
