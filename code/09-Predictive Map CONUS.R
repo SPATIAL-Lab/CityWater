@@ -11,8 +11,8 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, streamflow, medincome, water_use,
-                  ruggedness)
+  dplyr::select(idr, precip, popdensity, streamflow, medincome, water_use,
+                  ruggedness, lat)
 model$precip_pop = multilevel$precip / multilevel$pop
 model$sf_pop = multilevel$streamflow / multilevel$pop
 
@@ -81,15 +81,17 @@ precip_pop = precip/pop
 sf_pop = streamflow/pop
 
 #stack rasters
-s <- c(streamflow, medincome, water_use,
-         ruggedness,precip_pop,sf_pop)
+s <- c(streamflow, medincome, water_use, 
+         ruggedness, popdensity, precip_pop, sf_pop)
 names(s) <- c("streamflow", "medincome", "water_use", 
-              "ruggedness", "precip_pop", "sf_pop")
+              "ruggedness", "popdensity", "precip_pop", "sf_pop")
 
 # okay call the model that we want now
 
 
-best_model <- lm(sqrt(idr) ~ ., data = model)
+best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
+                   ruggedness + popdensity +precip_pop + sf_pop,
+                 data = model)
 
 predictedO_model <- predict(s, best_model)^2
 
@@ -100,9 +102,10 @@ st <-  terra::project(st, "ESRI:102003")
 
 predictedO_model <- project(predictedO_model, "ESRI:102003")
 
+#plot outcome
 tiff(filename = "figures/Fig5.tif", width = 600, height = 480, units = 'px', compression = c('lzw'))
 
-terra::plot(min(predictedO_model, 10), 
+terra::plot(min(predictedO_model,100), 
      col = viridis(100), 
      axes = F, 
      box = F)

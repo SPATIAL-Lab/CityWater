@@ -14,7 +14,7 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  dplyr::select(idr, total_area, streamflow, precip, 
+  dplyr::select(idr, streamflow, precip, 
          lat, pop, medincome, water_use, ruggedness, popdensity)
 
 # Add precip and streamflow per person
@@ -37,17 +37,17 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
+summary_best_subset$which[which.max(summary_best_subset$adjr2),]
 summary_best_subset$which[which.min(summary_best_subset$bic),]
-# okay, highest w/o major BIC penalty includes:
-# streamflow, medincome, water_use, ruggedness, popdensity, precip_pop, sf_pop
+# okay, highest adjr2 will include:
 
 best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
-                   ruggedness + popdensity + precip_pop + sf_pop,
+                   ruggedness + popdensity +precip_pop + sf_pop,
                  data = model)
 
 summary(best_model)
 
-#checking variance inflation factors for these independent variables 
+#checking variance inflation factors for these independent variables we've got highly correlated variables 
 vif(best_model) 
 # Up to 60% increase in coefficient std error (for precip_pop) 
 
@@ -61,3 +61,13 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 plot(density(best_model$residuals))
+
+#or we go with lowest BIC
+best_model <- lm(sqrt(idr) ~ precip + medincome + water_use + 
+                   ruggedness + popdensity +precip_pop,
+                 data = model)
+summary(best_model)
+
+#checking variance inflation factors for these independent variables we've got highly correlated variables 
+vif(best_model) 
+# we're much safer in terms of VIF with this one

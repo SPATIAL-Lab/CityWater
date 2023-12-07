@@ -176,7 +176,7 @@ expandedArea <- rbind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG,
 
 ruggedness <- rast("maps/elev_diff.tif")
 expandedArea <- project(expandedArea, ruggedness) %>% crop(ruggedness)
-df = extract(ruggedness, expandedArea, fun = max)
+df = terra::extract(ruggedness, expandedArea, fun = max, na.rm = T)
 expandedArea$ruggedness <- round(df$file5c181b575a85, 0)
 
 #convert clusterLocations from degrees to meters for expanding the borders of the metro areas
@@ -187,13 +187,14 @@ precip <- project(rast("maps/precip_mean.tif"), ruggedness)
 streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
 
 #some empty data in the tif, and so na.rm = T
-df <- raster::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = T)
-expandedArea$streamflow <- c(df$layer)
+df <- terra::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = T)
+expandedArea$streamflow <- c(df$last)
 
-df <- raster::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
+df <- terra::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
 expandedArea$precip <- c(df$PRISM_ppt_30yr_normal_4kmM3_annual_asc)
 
-multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) %>% 
+multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) 
+multivariate <- multivariate %>% 
   select(c(id, ruggedness, streamflow, precip)) %>% 
   rename(cluster_location = id)
 #ruggedness slotted in manually into the .csv for now
