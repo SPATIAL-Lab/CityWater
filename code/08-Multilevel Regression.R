@@ -21,12 +21,12 @@ model <- multilevel %>%
 model$precip_pop = multilevel$precip / multilevel$pop
 model$sf_pop = multilevel$streamflow / multilevel$pop
 
-all_model <- lm(sqrt(idr) ~ .,
+all_model <- lm(log(idr) ~ .,
                  data = model)
 
 summary(all_model)
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(sqrt(idr) ~ .,
+Best_Subset <- regsubsets(log(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -41,8 +41,8 @@ summary_best_subset$which[which.max(summary_best_subset$adjr2),]
 summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, highest adjr2 will include:
 
-best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
-                   ruggedness + popdensity +precip_pop + sf_pop,
+best_model <- lm(log(idr) ~ streamflow + pop + medincome + water_use + 
+                   ruggedness + popdensity + precip_pop + sf_pop,
                  data = model)
 
 summary(best_model)
@@ -63,8 +63,8 @@ plot(res.sum$bic)
 plot(density(best_model$residuals))
 
 #or we go with lowest BIC
-best_model <- lm(sqrt(idr) ~ precip + medincome + water_use + 
-                   ruggedness + popdensity +precip_pop,
+best_model <- lm(sqrt(idr) ~ streamflow + medincome + 
+                   ruggedness + sf_pop,
                  data = model)
 summary(best_model)
 

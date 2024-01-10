@@ -11,8 +11,8 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, precip, popdensity, streamflow, medincome, water_use,
-                  ruggedness, lat)
+  dplyr::select(idr, streamflow, medincome, water_use,
+                  ruggedness, popdensity)
 model$precip_pop = multilevel$precip / multilevel$pop
 model$sf_pop = multilevel$streamflow / multilevel$pop
 
@@ -21,8 +21,6 @@ conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
 conus <- subset(conus, STATEFP != 02)
 conus <- subset(conus, STATEFP != 15)
-conus$total_area <- (conus$ALAND + conus$AWATER)*0.000001
-conus$perc_water <- round(((conus$AWATER*0.000001)/conus$total_area)*100, 2)
 
 #precipitation 
 precip <- rast("maps/precip_mean.tif")
@@ -63,9 +61,7 @@ water <- read_excel("data/water.xlsx")%>%
 conus <- inner_join(conus, water, by = c("GEOID"))
 vect_conus <- project(vect(conus), precip)
 
-total_area <- rasterize(vect_conus, precip, vect_conus$total_area)
 water_use <- rasterize(vect_conus, precip, vect_conus$water_use)
-perc_water <- rasterize(vect_conus, precip, vect_conus$perc_water)
 medincome <- rasterize(vect_conus, precip, vect_conus$medincome)
 popdensity <- rasterize(vect_conus, precip, vect_conus$popdensity)
 pop <- rasterize(vect_conus, precip, vect_conus$pop)
@@ -73,27 +69,24 @@ pop <- rasterize(vect_conus, precip, vect_conus$pop)
 # we also have rasters of precip, elevation, and streamflow
 streamflow <- project(streamflow, precip)
 
-lat <- init(precip, 'y')# grab latitude as data
-lat <- mask(lat, precip)
-
 ruggedness <- mask(project(rast("maps/elev_diff.tif"), precip), precip)
 precip_pop = precip/pop
 sf_pop = streamflow/pop
 
 #stack rasters
-s <- c(streamflow, medincome, water_use, 
-         ruggedness, popdensity, precip_pop, sf_pop)
-names(s) <- c("streamflow", "medincome", "water_use", 
-              "ruggedness", "popdensity", "precip_pop", "sf_pop")
+s <- c(streamflow, medincome, 
+         ruggedness, sf_pop)
+names(s) <- c("streamflow", "medincome", 
+              "ruggedness", "sf_pop")
 
 # okay call the model that we want now
 
 
-best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
+best_model <- lm(log(idr) ~ streamflow + medincome + water_use + 
                    ruggedness + popdensity +precip_pop + sf_pop,
                  data = model)
 
-predictedO_model <- predict(s, best_model)^2
+predictedO_model <- exp(predict(s, best_model))
 
 st <- vect("maps/cb_2018_us_state_5m.shp")
 st <- project(st, precip)
