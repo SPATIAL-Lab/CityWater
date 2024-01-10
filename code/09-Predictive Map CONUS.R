@@ -70,23 +70,23 @@ pop <- rasterize(vect_conus, precip, vect_conus$pop)
 streamflow <- project(streamflow, precip)
 
 ruggedness <- mask(project(rast("maps/elev_diff.tif"), precip), precip)
-precip_pop = precip/pop
-sf_pop = streamflow/pop
+precip_pop = precip/popdensity
+sf_pop = streamflow/popdensity
 
 #stack rasters
-s <- c(streamflow, medincome, 
-         ruggedness, sf_pop)
-names(s) <- c("streamflow", "medincome", 
-              "ruggedness", "sf_pop")
+s <- c(streamflow, medincome, water_use, 
+         ruggedness, popdensity, precip_pop, sf_pop)
+names(s) <- c("streamflow", "medincome", "water_use",
+              "ruggedness", "popdensity", "precip_pop", "sf_pop")
 
 # okay call the model that we want now
 
-
-best_model <- lm(log(idr) ~ streamflow + medincome + water_use + 
-                   ruggedness + popdensity +precip_pop + sf_pop,
+best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
+                   ruggedness + popdensity + precip_pop + sf_pop,
                  data = model)
 
-predictedO_model <- exp(predict(s, best_model))
+predictedO_model <- (predict(s, best_model))
+plot(predictedO_model)
 
 st <- vect("maps/cb_2018_us_state_5m.shp")
 st <- project(st, precip)

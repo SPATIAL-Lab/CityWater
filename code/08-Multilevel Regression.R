@@ -1,6 +1,6 @@
 # Let's see what multi-level regression has to say about oxygen and d_excess values
 # We're changing from SD to IDR. 
-library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                        
+library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                      
 
 tapData <- read.csv("data/cityWater.csv") 
 tapData <- subset(tapData, cluster_location != "Oahu" & cluster_location != "Hawaii")
@@ -15,18 +15,55 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 
 model <- multilevel %>% 
   dplyr::select(idr, streamflow, precip, 
-         lat, pop, medincome, water_use, ruggedness, popdensity)
+         lat, lon, medincome, water_use, ruggedness, popdensity)
 
-# Add precip and streamflow per person
-model$precip_pop = multilevel$precip / multilevel$pop
-model$sf_pop = multilevel$streamflow / multilevel$pop
+# Add precip and streamflow per popdensity
+model$precip_pop = (multilevel$precip / multilevel$popdensity)
+model$sf_pop = (multilevel$streamflow / multilevel$popdensity)
 
-all_model <- lm(log(idr) ~ .,
+png("figures/regression.png", width = 8.0, height = 9, units = "in", res = 600)
+
+layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 * 2.54), lcm(2.5 * 2.54)),
+       heights = rep(lcm(3 * 2.54), 3))
+
+vn = c("Streamflow (units)", "Precipitation (mm)", "Latitude", "Longitude",
+       "Median income (USD)", "Water use (units)", "Ruggedness (units)",
+       "Population density (units)")
+  
+for(i in 2:ncol(model)){
+  if(i %in% c(2, 5, 8)){
+    par(mai = c(0.6, 0.6, 0.1, 0.1))
+  }else{
+    par(mai = c(0.6, 0.1, 0.1, 0.1))
+  }
+  
+  if(i == 5){
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], ylab = "Sqrt(IDR)")
+  }else if(i %in% c(2, 8)){
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], ylab = "")
+  }else{
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], axes = FALSE, ylab = "")
+    axis(1)
+    axis(2, labels = FALSE)
+    box()
+  }
+  l = lm(sqrt(model$idr) ~ model[, i])
+  abline(l)
+  s = signif(summary(l)$coefficients[2], 2)
+  r2 = round(summary(l)$adj.r.squared, 2)
+  p = signif(summary(l)$coefficients[2, 4], 1)
+  pt = paste("Slope:", s, "\nAdj R2:", r2, "\np:", p)
+  text(min(model[, i]) + diff(range(model[, i])) * 0.8, 2.6, pt)
+}
+dev.off()
+
+
+all_model <- lm(sqrt(idr) ~ .,
                  data = model)
 
 summary(all_model)
 # Choosing best predictors ------------------------------------------------
-Best_Subset <- regsubsets(log(idr) ~ .,
+Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
                           nvmax = NULL,    # NULL for no limit on number of variables
@@ -41,7 +78,7 @@ summary_best_subset$which[which.max(summary_best_subset$adjr2),]
 summary_best_subset$which[which.min(summary_best_subset$bic),]
 # okay, highest adjr2 will include:
 
-best_model <- lm(log(idr) ~ streamflow + pop + medincome + water_use + 
+best_model <- lm(sqrt(idr) ~ streamflow + lat + pop + medincome + water_use + 
                    ruggedness + popdensity + precip_pop + sf_pop,
                  data = model)
 
@@ -63,8 +100,8 @@ plot(res.sum$bic)
 plot(density(best_model$residuals))
 
 #or we go with lowest BIC
-best_model <- lm(sqrt(idr) ~ streamflow + medincome + 
-                   ruggedness + sf_pop,
+best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
+                   ruggedness + popdensity + precip_pop + sf_pop,
                  data = model)
 summary(best_model)
 
