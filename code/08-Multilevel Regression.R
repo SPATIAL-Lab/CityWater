@@ -1,5 +1,3 @@
-# Let's see what multi-level regression has to say about oxygen and d_excess values
-# We're changing from SD to IDR. 
 library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                      
 
 tapData <- read.csv("data/cityWater.csv") 
@@ -17,19 +15,18 @@ model <- multilevel %>%
   dplyr::select(idr, streamflow, precip, 
          lat, lon, medincome, water_use, ruggedness, popdensity)
 
-# Add precip and streamflow per popdensity
-model$precip_pop = (multilevel$precip / multilevel$popdensity)
-model$sf_pop = (multilevel$streamflow / multilevel$popdensity)
+model$water_use = multilevel$water_use / multilevel$pop * 1e6 * 3.78
+model$popdensity = log(model$popdensity)
 
-png("figures/regression.png", width = 8.0, height = 9, units = "in", res = 600)
+vn = c("Streamflow (units)", "Precipitation (mm)", "Latitude", "Longitude",
+       "Median income (USD)", "Water use (liters/person/day)", "Ruggedness (units)",
+       "Population density (ln[people/sq km])")
+
+png("figures/Fig5.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
 layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 * 2.54), lcm(2.5 * 2.54)),
        heights = rep(lcm(3 * 2.54), 3))
 
-vn = c("Streamflow (units)", "Precipitation (mm)", "Latitude", "Longitude",
-       "Median income (USD)", "Water use (units)", "Ruggedness (units)",
-       "Population density (units)")
-  
 for(i in 2:ncol(model)){
   if(i %in% c(2, 5, 8)){
     par(mai = c(0.6, 0.6, 0.1, 0.1))
@@ -38,11 +35,15 @@ for(i in 2:ncol(model)){
   }
   
   if(i == 5){
-    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], ylab = "Sqrt(IDR)")
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], 
+         ylab = expression("Sqrt("*delta^{18}*"O IDR)"),
+         pch = 21, bg = "light grey", cex = 1.75)
   }else if(i %in% c(2, 8)){
-    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], ylab = "")
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], ylab = "",
+         pch = 21, bg = "light grey", cex = 1.75)
   }else{
-    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], axes = FALSE, ylab = "")
+    plot(model[, i], sqrt(model$idr), xlab = vn[i-1], axes = FALSE, 
+         ylab = "", pch = 21, bg = "light grey", cex = 1.75)
     axis(1)
     axis(2, labels = FALSE)
     box()
@@ -56,7 +57,6 @@ for(i in 2:ncol(model)){
   text(min(model[, i]) + diff(range(model[, i])) * 0.8, 2.6, pt)
 }
 dev.off()
-
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
@@ -74,20 +74,6 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
-summary_best_subset$which[which.max(summary_best_subset$adjr2),]
-summary_best_subset$which[which.min(summary_best_subset$bic),]
-# okay, highest adjr2 will include:
-
-best_model <- lm(sqrt(idr) ~ streamflow + lat + pop + medincome + water_use + 
-                   ruggedness + popdensity + precip_pop + sf_pop,
-                 data = model)
-
-summary(best_model)
-
-#checking variance inflation factors for these independent variables we've got highly correlated variables 
-vif(best_model) 
-# Up to 60% increase in coefficient std error (for precip_pop) 
-
 # Model comparison just to check it out
 res.sum <- summary(Best_Subset)
 data.frame(
@@ -99,12 +85,19 @@ plot(res.sum$adjr2)
 plot(res.sum$bic)
 plot(density(best_model$residuals))
 
-#or we go with lowest BIC
-best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
-                   ruggedness + popdensity + precip_pop + sf_pop,
+# compromise model, 3 covariates:
+best_model <- lm(sqrt(idr) ~ streamflow + lon + medincome,
                  data = model)
+
 summary(best_model)
 
-#checking variance inflation factors for these independent variables we've got highly correlated variables 
+# Checking variance inflation factors for these independent variables we've got highly correlated variables 
 vif(best_model) 
-# we're much safer in terms of VIF with this one
+
+# Compare 4-covariate model 
+alt_model <- lm(sqrt(idr) ~ streamflow + lon + medincome + water_use,
+                 data = model)
+
+summary(alt_model)
+vif(alt_model) 
+# Also not bad, but minimal gain in predictive power for the added variable
