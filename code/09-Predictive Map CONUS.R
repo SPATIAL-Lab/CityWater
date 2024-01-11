@@ -11,19 +11,13 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  dplyr::select(idr, streamflow, medincome, water_use,
-                  ruggedness, popdensity)
-model$precip_pop = multilevel$precip / multilevel$pop
-model$sf_pop = multilevel$streamflow / multilevel$pop
+  dplyr::select(idr, streamflow, lon, medincome)
 
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
 conus <- subset(conus, STATEFP != 02)
 conus <- subset(conus, STATEFP != 15)
-
-#precipitation 
-precip <- rast("maps/precip_mean.tif")
 
 # streamflow
 streamflow <- rast("maps/streamflow_mean.tif")
@@ -44,68 +38,46 @@ acs_simple <- getCensus(
          medincome = B19013_001E) %>% 
   filter(state < 60, state != '02', state != '15') %>% 
   unite(GEOID, c("state", "county"), sep = '')
+
 # Jeff Davis County, Texas has an odd glitch right now with the census, showing median income as -666666666.
 # Let's fix that. 
-
 acs_simple$medincome[acs_simple$GEOID == '48243'] <- 38659
-# quick test of medincome
-hist(acs_simple$medincome)
 
 conus <- inner_join(conus, acs_simple, by = c("GEOID"))
-conus$popdensity <- conus$pop/(conus$ALAND*0.000001)
+conus <- project(vect(conus), streamflow)
+medincome <- rasterize(conus, streamflow, conus$medincome)
 
-# water use
-water <- read_excel("data/water.xlsx")%>% 
-  rename(GEOID = FIPS, 
-         water_use = 'TO-WFrTo')
-conus <- inner_join(conus, water, by = c("GEOID"))
-vect_conus <- project(vect(conus), precip)
+# Longitude
+lon = streamflow
+lon = project(lon, "WGS84")
+lc = crds(lon, na.rm = FALSE)
+values(lon) = lc[, 1]
+lon = project(lon, streamflow)
+lon = mask(lon, streamflow)
 
-water_use <- rasterize(vect_conus, precip, vect_conus$water_use)
-medincome <- rasterize(vect_conus, precip, vect_conus$medincome)
-popdensity <- rasterize(vect_conus, precip, vect_conus$popdensity)
-pop <- rasterize(vect_conus, precip, vect_conus$pop)
+# Stack rasters
+s <- c(streamflow, lon, medincome)
+names(s) <- c("streamflow", "lon", "medincome")
 
-# we also have rasters of precip, elevation, and streamflow
-streamflow <- project(streamflow, precip)
-
-ruggedness <- mask(project(rast("maps/elev_diff.tif"), precip), precip)
-precip_pop = precip/popdensity
-sf_pop = streamflow/popdensity
-
-#stack rasters
-s <- c(streamflow, medincome, water_use, 
-         ruggedness, popdensity, precip_pop, sf_pop)
-names(s) <- c("streamflow", "medincome", "water_use",
-              "ruggedness", "popdensity", "precip_pop", "sf_pop")
-
-# okay call the model that we want now
-
-best_model <- lm(sqrt(idr) ~ streamflow + medincome + water_use + 
-                   ruggedness + popdensity + precip_pop + sf_pop,
+# Fit the model
+best_model <- lm(sqrt(idr) ~ streamflow + lon + medincome,
                  data = model)
 
-predictedO_model <- (predict(s, best_model))
-plot(predictedO_model)
+# Predict
+O_pred <- max(predict(s, best_model), min(model$idr))^2
 
+# Plot
 st <- vect("maps/cb_2018_us_state_5m.shp")
-st <- project(st, precip)
-st <- crop(st, precip)
 st <-  terra::project(st, "ESRI:102003")
-
-predictedO_model <- project(predictedO_model, "ESRI:102003")
+st <- crop(st, predictedO_model)
+usa = aggregate(st)
 
 #plot outcome
-tiff(filename = "figures/Fig5.tif", width = 600, height = 480, units = 'px', compression = c('lzw'))
-
-terra::plot(min(predictedO_model,100), 
-     col = viridis(100), 
-     axes = F, 
-     box = F)
-terra::plot(st, col= NA, border = 'white', add = T)
-#north(type = 2, label = '', xy = 'bottomleft') #testing north and scale
-#sbar(500, 'bottomleft', type="bar", below="km", label=c(0,250,500), cex=.8)
+png(filename = "figures/Fig6.png", width = 7, height = 4.8, units = 'in', 
+    res = 600)
+plot(O_pred, col = viridis(100), mar = c(2, 2, 2, 6), 
+     axes = FALSE, box = FALSE)
+plot(st, col= NA, border = 'light grey', add = TRUE)
+plot(usa, col = NA, add = TRUE, lw = 2)
+mtext(expression("Tap water "*delta^{18}*"O IDR"), side = 4, line = 3.5)
 dev.off()
-
-
-
