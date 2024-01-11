@@ -1,16 +1,22 @@
 
 library(terra); library(elevatr); library(assignR)
 
-streamflow <- rast("maps/fa_qs_ann.tif")
-
+# Prep streamflow dataset
+streamflow <- rast("maps/sf.tif")
 s = project(states, "ESRI:102003")
-streamflow = project(streamflow, "ESRI:102003")
+
+streamflow = project(streamflow, s)
 streamflow = crop(streamflow, ext(s))
 streamflow = mask(streamflow, s)
 
-stream <- terra::as.data.frame(streamflow, xy = TRUE, na.rm = T)
+# Streamflow is in units 10^3 m3 / yr, convert to km3/yr
+streamflow = streamflow / 1e6
+
+# Create vector version
+stream <- as.data.frame(streamflow, xy = TRUE, na.rm = T)
 svect <- vect(stream, geom=c("x", "y"), crs = streamflow)
 
+# Buffer
 s1 <- buffer(svect[1:6000000], 20000)
 s2 <- buffer(svect[6000001:length(svect)], 20000)
 svect1 <- rbind(s1, s2)
