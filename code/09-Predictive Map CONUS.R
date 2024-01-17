@@ -13,6 +13,8 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 model <- multilevel %>% 
   dplyr::select(idr, streamflow, lon, medincome)
 
+model$streamflow = log(model$streamflow)
+
 conus <- counties(cb = TRUE)
 conus$STATEFP <- as.numeric(conus$STATEFP)
 conus <- subset(conus, STATEFP < 60)
@@ -21,6 +23,7 @@ conus <- subset(conus, STATEFP != 15)
 
 # streamflow
 streamflow <- rast("maps/streamflow_mean.tif")
+streamflow = log(streamflow)
 
 # median income
 Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
@@ -68,8 +71,8 @@ O_pred <- max(predict(s, best_model), min(model$idr))^2
 
 # Plot
 st <- vect("maps/cb_2018_us_state_5m.shp")
-st <-  terra::project(st, "ESRI:102003")
-st <- crop(st, predictedO_model)
+st <-  project(st, "ESRI:102003")
+st <- crop(st, O_pred)
 usa = aggregate(st)
 
 #plot outcome

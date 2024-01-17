@@ -12,15 +12,19 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 # Modelling IDR--------------------------------------------------------------
 
 model <- multilevel %>% 
-  dplyr::select(idr, streamflow, precip, 
-         lat, lon, medincome, water_use, ruggedness, popdensity)
+  dplyr::select(idr, lat, lon, ruggedness, streamflow, precip, 
+                popdensity, medincome, water_use)
 
 model$water_use = multilevel$water_use / multilevel$pop * 1e6 * 3.78
+
+model$streamflow = log(model$streamflow)
+#model$medincome = log(model$medincome)
+model$water_use = log(model$water_use)
 model$popdensity = log(model$popdensity)
 
-vn = c("Streamflow (units)", "Precipitation (mm)", "Latitude", "Longitude",
-       "Median income (USD)", "Water use (liters/person/day)", "Ruggedness (units)",
-       "Population density (ln[people/sq km])")
+vn = c("Latitude", "Longitude", "Ruggedness (m)", "Streamflow (ln[km^2/year])", 
+       "Precipitation (mm)","Population density (ln[people/km^2])", 
+       "Median income (USD)", "Water use (ln[L/person/day])")
 
 png("figures/Fig5.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
@@ -51,8 +55,8 @@ for(i in 2:ncol(model)){
   l = lm(sqrt(model$idr) ~ model[, i])
   abline(l)
   s = signif(summary(l)$coefficients[2], 2)
-  r2 = round(summary(l)$adj.r.squared, 2)
-  p = signif(summary(l)$coefficients[2, 4], 1)
+  r2 = round(summary(l)$r.squared, 2)
+  p = signif(summary(l)$coefficients[2, 4], 2)
   pt = paste("Slope:", s, "\nAdj R2:", r2, "\np:", p)
   text(min(model[, i]) + diff(range(model[, i])) * 0.8, 2.6, pt)
 }
@@ -95,9 +99,9 @@ summary(best_model)
 vif(best_model) 
 
 # Compare 4-covariate model 
-alt_model <- lm(sqrt(idr) ~ streamflow + lon + medincome + water_use,
+alt_model <- lm(sqrt(idr) ~ streamflow + lon + medincome + ruggedness,
                  data = model)
 
 summary(alt_model)
 vif(alt_model) 
-# Also not bad, but minimal gain in predictive power for the added variable
+# Higher VIF for ruggedness and lon

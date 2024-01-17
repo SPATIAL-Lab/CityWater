@@ -1,9 +1,9 @@
 # Needed for Cluster Location Info Scraping. No previous scripts needed. Note that this takes a while (hours/a day) depending on your processing power
-library(terra); library(elevatr); library(assignR)
+library(terra); library(elevatr); library(assignR); library(raster)
 
 ## Get data, using precip layer as target
 precip <- rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
-elevation <- get_elev_raster(precip, z = 5)
+elevation <- get_elev_raster(raster(precip), z = 5)
 elev = rast(elevation)
 
 ## Set negative values to zero

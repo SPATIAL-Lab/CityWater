@@ -184,11 +184,11 @@ expandedArea$ruggedness <- round(df$file5c181b575a85, 0)
 
 #read in raster
 precip <- project(rast("maps/precip_mean.tif"), ruggedness)
-streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
+streamflow <- project(rast("maps/sf.tif"), ruggedness)
 
 #some empty data in the tif, and so na.rm = T
 df <- terra::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = T)
-expandedArea$streamflow <- c(df$last)
+expandedArea$streamflow <- c(df$sf)
 
 df <- terra::extract(precip, expandedArea, weights = F, fun = mean, na.rm = T)
 expandedArea$precip <- c(df$PRISM_ppt_30yr_normal_4kmM3_annual_asc)
