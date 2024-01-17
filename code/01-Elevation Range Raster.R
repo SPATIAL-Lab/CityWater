@@ -2,8 +2,9 @@
 library(terra); library(elevatr); library(assignR); library(raster)
 
 ## Get data, using precip layer as target
-precip <- rast("maps/PRISM_ppt_30yr_normal_4kmM3_annual_asc.asc")
-elevation <- get_elev_raster(raster(precip), z = 5)
+sf <- rast("maps/sf.tif")
+sf = aggregate(sf, 4)
+elevation <- get_elev_raster(raster(sf), z = 5)
 elev = rast(elevation)
 
 ## Set negative values to zero
@@ -11,13 +12,13 @@ ev = values(elev)
 ev[ev < 0] = 0
 values(elev) = ev
 
-s = project(states, "ESRI:102003")
+s = project(states, elev)
 elev = crop(elev, ext(s))
 plot(elev, colNA = "red")
 lines(s)
 
 ## Convert to vector
-e <- terra::as.data.frame(elev, xy = TRUE, na.rm = T)
+e <- as.data.frame(elev, xy = TRUE, na.rm = T)
 evect <- vect(e, geom=c("x", "y"), crs = elev)
 
 ## Buffer; had to break this up due to memory limitations
