@@ -75,8 +75,8 @@ st <-  project(st, "ESRI:102003")
 st <- crop(st, O_pred)
 usa = aggregate(st)
 
-#plot outcome
-png(filename = "figures/Fig6.png", width = 7, height = 4.8, units = 'in', 
+# plot outcome
+png(filename = "figures/Fig5.png", width = 7, height = 4.8, units = 'in', 
     res = 600)
 plot(O_pred, col = viridis(100), mar = c(2, 2, 2, 6), 
      axes = FALSE, box = FALSE)
@@ -84,3 +84,7 @@ plot(st, col= NA, border = 'light grey', add = TRUE)
 plot(usa, col = NA, add = TRUE, lw = 2)
 mtext(expression("Tap water "*delta^{18}*"O IDR"), side = 4, line = 3.5)
 dev.off()
+
+# fraction of USA w/ IDR < 1 or 2 per mil
+sum(values(O_pred) < 1, na.rm = TRUE) / sum(!is.na(values(O_pred)))
+sum(values(O_pred) < 2, na.rm = TRUE) / sum(!is.na(values(O_pred)))

@@ -26,7 +26,7 @@ vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (
        expression("Population density (ln[people/km"^2*"])"), 
        expression("Median income (USD)"), expression("Water use (ln[L/person/day])"))
 
-png("figures/Fig5.png", width = 8.2, height = 9.2, units = "in", res = 600)
+png("figures/Fig4.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
 layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 * 2.54), lcm(2.5 * 2.54)),
        heights = rep(lcm(3 * 2.54), 3))
@@ -99,6 +99,8 @@ best_model <- lm(sqrt(idr) ~ streamflow + lon + medincome,
 
 summary(best_model)
 plot(density(best_model$residuals))
+shapiro.test(best_model$residuals)
+plot(best_model)
 
 # Checking variance inflation factors for these independent variables we've got highly correlated variables 
 vif(best_model) 
