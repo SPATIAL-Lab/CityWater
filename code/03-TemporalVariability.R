@@ -163,6 +163,9 @@ clustering <- clustering %>%
 
 write.csv(clustering, 'data/timeseriesModality.csv')
 
+tapData$cluster_ID <- as.character(tapData$cluster_ID)
+tapData$cluster_ID <- replace(tapData$cluster_ID, tapData$cluster_ID == "1.1", "1.10")
+clustering$cluster_ID <- replace(clustering$cluster_ID, clustering$cluster_ID == "1.1", "1.10")
 df <- tapData %>%
   filter(cluster_location == "Salt Lake City" | cluster_location == "San Francisco") %>%
   left_join(clustering, by = 'cluster_ID')
@@ -174,7 +177,7 @@ df$Cluster_ID <- fct_relevel(df$cluster_ID, #order these temporally for plotting
                              "25.1", "1.11", "1.10", "1.09", "1.08", "1.07",
                              "1.06", "1.05", "1.04", "1.03", "1.02", "1.01")
 
-timeDensity <- ggplot(data = df, aes(y = Cluster_ID, x = d18O, fill = modality)) + 
+ggplot(data = df, aes(y = Cluster_ID, x = d18O, fill = modality)) + 
   geom_density_ridges(scale = 3, rel_min_height = 0.01, stat = "density_ridges") +
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
   theme_bw(base_size = 16) +
@@ -187,8 +190,7 @@ timeDensity <- ggplot(data = df, aes(y = Cluster_ID, x = d18O, fill = modality))
   labs(
     x = expression(paste(delta^18, "O", " (\u2030, VSMOW)"))
   ) 
-timeDensity
-ggsave("figures/density_time_slice.pdf", width=6, height=5, units="in", dpi=300)
+ggsave("figures/density_time_slice.pdf", width=6, height=5, units="in", dpi=600)
 
 # Comparing IDR -----------------------------------------------------------
 

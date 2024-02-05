@@ -1,4 +1,4 @@
-# Ridge Plots for Figure 2 ------------------------------------------------
+# Ridge Plots for Figure 3 ------------------------------------------------
 
 library(tidyverse); library(ggridges); library(patchwork)
 
