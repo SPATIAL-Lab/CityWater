@@ -176,17 +176,17 @@ expandedArea <- rbind(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG,
 
 ruggedness <- rast("maps/elev_diff.tif")
 expandedArea <- project(expandedArea, ruggedness) %>% crop(ruggedness)
-df = extract(ruggedness, expandedArea, fun = max, na.rm = TRUE)
+df = terra::extract(ruggedness, expandedArea, fun = max, na.rm = TRUE)
 expandedArea$ruggedness <- round(df$na_dem, 0)
 
 #read in rasters
 precip <- project(rast("maps/precip_mean.tif"), ruggedness)
 streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
 
-df <- extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = TRUE)
+df <- terra::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = TRUE)
 expandedArea$streamflow <- c(df$last)
 
-df <- extract(precip, expandedArea, weights = F, fun = mean, na.rm = TRUE)
+df <- terra::extract(precip, expandedArea, weights = F, fun = mean, na.rm = TRUE)
 expandedArea$precip <- c(df$last)
 
 multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) 

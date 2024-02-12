@@ -35,8 +35,12 @@ temporal_28.3 <- tapData[tapData$cluster_location_time == "Los Angeles_Nov-14", 
 temporal_26.1 <- tapData[tapData$cluster_location_time == "Phoenix_Mar-Ap-14", ]
 temporal_26.2 <- tapData[tapData$cluster_location_time == "Phoenix_Oct-14", ]
 
+# San Diego
+temporal_27.1 <- tapData[tapData$cluster_location_time == "San Diego_Ap-14", ]
+temporal_27.2 <- tapData[tapData$cluster_location_time == "San Diego_Dic-13", ]
 # k-means clustering ------------------------------------------------------
 
+# Salt Lake City
 km_SF_25.1 <- temporal_25.1 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
@@ -174,6 +178,18 @@ km_LAX_28.3 <- temporal_28.3 %>%
   eclust("kmeans", nboot = 500)
 temporal_28.3$km_cluster <- factor(km_LAX_28.3$cluster)
 
+#temporal_27.1
+km_SAN_27.1 <- temporal_27.1 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_27.1$km_cluster <- factor(km_SAN_27.1$cluster)
+
+#temporal_28.2
+km_SAN_27.2 <- temporal_27.2 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_27.2$km_cluster <- factor(km_SAN_27.2$cluster)
+
 #Let's count the number of clusters and report modality in a reproducible table. 
 kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_1.04, temporal_1.05, temporal_1.06, 
@@ -182,10 +198,11 @@ kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_25.2, temporal_25.3, temporal_25.4, 
                temporal_25.5, temporal_25.6, temporal_25.7, 
                temporal_26.1, temporal_26.2, temporal_28.1, 
-               temporal_28.2, temporal_28.3
+               temporal_28.2, temporal_28.3, temporal_27.1, 
+               temporal_27.2
 )
 
-clustering <- data.frame(matrix(ncol = 0, nrow = 18))
+clustering <- data.frame(matrix(ncol = 0, nrow = 25))
 for (i in kmeans) {
   clusters = n_distinct(i$km_cluster)
   cluster_ID = unique(c(as.character(i$cluster_ID)))
@@ -209,9 +226,9 @@ write.csv(clustering, 'data/timeseriesModality.csv')
 tapData$cluster_ID <- as.character(tapData$cluster_ID)
 tapData$cluster_ID <- replace(tapData$cluster_ID, tapData$cluster_ID == "1.1", "1.10")
 clustering$cluster_ID <- replace(clustering$cluster_ID, clustering$cluster_ID == "1.1", "1.10")
+
 df <- tapData %>%
-  filter(cluster_location == "Salt Lake City" | cluster_location == "San Francisco" | 
-cluster_location == "Los Angeles" | cluster_location == "Phoenix") %>%
+  filter(cluster_location == "Salt Lake City" | cluster_location == "San Francisco" | cluster_location == "Los Angeles" | cluster_location == "Phoenix" | cluster_location == 'San Diego') %>%
   left_join(clustering, by = 'cluster_ID')
 
 # Density Plots ----------------------------------------------------------
@@ -247,9 +264,18 @@ idr <- df %>%
   ) %>% 
   select(Cluster_ID, IDR_O, IDR_d_ex, IDR_H) %>% 
   mutate(city = Cluster_ID, 
-         city = if_else(grepl('25.*', city), "SF", "SLC"))
+         city = if_else(grepl('25.*', city), "SF", 
+                        if_else(grepl('26.*', city), "Phoenix", 
+                                if_else(grepl('28.*', city), "Los Angeles",
+                                        if_else(grepl('27*', city), "San Diego",
+                                        "SLC")
+                                        ))))
 
 write.csv(idr, 'data/timeseriesSummary.csv')
 mean(subset(idr, city == 'SLC')$IDR_O)
 mean(subset(idr, city == 'SF')$IDR_O)
+mean(subset(idr, city == 'Phoenix')$IDR_O)
+mean(subset(idr, city == 'Los Angeles')$IDR_O)
+mean(subset(idr, city == 'San Diego')$IDR_O)
+
 #these numbers manually entered into datasummary for now. 

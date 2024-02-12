@@ -26,6 +26,9 @@ vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (
        expression("Population density (ln[people/km"^2*"])"), 
        expression("Median income (USD)"), expression("Water use (ln[L/person/day])"))
 
+
+# Figure 4 ----------------------------------------------------------------
+
 png("figures/Fig4.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
 layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 * 2.54), lcm(2.5 * 2.54)),
@@ -65,6 +68,9 @@ for(i in 2:ncol(model)){
        adj = c(0.5, 0))
 }
 dev.off()
+
+
+# All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
