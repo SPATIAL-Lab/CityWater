@@ -36,7 +36,8 @@ ggsave('figures/DENmap.pdf')
 ggplot() + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Minneapolis--St. Paul, MN--WI")) + 
   geom_sf(data = terra::subset(vectv, vectv$cluster_location == "Minneapolis"), 
-          aes(fill = cluster_number), size = 4, shape = 21) +   scale_fill_manual(values = c("#003f5c", "#d2042d")) +
+          aes(fill = cluster_number), size = 4, shape = 21) +   
+  scale_fill_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
   theme(legend.position = "none")
 ggsave('figures/MSPmap.pdf')
@@ -44,7 +45,7 @@ ggsave('figures/MSPmap.pdf')
 ggplot() + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Lawrence, KS")) + 
   geom_sf(data = terra::subset(vectv, vectv$cluster_location == "Lawrence"), 
-          aes(fill = cluster_number), size = 4, shape = 21) +   scale_fill_manual(values = c("#003f5c", "#d2042d")) +
+          aes(fill = cluster_number), size = 4, shape = 21) +   
   scale_fill_manual(values = c("#003f5c", "#d2042d")) +
   theme_void() +
   theme(legend.position = "none")

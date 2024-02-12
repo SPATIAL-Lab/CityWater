@@ -1,5 +1,5 @@
 # Used to generate k-means cluster analyses of locations and then data summary. 
-# note: timeseriesModality.csv created by 01, but in data folder
+# note: timeseriesModality.csv created by 03, but in data folder
 library(factoextra); library(readr); library(forcats); library(dplyr)
 
 tapData <- read_csv("data/cityWater.csv", 
