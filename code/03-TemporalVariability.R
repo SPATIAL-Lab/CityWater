@@ -264,22 +264,13 @@ idr <- df %>%
                                         ))))
 
 write.csv(idr, 'data/timeseriesSummary.csv')
-mean(subset(idr, city == 'SLC')$IDR_O)
-mean(subset(idr, city == 'SF')$IDR_O)
-mean(subset(idr, city == 'Phoenix')$IDR_O)
-mean(subset(idr, city == 'Los Angeles')$IDR_O)
-mean(subset(idr, city == 'San Diego')$IDR_O)
 
-mean(subset(idr, city == 'SLC')$IDR_H)
-mean(subset(idr, city == 'SF')$IDR_H)
-mean(subset(idr, city == 'Phoenix')$IDR_H)
-mean(subset(idr, city == 'Los Angeles')$IDR_H)
-mean(subset(idr, city == 'San Diego')$IDR_H)
-
-mean(subset(idr, city == 'SLC')$IDR_d_ex)
-mean(subset(idr, city == 'SF')$IDR_d_ex)
-mean(subset(idr, city == 'Phoenix')$IDR_d_ex)
-mean(subset(idr, city == 'Los Angeles')$IDR_d_ex)
-mean(subset(idr, city == 'San Diego')$IDR_d_ex)
+temporalSummary <- idr %>% 
+  group_by(city) %>% 
+  summarize(
+    IDR_O = round(mean(.data$IDR_O), 1), 
+    IDR_H = round(mean(.data$IDR_H), 1), 
+    IDR_d_ex = round(mean(.data$IDR_d_ex), 1)
+  )
 
 #these numbers manually entered into datasummary for now. 
