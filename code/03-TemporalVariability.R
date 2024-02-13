@@ -27,9 +27,8 @@ temporal_25.6 <- tapData[tapData$cluster_location_time == "San Francisco_Mar-15"
 temporal_25.7 <- tapData[tapData$cluster_location_time == "San Francisco_Jul-15", ]
 
 # Los Angeles
-temporal_28.1 <- tapData[tapData$cluster_location_time == "Los Angeles_Dic-13", ]
-temporal_28.2 <- tapData[tapData$cluster_location_time == "Los Angeles_Mar-Ap-14", ]
-temporal_28.3 <- tapData[tapData$cluster_location_time == "Los Angeles_Nov-14", ]
+temporal_28.1 <- tapData[tapData$cluster_location_time == "Los Angeles_Mar-Ap-14", ]
+temporal_28.2 <- tapData[tapData$cluster_location_time == "Los Angeles_Nov-14", ]
 
 # Phoenix
 temporal_26.1 <- tapData[tapData$cluster_location_time == "Phoenix_Mar-Ap-14", ]
@@ -172,19 +171,13 @@ km_LAX_28.2 <- temporal_28.2 %>%
   eclust("kmeans", nboot = 500)
 temporal_28.2$km_cluster <- factor(km_LAX_28.2$cluster)
 
-#temporal_28.3
-km_LAX_28.3 <- temporal_28.3 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_28.3$km_cluster <- factor(km_LAX_28.3$cluster)
-
 #temporal_27.1
 km_SAN_27.1 <- temporal_27.1 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
 temporal_27.1$km_cluster <- factor(km_SAN_27.1$cluster)
 
-#temporal_28.2
+#temporal_27.2
 km_SAN_27.2 <- temporal_27.2 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
@@ -198,8 +191,7 @@ kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_25.2, temporal_25.3, temporal_25.4, 
                temporal_25.5, temporal_25.6, temporal_25.7, 
                temporal_26.1, temporal_26.2, temporal_28.1, 
-               temporal_28.2, temporal_28.3, temporal_27.1, 
-               temporal_27.2
+               temporal_28.2, temporal_27.1, temporal_27.2
 )
 
 clustering <- data.frame(matrix(ncol = 0, nrow = 25))
@@ -267,7 +259,7 @@ idr <- df %>%
          city = if_else(grepl('25.*', city), "SF", 
                         if_else(grepl('26.*', city), "Phoenix", 
                                 if_else(grepl('28.*', city), "Los Angeles",
-                                        if_else(grepl('27*', city), "San Diego",
+                                        if_else(grepl('27.*', city), "San Diego",
                                         "SLC")
                                         ))))
 
@@ -277,5 +269,17 @@ mean(subset(idr, city == 'SF')$IDR_O)
 mean(subset(idr, city == 'Phoenix')$IDR_O)
 mean(subset(idr, city == 'Los Angeles')$IDR_O)
 mean(subset(idr, city == 'San Diego')$IDR_O)
+
+mean(subset(idr, city == 'SLC')$IDR_H)
+mean(subset(idr, city == 'SF')$IDR_H)
+mean(subset(idr, city == 'Phoenix')$IDR_H)
+mean(subset(idr, city == 'Los Angeles')$IDR_H)
+mean(subset(idr, city == 'San Diego')$IDR_H)
+
+mean(subset(idr, city == 'SLC')$IDR_d_ex)
+mean(subset(idr, city == 'SF')$IDR_d_ex)
+mean(subset(idr, city == 'Phoenix')$IDR_d_ex)
+mean(subset(idr, city == 'Los Angeles')$IDR_d_ex)
+mean(subset(idr, city == 'San Diego')$IDR_d_ex)
 
 #these numbers manually entered into datasummary for now. 

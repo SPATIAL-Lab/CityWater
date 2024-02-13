@@ -5,7 +5,7 @@ library(ggplot2); library(dplyr); library(terra); library(readxl);
 library(usmap)
 
 datasummary <- read.csv("data/datasummary.csv")
-datasummary <- datasummary[,-c(1, 3:5, 7:14, 17, 18)]
+datasummary <- datasummary[,-c(2:4, 6:13, 16, 17)]
 multivariate <- read.csv("data/multivariate.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
   rename('idr' = 'IDR_O')
