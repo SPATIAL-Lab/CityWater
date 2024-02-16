@@ -189,5 +189,4 @@ ggplot()+
   theme_void()
 
 
-
 write.csv(CLE3, 'data/Cleveland.csv')
