@@ -1,0 +1,216 @@
+"","sample_ID","date","site_name","type","d18O","d2H","lat","lon","cluster_location_time","...10","county","elevation","cluster_location","state","d_ex","cluster_ID","site_comments","start_time","collection_time_zone","collection_date","year","season","month","sample_comments","d2H_analytical_sd","d18O_analytical_sd","source","project_ID","km_cluster"
+"1","125","1/1/2018","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap","GW",-8.58,-57.6,41.11084722,-81.24344444,"Cleveland_Jan-Feb-18",NA,"Portage",334,"Cleveland","Ohio",11.04,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"2","126","1/1/2018","Marathon Gas
+station corner of 44
+and 224 Randolph,
+OH, Tap","GW",-9.17,-59.35,41.02963889,-81.24863056,"Cleveland_Jan-Feb-18",NA,"Portage",352,"Cleveland","Ohio",14.01,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"3","127","1/1/2018","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH","GW",-8.4,-55.47,41.03089167,-81.42650556,"Cleveland_Jan-Feb-18",NA,"Summit",333,"Cleveland","Ohio",11.73,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"4","130","1/1/2018","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap","GW",-8.06,-52.2,40.98918056,-81.66439444,"Cleveland_Jan-Feb-18",NA,"Wayne",347,"Cleveland","Ohio",12.28,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"5","131","1/1/2018","Circle K gas station
+at Broad and
+Silvercreek Rd
+Wadsworth, OH Tao","GW",-8.96,-58.34,40.99823056,-81.81000833,"Cleveland_Jan-Feb-18",NA,"Wayne",350,"Cleveland","Ohio",13.34,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"6","132","1/1/2018","Circle K gas station
+at 76 and 3 seville
+Tap","GW",-8.93,-58.62,41.03584722,-81.86499167,"Cleveland_Jan-Feb-18",NA,"Medina",325,"Cleveland","Ohio",12.82,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"7","133","1/1/2018","BP minimart Lake Rd
+and Reid Rd
+Chippew on the
+Lake, OH tap","GW",-8.26,-55.18,40.99813611,-81.80991111,"Cleveland_Jan-Feb-18",NA,"Wayne",350,"Cleveland","Ohio",10.9,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"8","135","1/1/2018","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH","GW",-6.3,-48.01,41.23296111,-81.84114167,"Cleveland_Jan-Feb-18",NA,"Medina",334,"Cleveland","Ohio",2.39,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"9","136","1/1/2018","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap","GW",-6.51,-49.63,41.34346389,-81.82559722,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",257,"Cleveland","Ohio",2.45,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"10","128","1/1/2018","Sheetz gas station corner main and waterloo Rd Akron, OH tap","Lake Rockwell",-8.360784437,-55.21628184,41.02809167,-81.52803611,"Cleveland_Jan-Feb-18",NA,"Summit",309,"Cleveland","Ohio",11.669993656,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"11","134","1/1/2018","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap","Lake Erie",-6.439860459,-48.77413026,41.15159444,-81.86298889,"Cleveland_Jan-Feb-18",NA,"Medina",306,"Cleveland","Ohio",2.744753412,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"12","137","1/1/2018","Circle K at snow and smith Brookepark tap","Lake Erie",-6.427844736,-48.59972294,41.40426667,-81.80456667,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",243,"Cleveland","Ohio",2.823034948,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"13","138","1/1/2018","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn","Lake Erie",-6.767218593,-51.14807653,41.41911389,-81.83251944,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",235,"Cleveland","Ohio",2.989672214,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"14","139","1/1/2018","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap","Lake Erie",-6.810654588,-51.75693387,41.45666389,-81.90153056,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",217,"Cleveland","Ohio",2.728302834,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"15","140","1/1/2018","McDonalds on 117th s of detroit Lake wood, OH tap","Lake Erie",-6.506492957,-49.52516751,41.48268333,-81.76924722,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",212,"Cleveland","Ohio",2.526776146,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"16","141","1/1/2018","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park","Lake Erie",-7.77595068,-56.16783592,41.44214167,-81.75493889,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",235,"Cleveland","Ohio",6.03976952,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"17","142","1/1/2018","Sheetz Ridge Rd and Day Dr Parma. OH Tap","Lake Erie",-6.601886018,-50.1743819,41.38013889,-81.73528056,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",287,"Cleveland","Ohio",2.640706244,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"18","144","1/2/2018","Circle K gas stationa
+Atwater at 183 and
+224 Tap","GW",-8.74,-56.28,41.02403056,-81.14753333,"Cleveland_Jan-Feb-18",NA,"Portage",348,"Cleveland","Ohio",13.64,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"19","166","1/3/2018","Detour Drive thru on
+303/88 on Hadson
+Breeville Rd
+Freedom OH tap","GW",-9.32,-60.26,41.23605,-81.1443,"Cleveland_Jan-Feb-18",NA,"Portage",363,"Cleveland","Ohio",14.3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"20","168","1/3/2018","Skylane Bowling
+Alley 82 and Liberty
+St tap Garrettsville
+OH","GW",-9.6,-62.88,41.27766944,-81.09004444,"Cleveland_Jan-Feb-18",NA,"Portage",315,"Cleveland","Ohio",13.92,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"21","169","1/3/2018","BP gas station at 88
+and 422 Main
+market Rd and
+Madison Rd tap
+Elwood/Spike
+Weaver grand river
+access Parkman OH","GW",-9.81,-63.74,41.37063889,-81.06357778,"Cleveland_Jan-Feb-18",NA,"Geauga",347,"Cleveland","Ohio",14.74,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"22","193","1/4/2018","Baitshop on corner
+og Washington ST &
+ravenna Rd/ 44
+Auburn corner OH
+business for sale Tap","GW",-9.56,-62.14,41.38706111,-81.21658611,"Cleveland_Jan-Feb-18",NA,"Geauga",364,"Cleveland","Ohio",14.34,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"23","194","1/4/2018","87 New Berry OH
+tap","GW",-9.66,-62.32,41.47066111,-81.193275,"Cleveland_Jan-Feb-18",NA,"Geauga",368,"Cleveland","Ohio",14.96,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"24","195","1/4/2018","McDonalds at W
+high St & springdale
+ave in Middlefield
+OH tap","GW",-10.01,-65.53,41.46235833,-81.08603889,"Cleveland_Jan-Feb-18",NA,"Geauga",358,"Cleveland","Ohio",14.55,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"25","196","1/4/2018","Montville country
+store at 528 & 6 /
+Madison rd & GAR
+hwy Mintville OH
+tap","GW",-10.07,-65.29,41.60745556,-81.05078056,"Cleveland_Jan-Feb-18",NA,"Geauga",376,"Cleveland","Ohio",15.27,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"26","197","1/4/2018","Stockers on the park
+resturaunt on 527 in
+circle thompson OH","GW",-10.24,-66.74,41.68977778,-81.05070278,"Cleveland_Jan-Feb-18",NA,"Geauga",374,"Cleveland","Ohio",15.18,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"27","198","1/4/2018","Hambden Corners
+gas station at 166 &
+GAR hwy tap
+Hambden Corners
+OH","GW",-10.02,-64.61,41.60692778,-81.14348611,"Cleveland_Jan-Feb-18",NA,"Geauga",388,"Cleveland","Ohio",15.55,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"28","200","1/4/2018","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap","GW",-10.38,-67.46,41.52306667,-81.33858333,"Cleveland_Jan-Feb-18",NA,"Geauga",360,"Cleveland","Ohio",15.58,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"29","204","1/4/2018","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap","GW",-9.69,-63.54,41.389825,-81.34023611,"Cleveland_Jan-Feb-18",NA,"Geauga",350,"Cleveland","Ohio",13.98,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"30","206","1/4/2018","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap","GW",-6.51,-49.37,41.30866111,-81.44175833,"Cleveland_Jan-Feb-18",NA,"Summit",332,"Cleveland","Ohio",2.71,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"31","207","1/4/2018","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap","GW",-6.49,-49.39,41.31433333,-81.51178333,"Cleveland_Jan-Feb-18",NA,"Summit",316,"Cleveland","Ohio",2.53,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"32","208","1/4/2018","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap","GW",-6.41,-48.73,41.31866944,-81.62736389,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",262,"Cleveland","Ohio",2.55,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"33","209","1/4/2018","Best Stop at 179 &
+303 Richfield OH tap","GW",-9.14,-58.68,41.23993333,-81.653825,"Cleveland_Jan-Feb-18",NA,"Summit",372,"Cleveland","Ohio",14.44,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"34","212","1/4/2018","Giant Eagle grocery
+store at 43 & 303/14
+Streetsboro OH tap","GW",-8.64,-57.62,41.23806389,-81.34747778,"Cleveland_Jan-Feb-18",NA,"Portage",333,"Cleveland","Ohio",11.5,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"35","213","1/4/2018","McGilvery Hall Kent
+OH tap","GW",-8.31,-55.47,41.15043056,-81.35086111,"Cleveland_Jan-Feb-18",NA,"Portage",331,"Cleveland","Ohio",11.01,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"36","201","1/4/2018","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap","Lake Erie",-6.364263727,-48.6671278,41.52046111,-81.43910278,"Cleveland_Jan-Feb-18",NA,"Cuyahoga",310,"Cleveland","Ohio",2.246982016,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"37","205","1/4/2018","Shell gas station at 82 & 43 in Aurora OH","Lake Erie",-6.510153437,-49.53251814,41.31768889,-81.35078889,"Cleveland_Jan-Feb-18",NA,"Portage",333,"Cleveland","Ohio",2.548709356,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"38","122","1/12/2018","Long Science Center
+Tap Water","GW",-6.23,-40.3,41.61445,-81.29389444,"Cleveland_Jan-Feb-18",NA,"Geauga",307,"Cleveland","Ohio",9.54000000000001,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"2"
+"39","224","2/4/2018","Shell Gas station at
+33 & 82 Tap grab","GW",-9.69,-63.09,41.31066389,-81.22136111,"Cleveland_Jan-Feb-18",NA,"Portage",367,"Cleveland","Ohio",14.43,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"3"
+"40","122.01","7/21/2018","Long Science Center
+Tap Water","GW",-9.96,-64.7,41.61445,-81.29389444,"Cleveland_Jul-Aug-18",NA,"Geauga",307,"Cleveland","Ohio",14.98,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"41","125.01","7/28/2018","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap","GW",-8.73,-58.15,41.11084722,-81.24344444,"Cleveland_Jul-Aug-18",NA,"Portage",334,"Cleveland","Ohio",11.69,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"42","126.01","7/28/2018","Marathon Gas
+station corner of 44
+and 224 Randolph,
+OH, Tap","GW",-8.89,-57.75,41.02963889,-81.24863056,"Cleveland_Jul-Aug-18",NA,"Portage",352,"Cleveland","Ohio",13.37,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"43","127.01","7/28/2018","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH","GW",-6.98,-48.14,41.03089167,-81.42650556,"Cleveland_Jul-Aug-18",NA,"Summit",333,"Cleveland","Ohio",7.7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"44","130.01","7/28/2018","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap","GW",-8.16,-53.59,40.98918056,-81.66439444,"Cleveland_Jul-Aug-18",NA,"Wayne",347,"Cleveland","Ohio",11.69,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"45","131.01","7/28/2018","Circle K gas station
+at Broad and
+Silvercreek Rd
+Wadsworth, OH Tao","GW",-8.99,-58.87,40.99823056,-81.81000833,"Cleveland_Jul-Aug-18",NA,"Wayne",350,"Cleveland","Ohio",13.05,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"46","132.01","7/28/2018","Circle K gas station
+at 76 and 3 seville
+Tap","GW",-8.9,-58.45,41.03584722,-81.86499167,"Cleveland_Jul-Aug-18",NA,"Medina",325,"Cleveland","Ohio",12.75,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"47","133.01","7/28/2018","BP minimart Lake Rd
+and Reid Rd
+Chippew on the
+Lake, OH tap","GW",-8.64,-56.63,40.99813611,-81.80991111,"Cleveland_Jul-Aug-18",NA,"Wayne",350,"Cleveland","Ohio",12.49,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"48","135.01","7/28/2018","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH","GW",-6.91,-51.71,41.23296111,-81.84114167,"Cleveland_Jul-Aug-18",NA,"Medina",334,"Cleveland","Ohio",3.57,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"49","136.01","7/28/2018","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap","GW",-6.84,-51.5,41.34346389,-81.82559722,"Cleveland_Jul-Aug-18",NA,"Cuyahoga",257,"Cleveland","Ohio",3.22,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"50","144.01","7/29/2018","Circle K gas stationa
+Atwater at 183 and
+224 Tap","GW",-8.7,-56.17,41.02403056,-81.14753333,"Cleveland_Jul-Aug-18",NA,"Portage",348,"Cleveland","Ohio",13.43,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"51","195.01","7/29/2018","McDonalds at W
+high St & springdale
+ave in Middlefield
+OH tap","GW",-9.94,-65.39,41.46235833,-81.08603889,"Cleveland_Jul-Aug-18",NA,"Geauga",358,"Cleveland","Ohio",14.13,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"52","166.01","7/30/2018","Detour Drive thru on
+303/88 on Hadson
+Breeville Rd
+Freedom OH tap","GW",-9.22,-60.38,41.23605,-81.1443,"Cleveland_Jul-Aug-18",NA,"Portage",363,"Cleveland","Ohio",13.38,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"53","168.01","7/30/2018","Skylane Bowling
+Alley 82 and Liberty
+St tap Garrettsville
+OH","GW",-9.55,-62.85,41.27766944,-81.09004444,"Cleveland_Jul-Aug-18",NA,"Portage",315,"Cleveland","Ohio",13.55,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"54","169.01","7/30/2018","BP gas station at 88
+and 422 Main
+market Rd and
+Madison Rd tap
+Elwood/Spike
+Weaver grand river
+access Parkman OH","GW",-9.75,-63.76,41.37063889,-81.06357778,"Cleveland_Jul-Aug-18",NA,"Geauga",347,"Cleveland","Ohio",14.24,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"55","193.01","7/30/2018","Baitshop on corner
+og Washington ST &
+ravenna Rd/ 44
+Auburn corner OH
+business for sale Tap","GW",-9.21,-60.21,41.38706111,-81.21658611,"Cleveland_Jul-Aug-18",NA,"Geauga",364,"Cleveland","Ohio",13.47,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"56","194.01","7/30/2018","87 New Berry OH
+tap","GW",-9.61,-62.29,41.47066111,-81.193275,"Cleveland_Jul-Aug-18",NA,"Geauga",368,"Cleveland","Ohio",14.59,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"57","196.01","7/30/2018","Montville country
+store at 528 & 6 /
+Madison rd & GAR
+hwy Mintville OH
+tap","GW",-10.03,-65.33,41.60745556,-81.05078056,"Cleveland_Jul-Aug-18",NA,"Geauga",376,"Cleveland","Ohio",14.91,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"58","197.01","7/30/2018","Stockers on the park
+resturaunt on 527 in
+circle thompson OH","GW",-7.15,-46.51,41.68977778,-81.05070278,"Cleveland_Jul-Aug-18",NA,"Geauga",374,"Cleveland","Ohio",10.69,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"59","198.01","7/30/2018","Hambden Corners
+gas station at 166 &
+GAR hwy tap
+Hambden Corners
+OH","GW",-9.95,-64.77,41.60692778,-81.14348611,"Cleveland_Jul-Aug-18",NA,"Geauga",388,"Cleveland","Ohio",14.83,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"60","200.01","7/30/2018","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap","GW",-10.27,-67.53,41.52306667,-81.33858333,"Cleveland_Jul-Aug-18",NA,"Geauga",360,"Cleveland","Ohio",14.63,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"61","204.01","7/31/2018","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap","GW",-9.67,-63.42,41.389825,-81.34023611,"Cleveland_Jul-Aug-18",NA,"Geauga",350,"Cleveland","Ohio",13.94,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"62","206.01","7/31/2018","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap","GW",-6.82,-51.32,41.30866111,-81.44175833,"Cleveland_Jul-Aug-18",NA,"Summit",332,"Cleveland","Ohio",3.24,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"63","207.01","7/31/2018","Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap","GW",-6.84,-51.44,41.31433333,-81.51178333,"Cleveland_Jul-Aug-18",NA,"Summit",316,"Cleveland","Ohio",3.28,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"64","208.01","7/31/2018","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap","GW",-6.82,-51.35,41.31866944,-81.62736389,"Cleveland_Jul-Aug-18",NA,"Cuyahoga",262,"Cleveland","Ohio",3.21,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"65","209.01","7/31/2018","Best Stop at 179 &
+303 Richfield OH tap","GW",-8.81,-57.18,41.23993333,-81.653825,"Cleveland_Jul-Aug-18",NA,"Summit",372,"Cleveland","Ohio",13.3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"66","212.01","7/31/2018","Giant Eagle grocery
+store at 43 & 303/14
+Streetsboro OH tap","GW",-8.75,-58.49,41.23806389,-81.34747778,"Cleveland_Jul-Aug-18",NA,"Portage",333,"Cleveland","Ohio",11.51,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"67","213.01","7/31/2018","McGilvery Hall Kent
+OH tap","GW",-8.37,-56.3,41.15043056,-81.35086111,"Cleveland_Jul-Aug-18",NA,"Portage",331,"Cleveland","Ohio",10.66,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
+"68","224.01","8/4/2018","Shell Gas station at
+33 & 82 Tap grab","GW",-9.65,-63.03,41.31066389,-81.22136111,"Cleveland_Jul-Aug-18",NA,"Portage",367,"Cleveland","Ohio",14.17,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"1"
