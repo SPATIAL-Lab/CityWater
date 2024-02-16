@@ -113,8 +113,9 @@ ggplot()+
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Cleveland, OH"), fill = "#003f5c") + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Wooster, OH"), fill =  "#d2042d") + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Akron, OH"), fill = 'goldenrod') + 
+  geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'hotpink') + 
   #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
-  geom_jitter(data = oh, aes(x = lon, y = lat, color = km_cluster), width = 0.01, size = 3) + 
+  geom_jitter(data = oh, aes(x = lon, y = lat), width = 0.01, size = 3) + 
   scale_color_viridis(discrete = T, option = 'mako') +
   theme_void()
 # you can see how we have a lot of samples well outside of Cleveland. There's an argument of cachement and whether these are suburbs
@@ -135,6 +136,7 @@ ggplot()+
   geom_sf(data = counties2, fill = 'white') + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Cleveland, OH"), fill = "#003f5c") + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Akron, OH"), fill = 'goldenrod') + 
+  geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'darkred') + 
   geom_sf(data = ohvect2, aes(color = d18O), size = 3) + 
   scale_color_viridis(discrete = F, option = 'mako') +
   theme_void()
