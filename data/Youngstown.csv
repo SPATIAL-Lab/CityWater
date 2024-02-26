@@ -1,0 +1,94 @@
+"","sample_ID","date","site_name","source","d18O","d2H","lat","lon","cluster_location_time","county","elevation","cluster"
+"1",145,"1/2/2018","Army corps of eng.
+Berlin, OH Berlin
+Lake Bedell Rd South
+of 224 Tap","GW",-8.98,-58.64,41.01521389,-80.98703056,"Cleveland_Jan-Mar-18","Mahoning",317,"Youngstown"
+"2",145.01,"7/29/2018","Army corps of eng.
+Berlin, OH Berlin
+Lake Bedell Rd South
+of 224 Tap","GW",-9.08,-59.62,41.01521389,-80.98703056,"Cleveland_Jul-Aug-18","Mahoning",317,"Youngstown"
+"3",152,"1/2/2018","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH","Mosquito creek ",-6.404320212,-44.32616783,41.18668333,-80.97133333,"Cleveland_Jan-Mar-18","Trumbull",283,"Youngstown"
+"4",160,"1/2/2018","Hard'd market at 305 and 534 Newtonfalls city water Southington OH","Mosquito creek ",-6.308673752,-43.71087311,41.30868333,-80.95541667,"Cleveland_Jan-Mar-18","Trumbull",277,"Youngstown"
+"5",171,"1/3/2018","Quinns grocery store
+St rte 45 4of 87
+North Bloomfield","GW",-9.62,-62.98,41.46293333,-80.86876667,"Cleveland_Jan-Mar-18","Trumbull",272,"Youngstown"
+"6",171.01,"7/29/2018","Quinns grocery store
+St rte 45 4of 87
+North Bloomfield","GW",-9.59,-62.8,41.46293333,-80.86876667,"Cleveland_Jul-Aug-18","Trumbull",272,"Youngstown"
+"7",159,"1/2/2018","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH","GW",-4.82,-35.97,41.25901667,-80.86846667,"Cleveland_Jan-Mar-18","Trumbull",279,"Youngstown"
+"8",159.01,"7/29/2018","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH","GW",-6.26,-45.78,41.25901667,-80.86846667,"Cleveland_Jul-Aug-18","Trumbull",279,"Youngstown"
+"9",146,"1/2/2018","Sunoco Gas station
+at 45 and 224
+Ellsworth, OH tap","GW",-9.73,-64.18,41.02395556,-80.85779167,"Cleveland_Jan-Mar-18","Mahoning",327,"Youngstown"
+"10",146.01,"7/29/2018","Sunoco Gas station
+at 45 and 224
+Ellsworth, OH tap","GW",-9.65,-63.95,41.02395556,-80.85779167,"Cleveland_Jul-Aug-18","Mahoning",327,"Youngstown"
+"11",153,"1/2/2018","Lordstown Speed check Gas station on Tod Ave SW and salt spring Rd Lordstown OH tap","Mosquito creek ",-5.798082609,-41.74043924,41.16623333,-80.85685,"Cleveland_Jan-Mar-18","Trumbull",289,"Youngstown"
+"12",151,"1/2/2018","Dollar General 10701 Mahonis Ave east of liberty St North Jackson, OH","Mosquito creek ",-5.761774409,-41.46552931,41.09985,-80.85168333,"Cleveland_Jan-Mar-18","Mahoning",305,"Youngstown"
+"13",161,"1/2/2018","Fast Break Gas station 45 and 305 Mahoning ave NW and Center St E Champion OH","Mosquito creek ",-4.806600549,-35.86689496,41.30868333,-80.84916667,"Cleveland_Jan-Mar-18","Trumbull",286,"Youngstown"
+"14",154,"1/2/2018","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH","Mosquito creek ",-5.724156868,-41.26409612,41.15923333,-80.76906667,"Cleveland_Jan-Mar-18","Trumbull",292,"Youngstown"
+"15",162,"1/2/2018","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd","GW",-9.07,-59.23,41.30843889,-80.74424722,"Cleveland_Jan-Mar-18","Trumbull",284,"Youngstown"
+"16",162.01,"7/29/2018","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd","GW",-9.03,-58.87,41.30843889,-80.74424722,"Cleveland_Jul-Aug-18","Trumbull",284,"Youngstown"
+"17",158,"1/2/2018","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap","GW",-5.81,-41.83,41.23781389,-80.74012778,"Cleveland_Jan-Mar-18","Trumbull",288,"Youngstown"
+"18",158,"1/2/2018","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap","Mosquito creek ",-5.806307115,-41.82738964,41.23781389,-80.74012778,"Cleveland_Jan-Mar-18","Trumbull",288,"Youngstown"
+"19",158.01,"7/29/2018","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap","GW",-7.72,-53.18,41.23781389,-80.74012778,"Cleveland_Jul-Aug-18","Trumbull",288,"Youngstown"
+"20",147,"1/2/2018","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap","GW",-4.93,-36.71,41.024025,-80.73642222,"Cleveland_Jan-Mar-18","Mahoning",337,"Youngstown"
+"21",147.01,"7/29/2018","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap","GW",-5.62,-41.74,41.024025,-80.73642222,"Cleveland_Jul-Aug-18","Mahoning",337,"Youngstown"
+"22",165,"1/2/2018","JAK's fine foods and
+gas station on 88
+and 45 greenville Rd
+and Niles Courtland
+Rd NE Tap","GW",-9.17,-59.6,41.3898,-80.73615,"Cleveland_Jan-Mar-18","Trumbull",297,"Youngstown"
+"23",165.01,"7/29/2018","JAK's fine foods and
+gas station on 88
+and 45 greenville Rd
+and Niles Courtland
+Rd NE Tap","GW",-9.22,-59.61,41.3898,-80.73615,"Cleveland_Jul-Aug-18","Trumbull",297,"Youngstown"
+"24",150,"1/2/2018","Burger King on Meridian and Magoning Rd Perkins corners, OH tap","Mosquito creek ",-5.734718913,-41.4820043,41.102675,-80.71065,"Cleveland_Jan-Mar-18","Mahoning",318,"Youngstown"
+"25",164,"1/2/2018","Quinns Mini Mart at
+193 and 88 Johnson
+OH","GW",-8.68,-55.65,41.38848333,-80.66543611,"Cleveland_Jan-Mar-18","Trumbull",336,"Youngstown"
+"26",164.01,"7/29/2018","Quinns Mini Mart at
+193 and 88 Johnson
+OH","GW",-8.53,-55.18,41.38848333,-80.66543611,"Cleveland_Jul-Aug-18","Trumbull",336,"Youngstown"
+"27",155,"1/2/2018","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)","Mosquito creek ",-5.789949162,-41.70819041,41.15301667,-80.66525,"Cleveland_Jan-Mar-18","Trumbull",319,"Youngstown"
+"28",148,"1/2/2018","Wendys at 224 and Applewood in Poland OH tap","Mosquito creek ",-4.972150824,-37.0628783,41.02386389,-80.64688333,"Cleveland_Jan-Mar-18","Mahoning",333,"Youngstown"
+"29",149,"1/2/2018","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap","Mosquito creek ",-7.456492819,-48.51759766,41.08995,-80.59043889,"Cleveland_Jan-Mar-18","Mahoning",321,"Youngstown"
+"30",156,"1/2/2018","Loves gas station on 7/62 abd Franklin in Hubbard OH tap","Mosquito creek ",-8.013665101,-53.55216612,41.17315,-80.56958333,"Cleveland_Jan-Mar-18","Trumbull",304,"Youngstown"
+"31",157,"1/2/2018","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH","GW",-5.81,-41.74,41.23343889,-80.56406667,"Cleveland_Jan-Mar-18","Trumbull",328,"Youngstown"
+"32",157.01,"7/29/2018","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH","GW",-7.74,-53.37,41.23343889,-80.56406667,"Cleveland_Jul-Aug-18","Trumbull",328,"Youngstown"
+"33",172,"1/3/2018","ACE Hardware Kinsman OH Main St (87 & 7 & 5) tap","",-9.68,-63.58,41.45495,-80.579725,"Cleveland_Jan-Mar-18","Trumbull",313,"Youngstown"
+"34",163,"1/2/2018","The Fowler grind coffee shop 305 and 193 Wilson sharpsville Rd and youngstown kingsville Rd Fowler center off tap","",-8.73,-56.69,41.31099722,-80.65634167,"Cleveland_Jan-Mar-18","Trumbull",342,"Youngstown"
+"35",170,"1/3/2018","Amish Mattress store. 6255 St rte 45 Bristol OH tap Run other tests Bad smell (?)","",-8.85,-58.71,41.38774444,-80.86939444,"Cleveland_Jan-Mar-18","Trumbull",280,"Youngstown"

@@ -193,3 +193,45 @@ ggplot()+
 
 
 write.csv(CLE3, 'data/Cleveland.csv')
+
+
+# Cleaning up Cleveland new data ------------------------------------------
+library(dplyr); library(ggplot2); library(terra); library(tidyterra); library(tidyr)
+CLE <- read.csv('data/OhioNoWooster.csv')
+
+latlong2county <- function(pointsDF) {
+  # Prepare SpatialPolygons object with one SpatialPolygon
+  # per county
+  counties <- map('county', fill=TRUE, col="transparent", plot=FALSE)
+  IDs <- sapply(strsplit(counties$names, ":"), function(x) x[1])
+  counties_sp <- map2SpatialPolygons(counties, IDs=IDs,
+                                     proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Convert pointsDF to a SpatialPoints object 
+  pointsSP <- SpatialPoints(pointsDF, 
+                            proj4string=CRS("+proj=longlat +datum=WGS84"))
+  
+  # Use 'over' to get _indices_ of the Polygons object containing each point 
+  indices <- over(pointsSP, counties_sp)
+  
+  # Return the county names of the Polygons object containing each point
+  countyNames <- sapply(counties_sp@polygons, function(x) x@ID)
+  countyNames[indices]
+}
+
+xy <- data.frame(x = CLE$lon, y = CLE$lat)
+
+CLE$county <- latlong2county(xy)
+CLE$county <- gsub(".*,", "", CLE$county)
+CLE$county <- str_to_title(CLE$county) 
+
+# Elevation ---------------------------------------------------------------
+elevation_USGS <- get_elev_point(xy, prj = 4326, src = "aws")
+CLE$elevation <- elevation_USGS$elevation
+
+counties <- counties("OH", cb = T, resolution = "20m") %>% 
+  filter(NAME %in% c("Geauga", "Portage", "Summit", "Wayne", "Medina", "Cuyahoga", 
+                     "Mahoning", "Trumbull", "Ashtabula", "Lake")) %>% 
+  vect() #%>% 
+#terra::aggregate()
+ohvect <- vect(oh, crs= crs(counties), keep = T)

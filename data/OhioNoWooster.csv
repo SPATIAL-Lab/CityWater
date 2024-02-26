@@ -1,364 +1,377 @@
-﻿sample_ID,date,site_name,type,d18O,d2H,lat,lon,cluster_location_time,
-125,1/1/2018,"Speedway gas
-station corner Lynn
-and Prospect
-Rootstown, OH Tap",GW,-8.58,-57.6,41.11084722,-81.24344444,Cleveland_Jan-Feb-18,
-126,1/1/2018,"Marathon Gas
-station corner of 44
-and 224 Randolph,
-OH, Tap",GW,-9.17,-59.35,41.02963889,-81.24863056,Cleveland_Jan-Feb-18,
-127,1/1/2018,"Speedway gas
-station corner of 224
-and 91 (1275) tap
-Lakemore, OH",GW,-8.4,-55.47,41.03089167,-81.42650556,Cleveland_Jan-Feb-18,
-130,1/1/2018,"Circle K gas station
-at 21 and eastern Rd
-Norton, OH Tap",GW,-8.06,-52.2,40.98918056,-81.66439444,Cleveland_Jan-Feb-18,
-131,1/1/2018,"Circle K gas station
-at Broad and
-Silvercreek Rd
-Wadsworth, OH Tao",GW,-8.96,-58.34,40.99823056,-81.81000833,Cleveland_Jan-Feb-18,
+﻿sample_ID,date,site_name,source,d18O,d2H,lat,lon,cluster_location_time
+139,1/1/2018,"GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",Lake Erie,-6.810654588,-51.75693387,41.45666389,-81.90153056,Cleveland_Jan-Mar-18
 132,1/1/2018,"Circle K gas station
 at 76 and 3 seville
-Tap",GW,-8.93,-58.62,41.03584722,-81.86499167,Cleveland_Jan-Feb-18,
-133,1/1/2018,"BP minimart Lake Rd
-and Reid Rd
-Chippew on the
-Lake, OH tap",GW,-8.26,-55.18,40.99813611,-81.80991111,Cleveland_Jan-Feb-18,
+Tap",GW,-8.93,-58.62,41.03584722,-81.86499167,Cleveland_Jan-Mar-18
+132.01,7/28/2018,"Circle K gas station
+at 76 and 3 seville
+Tap",GW,-8.9,-58.45,41.03584722,-81.86499167,Cleveland_Jul-Aug-18
+134,1/1/2018,"Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",Lake Erie,-6.439860459,-48.77413026,41.15159444,-81.86298889,Cleveland_Jan-Mar-18
 135,1/1/2018,"Speedway at 42
 Pearl Rd and Oxford
 Dr Tap, Brunswick
-OH",GW,-6.3,-48.01,41.23296111,-81.84114167,Cleveland_Jan-Feb-18,
+OH",GW,-6.3,-48.01,41.23296111,-81.84114167,Cleveland_Jan-Mar-18
+135.01,7/28/2018,"Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",GW,-6.91,-51.71,41.23296111,-81.84114167,Cleveland_Jul-Aug-18
+138,1/1/2018,"Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",Lake Erie,-6.767218593,-51.14807653,41.41911389,-81.83251944,Cleveland_Jan-Mar-18
 136,1/1/2018,"Sheetz at Whitney
 Rd and Pearl Rd/ 42
 Middleburg Hts, OH
-tap",GW,-6.51,-49.63,41.34346389,-81.82559722,Cleveland_Jan-Feb-18,
-128,1/1/2018,"Sheetz gas station corner main and waterloo Rd Akron, OH tap",Lake Rockwell,-8.360784437,-55.21628184,41.02809167,-81.52803611,Cleveland_Jan-Feb-18,
-134,1/1/2018,"Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",Lake Erie,-6.439860459,-48.77413026,41.15159444,-81.86298889,Cleveland_Jan-Feb-18,
-137,1/1/2018,Circle K at snow and smith Brookepark tap,Lake Erie,-6.427844736,-48.59972294,41.40426667,-81.80456667,Cleveland_Jan-Feb-18,
-138,1/1/2018,"Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",Lake Erie,-6.767218593,-51.14807653,41.41911389,-81.83251944,Cleveland_Jan-Feb-18,
-139,1/1/2018,"GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",Lake Erie,-6.810654588,-51.75693387,41.45666389,-81.90153056,Cleveland_Jan-Feb-18,
-140,1/1/2018,"McDonalds on 117th s of detroit Lake wood, OH tap",Lake Erie,-6.506492957,-49.52516751,41.48268333,-81.76924722,Cleveland_Jan-Feb-18,
-141,1/1/2018,"Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",Lake Erie,-7.77595068,-56.16783592,41.44214167,-81.75493889,Cleveland_Jan-Feb-18,
-142,1/1/2018,Sheetz Ridge Rd and Day Dr Parma. OH Tap,Lake Erie,-6.601886018,-50.1743819,41.38013889,-81.73528056,Cleveland_Jan-Feb-18,
+tap",GW,-6.51,-49.63,41.34346389,-81.82559722,Cleveland_Jan-Mar-18
+136.01,7/28/2018,"Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",GW,-6.84,-51.5,41.34346389,-81.82559722,Cleveland_Jul-Aug-18
+131,1/1/2018,"Circle K gas station
+at Broad and
+Silvercreek Rd
+Wadsworth, OH Tao",GW,-8.96,-58.34,40.99823056,-81.81000833,Cleveland_Jan-Mar-18
+131.01,7/28/2018,"Circle K gas station
+at Broad and
+Silvercreek Rd
+Wadsworth, OH Tao",GW,-8.99,-58.87,40.99823056,-81.81000833,Cleveland_Jul-Aug-18
+133,1/1/2018,"BP minimart Lake Rd
+and Reid Rd
+Chippew on the
+Lake, OH tap",GW,-8.26,-55.18,40.99813611,-81.80991111,Cleveland_Jan-Mar-18
+133.01,7/28/2018,"BP minimart Lake Rd
+and Reid Rd
+Chippew on the
+Lake, OH tap",GW,-8.64,-56.63,40.99813611,-81.80991111,Cleveland_Jul-Aug-18
+137,1/1/2018,Circle K at snow and smith Brookepark tap,Lake Erie,-6.427844736,-48.59972294,41.40426667,-81.80456667,Cleveland_Jan-Mar-18
+140,1/1/2018,"McDonalds on 117th s of detroit Lake wood, OH tap",Lake Erie,-6.506492957,-49.52516751,41.48268333,-81.76924722,Cleveland_Jan-Mar-18
+141,1/1/2018,"Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",Lake Erie,-7.77595068,-56.16783592,41.44214167,-81.75493889,Cleveland_Jan-Mar-18
+142,1/1/2018,Sheetz Ridge Rd and Day Dr Parma. OH Tap,Lake Erie,-6.601886018,-50.1743819,41.38013889,-81.73528056,Cleveland_Jan-Mar-18
+130,1/1/2018,"Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",GW,-8.06,-52.2,40.98918056,-81.66439444,Cleveland_Jan-Mar-18
+130.01,7/28/2018,"Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",GW,-8.16,-53.59,40.98918056,-81.66439444,Cleveland_Jul-Aug-18
+209,1/4/2018,"Best Stop at 179 &
+303 Richfield OH tap",GW,-9.14,-58.68,41.23993333,-81.653825,Cleveland_Jan-Mar-18
+209.01,7/31/2018,"Best Stop at 179 &
+303 Richfield OH tap",GW,-8.81,-57.18,41.23993333,-81.653825,Cleveland_Jul-Aug-18
+208,1/4/2018,"8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",GW,-6.41,-48.73,41.31866944,-81.62736389,Cleveland_Jan-Mar-18
+208.01,7/31/2018,"8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",GW,-6.82,-51.35,41.31866944,-81.62736389,Cleveland_Jul-Aug-18
+128,1/1/2018,"Sheetz gas station corner main and waterloo Rd Akron, OH tap",Lake Rockwell,-8.360784437,-55.21628184,41.02809167,-81.52803611,Cleveland_Jan-Mar-18
+207,1/4/2018,Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap,GW,-6.49,-49.39,41.31433333,-81.51178333,Cleveland_Jan-Mar-18
+207.01,7/31/2018,"Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",GW,-6.84,-51.44,41.31433333,-81.51178333,Cleveland_Jul-Aug-18
+206,1/4/2018,"Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",GW,-6.51,-49.37,41.30866111,-81.44175833,Cleveland_Jan-Mar-18
+206.01,7/31/2018,"Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",GW,-6.82,-51.32,41.30866111,-81.44175833,Cleveland_Jul-Aug-18
+201,1/4/2018,Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap,Lake Erie,-6.364263727,-48.6671278,41.52046111,-81.43910278,Cleveland_Jan-Mar-18
+191,1/3/2018,Circle K minimart at Vine St & 364th/ on 642 tap east lake,Lake Erie,-6.423558152,-49.04248045,41.64278333,-81.42915,Cleveland_Jan-Mar-18
+127,1/1/2018,"Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",GW,-8.4,-55.47,41.03089167,-81.42650556,Cleveland_Jan-Mar-18
+127.01,7/28/2018,"Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",GW,-6.98,-48.14,41.03089167,-81.42650556,Cleveland_Jul-Aug-18
+213,1/4/2018,"McGilvery Hall Kent
+OH tap",GW,-8.31,-55.47,41.15043056,-81.35086111,Cleveland_Jan-Mar-18
+213.01,7/31/2018,"McGilvery Hall Kent
+OH tap",GW,-8.37,-56.3,41.15043056,-81.35086111,Cleveland_Jul-Aug-18
+205,1/4/2018,Shell gas station at 82 & 43 in Aurora OH,Lake Erie,-6.510153437,-49.53251814,41.31768889,-81.35078889,Cleveland_Jan-Mar-18
+199,1/4/2018,"Circle K & 6 & 306
+Chillcothe rd &
+Chardon Rd tap
+Pecks Corners OH",GW,-6.41,-48.67,41.58361667,-81.3481,Cleveland_Jan-Mar-18
+199.01,7/30/2018,"Circle K & 6 & 306
+Chillcothe rd &
+Chardon Rd tap
+Pecks Corners OH",GW,-6.73,-50.75,41.58361667,-81.3481,Cleveland_Jul-Aug-18
+212,1/4/2018,"Giant Eagle grocery
+store at 43 & 303/14
+Streetsboro OH tap",GW,-8.64,-57.62,41.23806389,-81.34747778,Cleveland_Jan-Mar-18
+212.01,7/31/2018,"Giant Eagle grocery
+store at 43 & 303/14
+Streetsboro OH tap",GW,-8.75,-58.49,41.23806389,-81.34747778,Cleveland_Jul-Aug-18
+204,1/4/2018,"McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",GW,-9.69,-63.54,41.389825,-81.34023611,Cleveland_Jan-Mar-18
+204.01,7/31/2018,"McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",GW,-9.67,-63.42,41.389825,-81.34023611,Cleveland_Jul-Aug-18
+190,1/3/2018,BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap,Lake Erie,-6.489395491,-49.31237232,41.68865,-81.33878333,Cleveland_Jan-Mar-18
+200,1/4/2018,"Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",GW,-10.38,-67.46,41.52306667,-81.33858333,Cleveland_Jan-Mar-18
+200.01,7/30/2018,"Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",GW,-10.27,-67.53,41.52306667,-81.33858333,Cleveland_Jul-Aug-18
+189,1/3/2018,Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap,Lake Erie,-6.500387364,-49.20126483,41.71511111,-81.29967222,Cleveland_Jan-Mar-18
+122,1/12/2018,"Long Science Center
+Tap Water",GW,-6.23,-40.3,41.61445,-81.29389444,Cleveland_Jan-Mar-18
+122.01,7/21/2018,"Long Science Center
+Tap Water",GW,-9.96,-64.7,41.61445,-81.29389444,Cleveland_Jul-Aug-18
+126,1/1/2018,"Marathon Gas
+station corner of 44
+and 224 Randolph,
+OH, Tap",GW,-9.17,-59.35,41.02963889,-81.24863056,Cleveland_Jan-Mar-18
+126.01,7/28/2018,"Marathon Gas
+station corner of 44
+and 224 Randolph,
+OH, Tap",GW,-8.89,-57.75,41.02963889,-81.24863056,Cleveland_Jul-Aug-18
+125,1/1/2018,"Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",GW,-8.58,-57.6,41.11084722,-81.24344444,Cleveland_Jan-Mar-18
+125.01,7/28/2018,"Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",GW,-8.73,-58.15,41.11084722,-81.24344444,Cleveland_Jul-Aug-18
+124,1/1/2018,"Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab",,-9.02,-59.79,41.14751944,-81.24178611,Cleveland_Jan-Mar-18
+224,2/4/2018,"Shell Gas station at
+33 & 82 Tap grab",GW,-9.69,-63.09,41.31066389,-81.22136111,Cleveland_Jan-Mar-18
+224.01,8/4/2018,"Shell Gas station at
+33 & 82 Tap grab",GW,-9.65,-63.03,41.31066389,-81.22136111,Cleveland_Jul-Aug-18
+193,1/4/2018,"Baitshop on corner
+og Washington ST &
+ravenna Rd/ 44
+Auburn corner OH
+business for sale Tap",GW,-9.56,-62.14,41.38706111,-81.21658611,Cleveland_Jan-Mar-18
+193.01,7/30/2018,"Baitshop on corner
+og Washington ST &
+ravenna Rd/ 44
+Auburn corner OH
+business for sale Tap",GW,-9.21,-60.21,41.38706111,-81.21658611,Cleveland_Jul-Aug-18
+194,1/4/2018,"87 New Berry OH
+tap",GW,-9.66,-62.32,41.47066111,-81.193275,Cleveland_Jan-Mar-18
+194.01,7/30/2018,"87 New Berry OH
+tap",GW,-9.61,-62.29,41.47066111,-81.193275,Cleveland_Jul-Aug-18
+188,1/3/2018,BP gas station ar 90 & Vrooman Rd exit 205 Leroy center OH tap,Lake Erie,-6.41011883,-48.58104651,41.70678333,-81.17575,Cleveland_Jan-Mar-18
 144,1/2/2018,"Circle K gas stationa
 Atwater at 183 and
-224 Tap",GW,-8.74,-56.28,41.02403056,-81.14753333,Cleveland_Jan-Feb-18,
-145,1/2/2018,"Army corps of eng.
-Berlin, OH Berlin
-Lake Bedell Rd South
-of 224 Tap",GW,-8.98,-58.64,41.01521389,-80.98703056,Cleveland_Jan-Feb-18,
-146,1/2/2018,"Sunoco Gas station
-at 45 and 224
-Ellsworth, OH tap",GW,-9.73,-64.18,41.02395556,-80.85779167,Cleveland_Jan-Feb-18,
-147,1/2/2018,"Sheetz Gas station
-at 11 and 224 in
-Canfield OH Tap",GW,-4.93,-36.71,41.024025,-80.73642222,Cleveland_Jan-Feb-18,
-157,1/2/2018,"Scotty's Brookfield
-express mark on
-Warren Sharon Rd
-and Bedford SE
-Brookfield OH",GW,-5.81,-41.74,41.23343889,-80.56406667,Cleveland_Jan-Feb-18,
-158,1/2/2018,"Get Go gas station
-on Niles courtland
-road SE and East
-market, Howland
-Corners tap",GW,-5.81,-41.83,41.23781389,-80.74012778,Cleveland_Jan-Feb-18,
-159,1/2/2018,"Circle K 4021 N
-Leavitt Rd and
-Parkman Rd NW
-warren OH",GW,-4.82,-35.97,41.25901667,-80.86846667,Cleveland_Jan-Feb-18,
-162,1/2/2018,"Lakeside sport shop.
-Warren Meedville
-Rd and Wilson
-Sharpvill Rd",GW,-9.07,-59.23,41.30843889,-80.74424722,Cleveland_Jan-Feb-18,
-164,1/2/2018,"Quinns Mini Mart at
-193 and 88 Johnson
-OH",GW,-8.68,-55.65,41.38848333,-80.66543611,Cleveland_Jan-Feb-18,
-165,1/2/2018,"JAK's fine foods and
-gas station on 88
-and 45 greenville Rd
-and Niles Courtland
-Rd NE Tap",GW,-9.17,-59.6,41.3898,-80.73615,Cleveland_Jan-Feb-18,
-148,1/2/2018,Wendys at 224 and Applewood in Poland OH tap,Mosquito creek ,-4.972150824,-37.0628783,41.02386389,-80.64688333,Cleveland_Jan-Feb-18,
-149,1/2/2018,McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap,Mosquito creek ,-7.456492819,-48.51759766,41.08995,-80.59043889,Cleveland_Jan-Feb-18,
-150,1/2/2018,"Burger King on Meridian and Magoning Rd Perkins corners, OH tap",Mosquito creek ,-5.734718913,-41.4820043,41.102675,-80.71065,Cleveland_Jan-Feb-18,
-151,1/2/2018,"Dollar General 10701 Mahonis Ave east of liberty St North Jackson, OH",Mosquito creek ,-5.761774409,-41.46552931,41.09985,-80.85168333,Cleveland_Jan-Feb-18,
-152,1/2/2018,ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH,Mosquito creek ,-6.404320212,-44.32616783,41.18668333,-80.97133333,Cleveland_Jan-Feb-18,
-153,1/2/2018,Lordstown Speed check Gas station on Tod Ave SW and salt spring Rd Lordstown OH tap,Mosquito creek ,-5.798082609,-41.74043924,41.16623333,-80.85685,Cleveland_Jan-Feb-18,
-154,1/2/2018,Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH,Mosquito creek ,-5.724156868,-41.26409612,41.15923333,-80.76906667,Cleveland_Jan-Feb-18,
-155,1/2/2018,Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80),Mosquito creek ,-5.789949162,-41.70819041,41.15301667,-80.66525,Cleveland_Jan-Feb-18,
-156,1/2/2018,Loves gas station on 7/62 abd Franklin in Hubbard OH tap,Mosquito creek ,-8.013665101,-53.55216612,41.17315,-80.56958333,Cleveland_Jan-Feb-18,
-158,1/2/2018,"Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",Mosquito creek ,-5.806307115,-41.82738964,41.23781389,-80.74012778,Cleveland_Jan-Feb-18,
-160,1/2/2018,Hard'd market at 305 and 534 Newtonfalls city water Southington OH,Mosquito creek ,-6.308673752,-43.71087311,41.30868333,-80.95541667,Cleveland_Jan-Feb-18,
-161,1/2/2018,Fast Break Gas station 45 and 305 Mahoning ave NW and Center St E Champion OH,Mosquito creek ,-4.806600549,-35.86689496,41.30868333,-80.84916667,Cleveland_Jan-Feb-18,
+224 Tap",GW,-8.74,-56.28,41.02403056,-81.14753333,Cleveland_Jan-Mar-18
+144.01,7/29/2018,"Circle K gas stationa
+Atwater at 183 and
+224 Tap",GW,-8.7,-56.17,41.02403056,-81.14753333,Cleveland_Jul-Aug-18
 166,1/3/2018,"Detour Drive thru on
 303/88 on Hadson
 Breeville Rd
-Freedom OH tap",GW,-9.32,-60.26,41.23605,-81.1443,Cleveland_Jan-Feb-18,
+Freedom OH tap",GW,-9.32,-60.26,41.23605,-81.1443,Cleveland_Jan-Mar-18
+166.01,7/30/2018,"Detour Drive thru on
+303/88 on Hadson
+Breeville Rd
+Freedom OH tap",GW,-9.22,-60.38,41.23605,-81.1443,Cleveland_Jul-Aug-18
+198,1/4/2018,"Hambden Corners
+gas station at 166 &
+GAR hwy tap
+Hambden Corners
+OH",GW,-10.02,-64.61,41.60692778,-81.14348611,Cleveland_Jan-Mar-18
+198.01,7/30/2018,"Hambden Corners
+gas station at 166 &
+GAR hwy tap
+Hambden Corners
+OH",GW,-9.95,-64.77,41.60692778,-81.14348611,Cleveland_Jul-Aug-18
 168,1/3/2018,"Skylane Bowling
 Alley 82 and Liberty
 St tap Garrettsville
-OH",GW,-9.6,-62.88,41.27766944,-81.09004444,Cleveland_Jan-Feb-18,
+OH",GW,-9.6,-62.88,41.27766944,-81.09004444,Cleveland_Jan-Mar-18
+168.01,7/30/2018,"Skylane Bowling
+Alley 82 and Liberty
+St tap Garrettsville
+OH",GW,-9.55,-62.85,41.27766944,-81.09004444,Cleveland_Jul-Aug-18
+195,1/4/2018,"McDonalds at W
+high St & springdale
+ave in Middlefield
+OH tap",GW,-10.01,-65.53,41.46235833,-81.08603889,Cleveland_Jan-Mar-18
+195.01,7/29/2018,"McDonalds at W
+high St & springdale
+ave in Middlefield
+OH tap",GW,-9.94,-65.39,41.46235833,-81.08603889,Cleveland_Jul-Aug-18
 169,1/3/2018,"BP gas station at 88
 and 422 Main
 market Rd and
 Madison Rd tap
 Elwood/Spike
 Weaver grand river
-access Parkman OH",GW,-9.81,-63.74,41.37063889,-81.06357778,Cleveland_Jan-Feb-18,
-171,1/3/2018,"Quinns grocery store
-St rte 45 4of 87
-North Bloomfield",GW,-9.62,-62.98,41.46293333,-80.86876667,Cleveland_Jan-Feb-18,
-173,1/3/2018,"Post Office in
-williamsfield OH tap
-on 322 W of 7",GW,-9.83,-64.08,41.53346667,-80.57258333,Cleveland_Jan-Feb-18,
-174,1/3/2018,"Colebrook Lounge on
-322 east of 46
-Colebrook OH tap",GW,-8.51,-54.07,41.53628611,-80.75740833,Cleveland_Jan-Feb-18,
-175,1/3/2018,"JD's pit stop 322/
-main st and Satley
-rd Orwell OH tap",GW,-8.94,-57.87,41.53536667,-80.84476111,Cleveland_Jan-Feb-18,
-176,1/3/2018,"Primary health
-network 5266 state
-rte 45 Rome OH tap",GW,-6.24,-47.26,41.60563056,-80.86491944,Cleveland_Jan-Feb-18,
-177,1/3/2018,"BP gas station at 6
-and 46 New Lyme,
-OH grand army of
-the republic hay tap",GW,-3.21,-31.65,41.60508056,-80.78075833,Cleveland_Jan-Feb-18,
-179,1/3/2018,"Bushnell store tap at
-7 and 84 center rd
-and bushnell",GW,-9.8,-63.44,41.863025,-80.57206667,Cleveland_Jan-Feb-18,
-180,1/3/2018,Love gas station at 7 and 90 Loves Dr tap Conneaat ,Lake Erie,-6.520061559,-49.05686241,41.91403056,-80.57053056,Cleveland_Jan-Feb-18,
-181,1/3/2018,"T&A 193, 84 & 90 Kingsville OH tap",Lake Erie,-6.533784356,-49.15161568,41.87671944,-80.66708333,Cleveland_Jan-Feb-18,
-182,1/3/2018,Sheets at 11&20 Astabula OH tap,Lake Erie,-6.467647788,-48.87701673,41.87628056,-80.76436667,Cleveland_Jan-Feb-18,
-183,1/3/2018,Flying J store at 90&45 Manson Hill OH / Saybrook TWP,Lake Erie,-6.509005077,-49.0724633,41.789275,-80.85591667,Cleveland_Jan-Feb-18,
-184,1/3/2018,McDonalds at 90 & 534 Geneva OH tap,Lake Erie,-6.372391593,-48.15841344,41.77262222,-80.94738889,Cleveland_Jan-Feb-18,
-185,1/3/2018,Pasta oven at W water st & S main st Rockcreek OH tap,Lake Erie,-6.529109194,-49.01247189,41.66010833,-80.86084722,Cleveland_Jan-Feb-18,
-186,1/3/2018,Shell gas station at E satin st & rt 46 in Jefferson OH,Lake Erie,-6.447257569,-48.80250758,41.73601667,-80.76914444,Cleveland_Jan-Feb-18,
-187,1/3/2018,McDonalds at 90 & 528 Madison OH tap,Lake Erie,-6.214136569,-47.21955977,41.76170278,-81.0469,Cleveland_Jan-Feb-18,
-188,1/3/2018,BP gas station ar 90 & Vrooman Rd exit 205 Leroy center OH tap,Lake Erie,-6.41011883,-48.58104651,41.70678333,-81.17575,Cleveland_Jan-Feb-18,
-189,1/3/2018,Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap,Lake Erie,-6.500387364,-49.20126483,41.71511111,-81.29967222,Cleveland_Jan-Feb-18,
-190,1/3/2018,BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap,Lake Erie,-6.489395491,-49.31237232,41.68865,-81.33878333,Cleveland_Jan-Feb-18,
-191,1/3/2018,Circle K minimart at Vine St & 364th/ on 642 tap east lake,Lake Erie,-6.423558152,-49.04248045,41.64278333,-81.42915,Cleveland_Jan-Feb-18,
-193,1/4/2018,"Baitshop on corner
-og Washington ST &
-ravenna Rd/ 44
-Auburn corner OH
-business for sale Tap",GW,-9.56,-62.14,41.38706111,-81.21658611,Cleveland_Jan-Feb-18,
-194,1/4/2018,"87 New Berry OH
-tap",GW,-9.66,-62.32,41.47066111,-81.193275,Cleveland_Jan-Feb-18,
-195,1/4/2018,"McDonalds at W
-high St & springdale
-ave in Middlefield
-OH tap",GW,-10.01,-65.53,41.46235833,-81.08603889,Cleveland_Jan-Feb-18,
-196,1/4/2018,"Montville country
-store at 528 & 6 /
-Madison rd & GAR
-hwy Mintville OH
-tap",GW,-10.07,-65.29,41.60745556,-81.05078056,Cleveland_Jan-Feb-18,
-197,1/4/2018,"Stockers on the park
-resturaunt on 527 in
-circle thompson OH",GW,-10.24,-66.74,41.68977778,-81.05070278,Cleveland_Jan-Feb-18,
-198,1/4/2018,"Hambden Corners
-gas station at 166 &
-GAR hwy tap
-Hambden Corners
-OH",GW,-10.02,-64.61,41.60692778,-81.14348611,Cleveland_Jan-Feb-18,
-199,1/4/2018,"Circle K & 6 & 306
-Chillcothe rd &
-Chardon Rd tap
-Pecks Corners OH",GW,-6.41,-48.67,41.58361667,-81.3481,Cleveland_Jan-Feb-18,
-200,1/4/2018,"Pizza Hut on
-Chillcothe rd &
-Mayfield OH tap",GW,-10.38,-67.46,41.52306667,-81.33858333,Cleveland_Jan-Feb-18,
-204,1/4/2018,"McDonalds at
-Chillcothe Rd &
-Chagrin Rd Bain
-Bridge OH tap",GW,-9.69,-63.54,41.389825,-81.34023611,Cleveland_Jan-Feb-18,
-206,1/4/2018,"Panera Bread at 91
-& 480/14 Twinsburg
-OH tap",GW,-6.51,-49.37,41.30866111,-81.44175833,Cleveland_Jan-Feb-18,
-207,1/4/2018,Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap,GW,-6.49,-49.39,41.31433333,-81.51178333,Cleveland_Jan-Feb-18,
-208,1/4/2018,"8952 Brecksville Rd
-& shell gas station
-Arlington St
-Brecksville OH tap",GW,-6.41,-48.73,41.31866944,-81.62736389,Cleveland_Jan-Feb-18,
-209,1/4/2018,"Best Stop at 179 &
-303 Richfield OH tap",GW,-9.14,-58.68,41.23993333,-81.653825,Cleveland_Jan-Feb-18,
-212,1/4/2018,"Giant Eagle grocery
-store at 43 & 303/14
-Streetsboro OH tap",GW,-8.64,-57.62,41.23806389,-81.34747778,Cleveland_Jan-Feb-18,
-213,1/4/2018,"McGilvery Hall Kent
-OH tap",GW,-8.31,-55.47,41.15043056,-81.35086111,Cleveland_Jan-Feb-18,
-201,1/4/2018,Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap,Lake Erie,-6.364263727,-48.6671278,41.52046111,-81.43910278,Cleveland_Jan-Feb-18,
-205,1/4/2018,Shell gas station at 82 & 43 in Aurora OH,Lake Erie,-6.510153437,-49.53251814,41.31768889,-81.35078889,Cleveland_Jan-Feb-18,
-122,1/12/2018,"Long Science Center
-Tap Water",GW,-6.23,-40.3,41.61445,-81.29389444,Cleveland_Jan-Feb-18,
-224,2/4/2018,"Shell Gas station at
-33 & 82 Tap grab",GW,-9.69,-63.09,41.31066389,-81.22136111,Cleveland_Jan-Feb-18,
-122.01,7/21/2018,"Long Science Center
-Tap Water",GW,-9.96,-64.7,41.61445,-81.29389444,Cleveland_Jul-Aug-18,
-125.01,7/28/2018,"Speedway gas
-station corner Lynn
-and Prospect
-Rootstown, OH Tap",GW,-8.73,-58.15,41.11084722,-81.24344444,Cleveland_Jul-Aug-18,
-126.01,7/28/2018,"Marathon Gas
-station corner of 44
-and 224 Randolph,
-OH, Tap",GW,-8.89,-57.75,41.02963889,-81.24863056,Cleveland_Jul-Aug-18,
-127.01,7/28/2018,"Speedway gas
-station corner of 224
-and 91 (1275) tap
-Lakemore, OH",GW,-6.98,-48.14,41.03089167,-81.42650556,Cleveland_Jul-Aug-18,
-130.01,7/28/2018,"Circle K gas station
-at 21 and eastern Rd
-Norton, OH Tap",GW,-8.16,-53.59,40.98918056,-81.66439444,Cleveland_Jul-Aug-18,
-131.01,7/28/2018,"Circle K gas station
-at Broad and
-Silvercreek Rd
-Wadsworth, OH Tao",GW,-8.99,-58.87,40.99823056,-81.81000833,Cleveland_Jul-Aug-18,
-132.01,7/28/2018,"Circle K gas station
-at 76 and 3 seville
-Tap",GW,-8.9,-58.45,41.03584722,-81.86499167,Cleveland_Jul-Aug-18,
-133.01,7/28/2018,"BP minimart Lake Rd
-and Reid Rd
-Chippew on the
-Lake, OH tap",GW,-8.64,-56.63,40.99813611,-81.80991111,Cleveland_Jul-Aug-18,
-135.01,7/28/2018,"Speedway at 42
-Pearl Rd and Oxford
-Dr Tap, Brunswick
-OH",GW,-6.91,-51.71,41.23296111,-81.84114167,Cleveland_Jul-Aug-18,
-136.01,7/28/2018,"Sheetz at Whitney
-Rd and Pearl Rd/ 42
-Middleburg Hts, OH
-tap",GW,-6.84,-51.5,41.34346389,-81.82559722,Cleveland_Jul-Aug-18,
-144.01,7/29/2018,"Circle K gas stationa
-Atwater at 183 and
-224 Tap",GW,-8.7,-56.17,41.02403056,-81.14753333,Cleveland_Jul-Aug-18,
-145.01,7/29/2018,"Army corps of eng.
-Berlin, OH Berlin
-Lake Bedell Rd South
-of 224 Tap",GW,-9.08,-59.62,41.01521389,-80.98703056,Cleveland_Jul-Aug-18,
-146.01,7/29/2018,"Sunoco Gas station
-at 45 and 224
-Ellsworth, OH tap",GW,-9.65,-63.95,41.02395556,-80.85779167,Cleveland_Jul-Aug-18,
-147.01,7/29/2018,"Sheetz Gas station
-at 11 and 224 in
-Canfield OH Tap",GW,-5.62,-41.74,41.024025,-80.73642222,Cleveland_Jul-Aug-18,
-157.01,7/29/2018,"Scotty's Brookfield
-express mark on
-Warren Sharon Rd
-and Bedford SE
-Brookfield OH",GW,-7.74,-53.37,41.23343889,-80.56406667,Cleveland_Jul-Aug-18,
-158.01,7/29/2018,"Get Go gas station
-on Niles courtland
-road SE and East
-market, Howland
-Corners tap",GW,-7.72,-53.18,41.23781389,-80.74012778,Cleveland_Jul-Aug-18,
-159.01,7/29/2018,"Circle K 4021 N
-Leavitt Rd and
-Parkman Rd NW
-warren OH",GW,-6.26,-45.78,41.25901667,-80.86846667,Cleveland_Jul-Aug-18,
-162.01,7/29/2018,"Lakeside sport shop.
-Warren Meedville
-Rd and Wilson
-Sharpvill Rd",GW,-9.03,-58.87,41.30843889,-80.74424722,Cleveland_Jul-Aug-18,
-164.01,7/29/2018,"Quinns Mini Mart at
-193 and 88 Johnson
-OH",GW,-8.53,-55.18,41.38848333,-80.66543611,Cleveland_Jul-Aug-18,
-165.01,7/29/2018,"JAK's fine foods and
-gas station on 88
-and 45 greenville Rd
-and Niles Courtland
-Rd NE Tap",GW,-9.22,-59.61,41.3898,-80.73615,Cleveland_Jul-Aug-18,
-171.01,7/29/2018,"Quinns grocery store
-St rte 45 4of 87
-North Bloomfield",GW,-9.59,-62.8,41.46293333,-80.86876667,Cleveland_Jul-Aug-18,
-173.01,7/29/2018,"Post Office in
-williamsfield OH tap
-on 322 W of 7",GW,-8.88,-57.29,41.53346667,-80.57258333,Cleveland_Jul-Aug-18,
-174.01,7/29/2018,"Colebrook Lounge on
-322 east of 46
-Colebrook OH tap",GW,-8.41,-53.7,41.53628611,-80.75740833,Cleveland_Jul-Aug-18,
-175.01,7/29/2018,"JD's pit stop 322/
-main st and Satley
-rd Orwell OH tap",GW,-8.81,-57.5,41.53536667,-80.84476111,Cleveland_Jul-Aug-18,
-176.01,7/29/2018,"Primary health
-network 5266 state
-rte 45 Rome OH tap",GW,-7.03,-52.48,41.60563056,-80.86491944,Cleveland_Jul-Aug-18,
-177.01,7/29/2018,"BP gas station at 6
-and 46 New Lyme,
-OH grand army of
-the republic hay tap",GW,-3.33,-34.33,41.60508056,-80.78075833,Cleveland_Jul-Aug-18,
-195.01,7/29/2018,"McDonalds at W
-high St & springdale
-ave in Middlefield
-OH tap",GW,-9.94,-65.39,41.46235833,-81.08603889,Cleveland_Jul-Aug-18,
-166.01,7/30/2018,"Detour Drive thru on
-303/88 on Hadson
-Breeville Rd
-Freedom OH tap",GW,-9.22,-60.38,41.23605,-81.1443,Cleveland_Jul-Aug-18,
-168.01,7/30/2018,"Skylane Bowling
-Alley 82 and Liberty
-St tap Garrettsville
-OH",GW,-9.55,-62.85,41.27766944,-81.09004444,Cleveland_Jul-Aug-18,
+access Parkman OH",GW,-9.81,-63.74,41.37063889,-81.06357778,Cleveland_Jan-Mar-18
 169.01,7/30/2018,"BP gas station at 88
 and 422 Main
 market Rd and
 Madison Rd tap
 Elwood/Spike
 Weaver grand river
-access Parkman OH",GW,-9.75,-63.76,41.37063889,-81.06357778,Cleveland_Jul-Aug-18,
-179.01,7/30/2018,"Bushnell store tap at
-7 and 84 center rd
-and bushnell",GW,-9.69,-62.95,41.863025,-80.57206667,Cleveland_Jul-Aug-18,
-193.01,7/30/2018,"Baitshop on corner
-og Washington ST &
-ravenna Rd/ 44
-Auburn corner OH
-business for sale Tap",GW,-9.21,-60.21,41.38706111,-81.21658611,Cleveland_Jul-Aug-18,
-194.01,7/30/2018,"87 New Berry OH
-tap",GW,-9.61,-62.29,41.47066111,-81.193275,Cleveland_Jul-Aug-18,
+access Parkman OH",GW,-9.75,-63.76,41.37063889,-81.06357778,Cleveland_Jul-Aug-18
+196,1/4/2018,"Montville country
+store at 528 & 6 /
+Madison rd & GAR
+hwy Mintville OH
+tap",GW,-10.07,-65.29,41.60745556,-81.05078056,Cleveland_Jan-Mar-18
 196.01,7/30/2018,"Montville country
 store at 528 & 6 /
 Madison rd & GAR
 hwy Mintville OH
-tap",GW,-10.03,-65.33,41.60745556,-81.05078056,Cleveland_Jul-Aug-18,
+tap",GW,-10.03,-65.33,41.60745556,-81.05078056,Cleveland_Jul-Aug-18
+197,1/4/2018,"Stockers on the park
+resturaunt on 527 in
+circle thompson OH",GW,-10.24,-66.74,41.68977778,-81.05070278,Cleveland_Jan-Mar-18
 197.01,7/30/2018,"Stockers on the park
 resturaunt on 527 in
-circle thompson OH",GW,-7.15,-46.51,41.68977778,-81.05070278,Cleveland_Jul-Aug-18,
-198.01,7/30/2018,"Hambden Corners
-gas station at 166 &
-GAR hwy tap
-Hambden Corners
-OH",GW,-9.95,-64.77,41.60692778,-81.14348611,Cleveland_Jul-Aug-18,
-199.01,7/30/2018,"Circle K & 6 & 306
-Chillcothe rd &
-Chardon Rd tap
-Pecks Corners OH",GW,-6.73,-50.75,41.58361667,-81.3481,Cleveland_Jul-Aug-18,
-200.01,7/30/2018,"Pizza Hut on
-Chillcothe rd &
-Mayfield OH tap",GW,-10.27,-67.53,41.52306667,-81.33858333,Cleveland_Jul-Aug-18,
-204.01,7/31/2018,"McDonalds at
-Chillcothe Rd &
-Chagrin Rd Bain
-Bridge OH tap",GW,-9.67,-63.42,41.389825,-81.34023611,Cleveland_Jul-Aug-18,
-206.01,7/31/2018,"Panera Bread at 91
-& 480/14 Twinsburg
-OH tap",GW,-6.82,-51.32,41.30866111,-81.44175833,Cleveland_Jul-Aug-18,
-207.01,7/31/2018,"Speedway gas
-station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",GW,-6.84,-51.44,41.31433333,-81.51178333,Cleveland_Jul-Aug-18,
-208.01,7/31/2018,"8952 Brecksville Rd
-& shell gas station
-Arlington St
-Brecksville OH tap",GW,-6.82,-51.35,41.31866944,-81.62736389,Cleveland_Jul-Aug-18,
-209.01,7/31/2018,"Best Stop at 179 &
-303 Richfield OH tap",GW,-8.81,-57.18,41.23993333,-81.653825,Cleveland_Jul-Aug-18,
-212.01,7/31/2018,"Giant Eagle grocery
-store at 43 & 303/14
-Streetsboro OH tap",GW,-8.75,-58.49,41.23806389,-81.34747778,Cleveland_Jul-Aug-18,
-213.01,7/31/2018,"McGilvery Hall Kent
-OH tap",GW,-8.37,-56.3,41.15043056,-81.35086111,Cleveland_Jul-Aug-18,
-224.01,8/4/2018,"Shell Gas station at
-33 & 82 Tap grab",GW,-9.65,-63.03,41.31066389,-81.22136111,Cleveland_Jul-Aug-18,
+circle thompson OH",GW,-7.15,-46.51,41.68977778,-81.05070278,Cleveland_Jul-Aug-18
+187,1/3/2018,McDonalds at 90 & 528 Madison OH tap,Lake Erie,-6.214136569,-47.21955977,41.76170278,-81.0469,Cleveland_Jan-Mar-18
+145,1/2/2018,"Army corps of eng.
+Berlin, OH Berlin
+Lake Bedell Rd South
+of 224 Tap",GW,-8.98,-58.64,41.01521389,-80.98703056,Cleveland_Jan-Mar-18
+145.01,7/29/2018,"Army corps of eng.
+Berlin, OH Berlin
+Lake Bedell Rd South
+of 224 Tap",GW,-9.08,-59.62,41.01521389,-80.98703056,Cleveland_Jul-Aug-18
+152,1/2/2018,ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH,Mosquito creek ,-6.404320212,-44.32616783,41.18668333,-80.97133333,Cleveland_Jan-Mar-18
+160,1/2/2018,Hard'd market at 305 and 534 Newtonfalls city water Southington OH,Mosquito creek ,-6.308673752,-43.71087311,41.30868333,-80.95541667,Cleveland_Jan-Mar-18
+184,1/3/2018,McDonalds at 90 & 534 Geneva OH tap,Lake Erie,-6.372391593,-48.15841344,41.77262222,-80.94738889,Cleveland_Jan-Mar-18
+171,1/3/2018,"Quinns grocery store
+St rte 45 4of 87
+North Bloomfield",GW,-9.62,-62.98,41.46293333,-80.86876667,Cleveland_Jan-Mar-18
+171.01,7/29/2018,"Quinns grocery store
+St rte 45 4of 87
+North Bloomfield",GW,-9.59,-62.8,41.46293333,-80.86876667,Cleveland_Jul-Aug-18
+159,1/2/2018,"Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",GW,-4.82,-35.97,41.25901667,-80.86846667,Cleveland_Jan-Mar-18
+159.01,7/29/2018,"Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",GW,-6.26,-45.78,41.25901667,-80.86846667,Cleveland_Jul-Aug-18
+176,1/3/2018,"Primary health
+network 5266 state
+rte 45 Rome OH tap",GW,-6.24,-47.26,41.60563056,-80.86491944,Cleveland_Jan-Mar-18
+176.01,7/29/2018,"Primary health
+network 5266 state
+rte 45 Rome OH tap",GW,-7.03,-52.48,41.60563056,-80.86491944,Cleveland_Jul-Aug-18
+185,1/3/2018,Pasta oven at W water st & S main st Rockcreek OH tap,Lake Erie,-6.529109194,-49.01247189,41.66010833,-80.86084722,Cleveland_Jan-Mar-18
+146,1/2/2018,"Sunoco Gas station
+at 45 and 224
+Ellsworth, OH tap",GW,-9.73,-64.18,41.02395556,-80.85779167,Cleveland_Jan-Mar-18
+146.01,7/29/2018,"Sunoco Gas station
+at 45 and 224
+Ellsworth, OH tap",GW,-9.65,-63.95,41.02395556,-80.85779167,Cleveland_Jul-Aug-18
+153,1/2/2018,Lordstown Speed check Gas station on Tod Ave SW and salt spring Rd Lordstown OH tap,Mosquito creek ,-5.798082609,-41.74043924,41.16623333,-80.85685,Cleveland_Jan-Mar-18
+183,1/3/2018,Flying J store at 90&45 Manson Hill OH / Saybrook TWP,Lake Erie,-6.509005077,-49.0724633,41.789275,-80.85591667,Cleveland_Jan-Mar-18
+151,1/2/2018,"Dollar General 10701 Mahonis Ave east of liberty St North Jackson, OH",Mosquito creek ,-5.761774409,-41.46552931,41.09985,-80.85168333,Cleveland_Jan-Mar-18
+161,1/2/2018,Fast Break Gas station 45 and 305 Mahoning ave NW and Center St E Champion OH,Mosquito creek ,-4.806600549,-35.86689496,41.30868333,-80.84916667,Cleveland_Jan-Mar-18
+175,1/3/2018,"JD's pit stop 322/
+main st and Satley
+rd Orwell OH tap",GW,-8.94,-57.87,41.53536667,-80.84476111,Cleveland_Jan-Mar-18
+175.01,7/29/2018,"JD's pit stop 322/
+main st and Satley
+rd Orwell OH tap",GW,-8.81,-57.5,41.53536667,-80.84476111,Cleveland_Jul-Aug-18
+177,1/3/2018,"BP gas station at 6
+and 46 New Lyme,
+OH grand army of
+the republic hay tap",GW,-3.21,-31.65,41.60508056,-80.78075833,Cleveland_Jan-Mar-18
+177.01,7/29/2018,"BP gas station at 6
+and 46 New Lyme,
+OH grand army of
+the republic hay tap",GW,-3.33,-34.33,41.60508056,-80.78075833,Cleveland_Jul-Aug-18
+186,1/3/2018,Shell gas station at E satin st & rt 46 in Jefferson OH,Lake Erie,-6.447257569,-48.80250758,41.73601667,-80.76914444,Cleveland_Jan-Mar-18
+154,1/2/2018,Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH,Mosquito creek ,-5.724156868,-41.26409612,41.15923333,-80.76906667,Cleveland_Jan-Mar-18
+182,1/3/2018,Sheets at 11&20 Astabula OH tap,Lake Erie,-6.467647788,-48.87701673,41.87628056,-80.76436667,Cleveland_Jan-Mar-18
+174,1/3/2018,"Colebrook Lounge on
+322 east of 46
+Colebrook OH tap",GW,-8.51,-54.07,41.53628611,-80.75740833,Cleveland_Jan-Mar-18
+174.01,7/29/2018,"Colebrook Lounge on
+322 east of 46
+Colebrook OH tap",GW,-8.41,-53.7,41.53628611,-80.75740833,Cleveland_Jul-Aug-18
+162,1/2/2018,"Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",GW,-9.07,-59.23,41.30843889,-80.74424722,Cleveland_Jan-Mar-18
+162.01,7/29/2018,"Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",GW,-9.03,-58.87,41.30843889,-80.74424722,Cleveland_Jul-Aug-18
+158,1/2/2018,"Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",GW,-5.81,-41.83,41.23781389,-80.74012778,Cleveland_Jan-Mar-18
+158,1/2/2018,"Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",Mosquito creek ,-5.806307115,-41.82738964,41.23781389,-80.74012778,Cleveland_Jan-Mar-18
+158.01,7/29/2018,"Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",GW,-7.72,-53.18,41.23781389,-80.74012778,Cleveland_Jul-Aug-18
+147,1/2/2018,"Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",GW,-4.93,-36.71,41.024025,-80.73642222,Cleveland_Jan-Mar-18
+147.01,7/29/2018,"Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",GW,-5.62,-41.74,41.024025,-80.73642222,Cleveland_Jul-Aug-18
+165,1/2/2018,"JAK's fine foods and
+gas station on 88
+and 45 greenville Rd
+and Niles Courtland
+Rd NE Tap",GW,-9.17,-59.6,41.3898,-80.73615,Cleveland_Jan-Mar-18
+165.01,7/29/2018,"JAK's fine foods and
+gas station on 88
+and 45 greenville Rd
+and Niles Courtland
+Rd NE Tap",GW,-9.22,-59.61,41.3898,-80.73615,Cleveland_Jul-Aug-18
+150,1/2/2018,"Burger King on Meridian and Magoning Rd Perkins corners, OH tap",Mosquito creek ,-5.734718913,-41.4820043,41.102675,-80.71065,Cleveland_Jan-Mar-18
+181,1/3/2018,"T&A 193, 84 & 90 Kingsville OH tap",Lake Erie,-6.533784356,-49.15161568,41.87671944,-80.66708333,Cleveland_Jan-Mar-18
+164,1/2/2018,"Quinns Mini Mart at
+193 and 88 Johnson
+OH",GW,-8.68,-55.65,41.38848333,-80.66543611,Cleveland_Jan-Mar-18
+164.01,7/29/2018,"Quinns Mini Mart at
+193 and 88 Johnson
+OH",GW,-8.53,-55.18,41.38848333,-80.66543611,Cleveland_Jul-Aug-18
+155,1/2/2018,Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80),Mosquito creek ,-5.789949162,-41.70819041,41.15301667,-80.66525,Cleveland_Jan-Mar-18
+148,1/2/2018,Wendys at 224 and Applewood in Poland OH tap,Mosquito creek ,-4.972150824,-37.0628783,41.02386389,-80.64688333,Cleveland_Jan-Mar-18
+149,1/2/2018,McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap,Mosquito creek ,-7.456492819,-48.51759766,41.08995,-80.59043889,Cleveland_Jan-Mar-18
+173,1/3/2018,"Post Office in
+williamsfield OH tap
+on 322 W of 7",GW,-9.83,-64.08,41.53346667,-80.57258333,Cleveland_Jan-Mar-18
+173.01,7/29/2018,"Post Office in
+williamsfield OH tap
+on 322 W of 7",GW,-8.88,-57.29,41.53346667,-80.57258333,Cleveland_Jul-Aug-18
+179,1/3/2018,"Bushnell store tap at
+7 and 84 center rd
+and bushnell",GW,-9.8,-63.44,41.863025,-80.57206667,Cleveland_Jan-Mar-18
+179.01,7/30/2018,"Bushnell store tap at
+7 and 84 center rd
+and bushnell",GW,-9.69,-62.95,41.863025,-80.57206667,Cleveland_Jul-Aug-18
+180,1/3/2018,Love gas station at 7 and 90 Loves Dr tap Conneaat ,Lake Erie,-6.520061559,-49.05686241,41.91403056,-80.57053056,Cleveland_Jan-Mar-18
+156,1/2/2018,Loves gas station on 7/62 abd Franklin in Hubbard OH tap,Mosquito creek ,-8.013665101,-53.55216612,41.17315,-80.56958333,Cleveland_Jan-Mar-18
+157,1/2/2018,"Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",GW,-5.81,-41.74,41.23343889,-80.56406667,Cleveland_Jan-Mar-18
+157.01,7/29/2018,"Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",GW,-7.74,-53.37,41.23343889,-80.56406667,Cleveland_Jul-Aug-18
+172,1/3/2018,ACE Hardware Kinsman OH Main St (87 & 7 & 5) tap,,-9.68,-63.58,41.45495,-80.579725,Cleveland_Jan-Mar-18
+163,1/2/2018,The Fowler grind coffee shop 305 and 193 Wilson sharpsville Rd and youngstown kingsville Rd Fowler center off tap,,-8.73,-56.69,41.31099722,-80.65634167,Cleveland_Jan-Mar-18
+170,1/3/2018,Amish Mattress store. 6255 St rte 45 Bristol OH tap Run other tests Bad smell (?),,-8.85,-58.71,41.38774444,-80.86939444,Cleveland_Jan-Mar-18
+167,1/3/2018,Circle K gas station Maple grove and E center St/303 windham OH,,-9.02,-59,41.23473611,-81.04068889,Cleveland_Jan-Mar-18
+143,1/2/2018,"Marathon gas station 76 and 14 Edinburg, OH tap",,-8.93,-57.59,41.10470278,-81.15386667,Cleveland_Jan-Mar-18
+192,1/4/2018,McDonalds on 44 of Wesr Prospect st Mantua OH tap,,-9.59,-63.19,41.28098611,-81.22483889,Cleveland_Jan-Mar-18
+229,3/18/2018,"Deep Springs Trout Club, 11069 Chardon Rd, Chardon, OH 44024",,-10.44,-67.82,41.57862778,-81.24453889,Cleveland_Jan-Mar-18
+203,1/4/2018,Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap,,-6.54,-49.77,41.39145556,-81.43814444,Cleveland_Jan-Mar-18
+210,1/4/2018,Winking Lizard on 303 in the valley Peninsula OH tap ,,-8.36,-55.3,41.24149444,-81.44260556,Cleveland_Jan-Mar-18
+202,1/4/2018,Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap,,-6.47,-49.26,41.46316667,-81.45999167,Cleveland_Jan-Mar-18
+211,1/4/2018,Shell Gas station on 303 & Library st Hadson OH tap,,-9.01,-59.14,41.24015833,-81.54904444,Cleveland_Jan-Mar-18
+129,1/1/2018,"McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)",,-8.05,-52.51,41.01199167,-81.60758611,Cleveland_Jan-Mar-18
