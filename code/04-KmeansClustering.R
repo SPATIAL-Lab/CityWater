@@ -78,7 +78,7 @@ datasummary <- tapData %>%
   )))
 
 datasummary2 <- tapData %>%
-  group_by(cluster_location, modality) %>%
+  group_by(cluster_location) %>%
   select(lat, lon) %>% 
   summarize(n = n(), 
             lat = mean(lat), 

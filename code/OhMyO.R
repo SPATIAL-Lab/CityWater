@@ -92,19 +92,6 @@ ggplot() +
   scale_color_manual(values = c("#003f5c", "#d2042d")) + 
   theme_classic()
 
-# Cluster re-analysis -----------------------------------------------------
-
-km_OH <- oh %>%
-  select(c(6, 5)) %>% 
-  eclust("kmeans", nboot = 500)
-oh$km_cluster <- factor(km_OH$cluster)
-# okay so the number of clusters doesn't change
-
-km_CLE <- subset(oh, cluster_location != "Wooster") %>%
-  select(c(6, 5)) %>% 
-  eclust("kmeans", nboot = 500)
-oh$km_cluster <- factor(km_OH$cluster)
-
 cities <- vect("maps/cb_2018_us_ua10_500k.shp")
 citycheck <- as.data.frame(cities)
 
@@ -249,7 +236,7 @@ ggplot() +
 
 YNG <- subset(tapData, cluster_location == "Youngstown")
 CED <- subset(tapData, cluster_location == 'Cedar City')
-
+cities <- vect("maps/cb_2018_us_ua10_500k.shp")
 ggplot()+ 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'lightgrey') + 
   #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
@@ -269,7 +256,6 @@ ggplot()+
 
 # Why is Ohio like this ---------------------------------------------------
 
-
 library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                      
 
 datasummary <- read.csv("data/datasummary.csv")
@@ -280,5 +266,19 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('sd' = 'd18O_sd', 
          'idr' = 'IDR_O')
 
-ggplot() + 
-  geom_col(data = multilevel, aes(x = fct_infreq(cluster_location), y = medincome))
+# Counterpoint: Fuck Youngstown -------------------------------------------
+# okay, those points outside of the city limits are probably throwing things off, what if we toss them
+
+YNGoutline <- subset(cities, cities$NAME10 == "Youngstown, OH--PA")
+ohvect <- vect(subset(tapData, cluster_location == "Youngstown"))
+crs(YNG) <- crs(cities)
+YNG <- mask(ohvect, YNGoutline)
+crs(YNG) <- crs(cities)
+
+ggplot()+ 
+  geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'lightgrey') + 
+  #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
+  geom_sf(data = YNG) + 
+  theme_void()
+
+YNGdf <- as.data.frame(YNG)

@@ -290,8 +290,8 @@ temporalSummary <- idr %>%
   group_by(city) %>% 
   summarize(
     IDR_O = round(mean(.data$IDR_O), 1), 
-    IDR_H = round(mean(.data$IDR_H), 1), 
-    IDR_d_ex = round(mean(.data$IDR_d_ex), 1)
+    IDR_d_ex = round(mean(.data$IDR_d_ex), 1),
+    IDR_H = round(mean(.data$IDR_H), 1) 
   )
 
 #these numbers manually entered into datasummary for now. 
