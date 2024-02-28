@@ -235,3 +235,50 @@ counties <- counties("OH", cb = T, resolution = "20m") %>%
   vect() #%>% 
 #terra::aggregate()
 ohvect <- vect(oh, crs= crs(counties), keep = T)
+
+
+# They're in the system, now what? ----------------------------------------
+
+tapData <- read_csv("data/cityWater.csv", 
+                    col_types = cols(cluster_ID = col_character()))
+
+ggplot() + 
+  geom_density(data = subset(tapData, cluster_location == "Cleveland-Akron" | cluster_location == "Youngstown"), 
+               aes(x = d18O, fill = cluster_location), alpha = 0.5) + 
+  scale_fill_manual(values = c("#003f5c","#84edff"))
+
+YNG <- subset(tapData, cluster_location == "Youngstown")
+CED <- subset(tapData, cluster_location == 'Cedar City')
+
+ggplot()+ 
+  geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'lightgrey') + 
+  #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
+  geom_jitter(data = YNG, aes(x = lon, y = lat, color = d18O), width = 0.01, size = 3) + 
+  scale_color_viridis(discrete = F, option = 'mako') +
+  labs(title = "City of Youngstown with d18O values of tap water") +
+  theme_void()
+
+ggplot()+ 
+  geom_sf(data = terra::subset(cities, cities$NAME10 == "Cedar City, UT"), fill = 'lightgrey') + 
+  #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
+  geom_jitter(data = CED, aes(x = lon, y = lat, color = d18O), width = 0.01, size = 3) + 
+  scale_color_viridis(discrete = F, option = 'mako') +
+  labs(title = "City of Cedar City with d18O values of tap water") +
+  theme_void()
+
+
+# Why is Ohio like this ---------------------------------------------------
+
+
+library(tidyr); library(dplyr); library(leaps); library(ggpubr); library(car)                      
+
+datasummary <- read.csv("data/datasummary.csv")
+datasummary <- datasummary[,-c(2:4, 6:13, 16, 17)]
+multivariate <- read.csv("data/multivariate.csv") %>% 
+  filter(cluster_location != "Oahu" & cluster_location != "Hawaii")
+multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
+  rename('sd' = 'd18O_sd', 
+         'idr' = 'IDR_O')
+
+ggplot() + 
+  geom_col(data = multilevel, aes(x = fct_infreq(cluster_location), y = medincome))

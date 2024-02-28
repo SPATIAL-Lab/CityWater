@@ -3,6 +3,7 @@ library(factoextra); library(ggridges); library(forcats); library(readr); librar
 
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(cluster_ID = col_character()))
+
 # Modality ----------------------------------------------------------------
 #SLC
 temporal_1.01 <- tapData[tapData$cluster_location_time == "Salt Lake City_Ap-13", ]
@@ -37,6 +38,10 @@ temporal_26.2 <- tapData[tapData$cluster_location_time == "Phoenix_Oct-14", ]
 # San Diego
 temporal_27.1 <- tapData[tapData$cluster_location_time == "San Diego_Ap-14", ]
 temporal_27.2 <- tapData[tapData$cluster_location_time == "San Diego_Dic-13", ]
+
+# Cleveland
+temporal_29.1 <- tapData[tapData$cluster_location_time == "Cleveland_Jan-Mar-18", ]
+temporal_29.2 <- tapData[tapData$cluster_location_time == "Cleveland_Jul-Aug-18", ]
 # k-means clustering ------------------------------------------------------
 
 # Salt Lake City
@@ -183,6 +188,18 @@ km_SAN_27.2 <- temporal_27.2 %>%
   eclust("kmeans", nboot = 500)
 temporal_27.2$km_cluster <- factor(km_SAN_27.2$cluster)
 
+#temporal_29.1
+km_CLE_29.1 <- temporal_29.1 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_29.1$km_cluster <- factor(km_CLE_29.1$cluster)
+
+#temporal_29.2
+km_CLE_29.2 <- temporal_29.2 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_29.2$km_cluster <- factor(km_CLE_29.2$cluster)
+
 #Let's count the number of clusters and report modality in a reproducible table. 
 kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_1.04, temporal_1.05, temporal_1.06, 
@@ -191,7 +208,8 @@ kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_25.2, temporal_25.3, temporal_25.4, 
                temporal_25.5, temporal_25.6, temporal_25.7, 
                temporal_26.1, temporal_26.2, temporal_28.1, 
-               temporal_28.2, temporal_27.1, temporal_27.2
+               temporal_28.2, temporal_27.1, temporal_27.2, 
+               temporal_29.1, temporal_29.2
 )
 
 clustering <- data.frame(matrix(ncol = 0, nrow = 25))
@@ -220,7 +238,9 @@ tapData$cluster_ID <- replace(tapData$cluster_ID, tapData$cluster_ID == "1.1", "
 clustering$cluster_ID <- replace(clustering$cluster_ID, clustering$cluster_ID == "1.1", "1.10")
 
 df <- tapData %>%
-  filter(cluster_location == "Salt Lake City" | cluster_location == "San Francisco" | cluster_location == "Los Angeles" | cluster_location == "Phoenix" | cluster_location == 'San Diego') %>%
+  filter(cluster_location == "Salt Lake City" | cluster_location == "San Francisco" |
+           cluster_location == "Los Angeles" | cluster_location == "Phoenix" |
+           cluster_location == 'San Diego' | cluster_location == "Cleveland-Akron") %>%
   left_join(clustering, by = 'cluster_ID')
 
 # Density Plots ----------------------------------------------------------
@@ -248,20 +268,21 @@ ggsave("figures/density_time_slice.pdf", width=6, height=5, units="in", dpi=600)
 # Comparing IDR -----------------------------------------------------------
 
 idr <- df %>% 
-  group_by(Cluster_ID) %>% 
+  group_by(cluster_ID) %>% 
   summarize(
     IDR_O = round(abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 2), 
     IDR_d_ex = round(abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 2), 
     IDR_H = round(abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))), 2),
   ) %>% 
-  select(Cluster_ID, IDR_O, IDR_d_ex, IDR_H) %>% 
-  mutate(city = Cluster_ID, 
+  select(cluster_ID, IDR_O, IDR_d_ex, IDR_H) %>% 
+  mutate(city = cluster_ID, 
          city = if_else(grepl('25.*', city), "SF", 
                         if_else(grepl('26.*', city), "Phoenix", 
                                 if_else(grepl('28.*', city), "Los Angeles",
                                         if_else(grepl('27.*', city), "San Diego",
+                                                if_else(grepl("29.*", city), "Cleveland-Akron",
                                         "SLC")
-                                        ))))
+                                        )))))
 
 write.csv(idr, 'data/timeseriesSummary.csv')
 

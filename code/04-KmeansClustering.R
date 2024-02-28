@@ -30,14 +30,15 @@ SD <- tapData[tapData$cluster_location == "San Diego", ]
 SM <- tapData[tapData$cluster_location_time == "San Marcos", ]
 SP <- tapData[tapData$cluster_location_time == "St Petersburg", ]
 WOO <- tapData[tapData$cluster_location_time == "Wooster", ] # Wooster
+YNG <- tapData[tapData$cluster_location == "Youngstown", ]
 
 # Calculating K-means -----------------------------------------------------
 
 # takes a couple minutes, take a break and re-hydrate. 
 kmeans <- list(AA, ABQ, ATH, ATL, BEL, CED, COL, DEN, DFW, FLG, GNV, HI, LAW, 
-               LAX, LCR, MOR, MSP, NAS, OA, PHX, PTD, SC, SD, SM, SP, WOO)
+               LAX, LCR, MOR, MSP, NAS, OA, PHX, PTD, SC, SD, SM, SP, WOO, YNG)
 
-df <- data.frame(matrix(ncol = 0, nrow = 3827))
+df <- data.frame(matrix(ncol = 0, nrow = 3929))
 for (i in kmeans) {
  km <-  i %>% 
   select(c(17, 16)) %>% 
@@ -87,9 +88,9 @@ datasummary2 <- tapData %>%
 datasummary3 <- tapData %>% 
   group_by(cluster_location) %>% 
   summarize(
-    IDR_O = abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 
-    IDR_d_ex = abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 
-    IDR_H = abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))),
+    IDR_O = round(abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 1), 
+    IDR_d_ex = round(abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 1), 
+    IDR_H = round(abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))), 1),
   )
 
 datasummary <- datasummary %>% 

@@ -15,7 +15,8 @@ density <- tapData %>%
                                         "Nashville","Cedar City", "San Francisco",
                                         "Colorado Springs","Lawrence","Denver",
                                         "Salt Lake City","Morristown","State College",
-                                        "Wooster","Ann Arbor","La Crosse","Minneapolis",
+                                        "Wooster", "Youngstown", "Cleveland-Akron",
+                                        "Ann Arbor","La Crosse","Minneapolis",
                                         "Portland","Bellingham")) 
 
 
@@ -48,3 +49,6 @@ DensPlot_d_ex <- ggplot(density, aes(x = d_ex, y = cluster_location, fill = ..x.
 
 DensPlot_d18O + DensPlot_d_ex  
 ggsave("figures/densityRidges.pdf", width=12, height=5, units="in", dpi=300)
+
+
+
