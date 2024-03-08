@@ -116,10 +116,15 @@ ggplot()+
 csub = ohvect[subset(cities, cities$NAME10 == "Cleveland, OH")]
 csub = rbind(csub, ohvect[subset(cities, cities$NAME10 == "Akron, OH")])
 csub$cluster_location = rep("Cleveland-Akron")
+csub$cluster_ID[csub$cluster_location_time == "Cleveland_Jan-Mar-18"] = 
+  29.1
+csub$cluster_ID[csub$cluster_location_time == "Cleveland_Jul-Aug-18"] = 
+  29.2
 
 # Youngstown metro
 ysub = ohvect[subset(cities, cities$NAME10 == "Youngstown, OH--PA")]
 ysub$cluster_location = rep("Youngstown")
+ysub$cluster_ID = 30
 
 # Read and replace citywater values
 cw = read.csv("data/cityWater.csv")
