@@ -198,6 +198,7 @@ expandedArea$ruggedness <- round(df$na_dem, 0)
 
 precip <- project(rast("maps/precip_mean.tif"), ruggedness)
 streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
+Orange <- project(rast("maps/Orange.tif"), ruggedness)
 
 df <- terra::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = TRUE)
 expandedArea$streamflow <- c(df$last)
@@ -205,9 +206,13 @@ expandedArea$streamflow <- c(df$last)
 df <- terra::extract(precip, expandedArea, weights = F, fun = mean, na.rm = TRUE)
 expandedArea$precip <- c(df$last)
 
+df <- terra::extract(Orange, expandedArea, weights = F, fun = mean, na.rm = TRUE,
+                     ID = FALSE)
+expandedArea$Orange <- c(df)
+
 multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) 
 multivariate <- multivariate %>% 
-  select(c(id, ruggedness, streamflow, precip)) %>% 
+  select(c(id, ruggedness, streamflow, precip, Orange)) %>% 
   rename(cluster_location = id)
 
 # Land and water area totals ----------------------------------------------

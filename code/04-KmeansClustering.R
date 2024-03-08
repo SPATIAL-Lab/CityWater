@@ -98,4 +98,4 @@ datasummary <- datasummary %>%
   left_join(datasummary3) %>% 
   mutate_at(2:13, round, 2)
 
-write.csv(datasummary, "data/datasummary.csv") # note that SF and SLC reporting for mean IDR is from 01
+write.csv(datasummary, "data/datasummary.csv", row.names = FALSE) # note that SF and SLC reporting for mean IDR is from 01
