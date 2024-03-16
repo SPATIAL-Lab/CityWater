@@ -3815,155 +3815,611 @@
 "3814","JAFB","18","Wooster","Wooster",40.7997799,-81.934639,NA,"20-070_WOO-HG-004",NA,-5,"28-01-20 18:30",2020,"winter","january",NA,-49.77396832,-7.698021718,0.167226429,0.009213468,"SPATIAL","p225",11.81020542,"Wayne","Ohio",293,1,"Uni"
 "3815","Corner House","18","Wooster","Wooster",40.80798144,-81.93410707,NA,"20-070_WOO-CW-003",NA,-5,"28-01-20 20:57",2020,"winter","january",NA,-51.10000643,-7.844337417,0.272524462,0.033155293,"SPATIAL","p225",11.65469291,"Wayne","Ohio",312,1,"Uni"
 "3816","Gault","18","Wooster","Wooster",40.8114,-81.9373,NA,"20-070_WOO-ST-002",NA,-5,"29-01-20 7:00",2020,"winter","january",NA,-50.74213772,-7.847788851,0.118353346,0.022446369,"SPATIAL","p225",12.04017309,"Wayne","Ohio",312,1,"Uni"
-"3817","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.45666389,-81.90153056,NA,"139",NA,NA,NA,NA,NA,NA,NA,-51.75693387,-6.810654588,NA,NA,"Lake Erie",NA,2.728302834,"Cuyahoga","Ohio",217,NA,"Uni"
-"3818","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.15159444,-81.86298889,NA,"134",NA,NA,NA,NA,NA,NA,NA,-48.77413026,-6.439860459,NA,NA,"Lake Erie",NA,2.744753412,"Medina","Ohio",306,NA,"Uni"
-"3819","Speedway at 42
+"3817","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.45666389,-81.90153056,NA,"139",NA,NA,NA,NA,NA,NA,NA,-51.75693387,-6.810654588,NA,NA,"Lake Erie",NA,2.728302834,"Cuyahoga","Ohio",217,NA,"Uni"
+"3818","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.45666389,-81.90153056,NA,"139",NA,NA,NA,NA,NA,NA,NA,-51.75693387,-6.810654588,NA,NA,"Lake Erie",NA,2.728302834,"Cuyahoga","Ohio",217,NA,"Uni"
+"3819","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.45666389,-81.90153056,NA,"139",NA,NA,NA,NA,NA,NA,NA,-51.75693387,-6.810654588,NA,NA,"Lake Erie",NA,2.728302834,"Cuyahoga","Ohio",217,NA,"Uni"
+"3820","GetGo at Centerridge Rd and Columbia Rd 252 and 20 Westlake, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.45666389,-81.90153056,NA,"139",NA,NA,NA,NA,NA,NA,NA,-51.75693387,-6.810654588,NA,NA,"Lake Erie",NA,2.728302834,"Cuyahoga","Ohio",217,NA,"Uni"
+"3821","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15159444,-81.86298889,NA,"134",NA,NA,NA,NA,NA,NA,NA,-48.77413026,-6.439860459,NA,NA,"Lake Erie",NA,2.744753412,"Medina","Ohio",306,NA,"Uni"
+"3822","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15159444,-81.86298889,NA,"134",NA,NA,NA,NA,NA,NA,NA,-48.77413026,-6.439860459,NA,NA,"Lake Erie",NA,2.744753412,"Medina","Ohio",306,NA,"Uni"
+"3823","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15159444,-81.86298889,NA,"134",NA,NA,NA,NA,NA,NA,NA,-48.77413026,-6.439860459,NA,NA,"Lake Erie",NA,2.744753412,"Medina","Ohio",306,NA,"Uni"
+"3824","Speedway at N Court ST and Forest meadows Dr, Medina, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15159444,-81.86298889,NA,"134",NA,NA,NA,NA,NA,NA,NA,-48.77413026,-6.439860459,NA,NA,"Lake Erie",NA,2.744753412,"Medina","Ohio",306,NA,"Uni"
+"3825","Speedway at 42
 Pearl Rd and Oxford
 Dr Tap, Brunswick
-OH","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.23296111,-81.84114167,NA,"135",NA,NA,NA,NA,NA,NA,NA,-48.01,-6.3,NA,NA,"GW",NA,2.39,"Medina","Ohio",334,NA,"Uni"
-"3820","Speedway at 42
+OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23296111,-81.84114167,NA,"135",NA,NA,NA,NA,NA,NA,NA,-48.01,-6.3,NA,NA,"GW",NA,2.39,"Medina","Ohio",334,NA,"Uni"
+"3826","Speedway at 42
 Pearl Rd and Oxford
 Dr Tap, Brunswick
-OH","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.23296111,-81.84114167,NA,"135.01",NA,NA,NA,NA,NA,NA,NA,-51.71,-6.91,NA,NA,"GW",NA,3.57,"Medina","Ohio",334,NA,"Uni"
-"3821","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.41911389,-81.83251944,NA,"138",NA,NA,NA,NA,NA,NA,NA,-51.14807653,-6.767218593,NA,NA,"Lake Erie",NA,2.989672214,"Cuyahoga","Ohio",235,NA,"Uni"
-"3822","Sheetz at Whitney
+OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23296111,-81.84114167,NA,"135",NA,NA,NA,NA,NA,NA,NA,-48.01,-6.3,NA,NA,"GW",NA,2.39,"Medina","Ohio",334,NA,"Uni"
+"3827","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23296111,-81.84114167,NA,"135",NA,NA,NA,NA,NA,NA,NA,-48.01,-6.3,NA,NA,"GW",NA,2.39,"Medina","Ohio",334,NA,"Uni"
+"3828","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23296111,-81.84114167,NA,"135",NA,NA,NA,NA,NA,NA,NA,-48.01,-6.3,NA,NA,"GW",NA,2.39,"Medina","Ohio",334,NA,"Uni"
+"3829","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23296111,-81.84114167,NA,"135.01",NA,NA,NA,NA,NA,NA,NA,-51.71,-6.91,NA,NA,"GW",NA,3.57,"Medina","Ohio",334,NA,"Uni"
+"3830","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23296111,-81.84114167,NA,"135.01",NA,NA,NA,NA,NA,NA,NA,-51.71,-6.91,NA,NA,"GW",NA,3.57,"Medina","Ohio",334,NA,"Uni"
+"3831","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23296111,-81.84114167,NA,"135.01",NA,NA,NA,NA,NA,NA,NA,-51.71,-6.91,NA,NA,"GW",NA,3.57,"Medina","Ohio",334,NA,"Uni"
+"3832","Speedway at 42
+Pearl Rd and Oxford
+Dr Tap, Brunswick
+OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23296111,-81.84114167,NA,"135.01",NA,NA,NA,NA,NA,NA,NA,-51.71,-6.91,NA,NA,"GW",NA,3.57,"Medina","Ohio",334,NA,"Uni"
+"3833","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.41911389,-81.83251944,NA,"138",NA,NA,NA,NA,NA,NA,NA,-51.14807653,-6.767218593,NA,NA,"Lake Erie",NA,2.989672214,"Cuyahoga","Ohio",235,NA,"Uni"
+"3834","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.41911389,-81.83251944,NA,"138",NA,NA,NA,NA,NA,NA,NA,-51.14807653,-6.767218593,NA,NA,"Lake Erie",NA,2.989672214,"Cuyahoga","Ohio",235,NA,"Uni"
+"3835","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.41911389,-81.83251944,NA,"138",NA,NA,NA,NA,NA,NA,NA,-51.14807653,-6.767218593,NA,NA,"Lake Erie",NA,2.989672214,"Cuyahoga","Ohio",235,NA,"Uni"
+"3836","Cirlce k Brookepark Rd at 237 North of Airport, Tap Nasaglenn",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.41911389,-81.83251944,NA,"138",NA,NA,NA,NA,NA,NA,NA,-51.14807653,-6.767218593,NA,NA,"Lake Erie",NA,2.989672214,"Cuyahoga","Ohio",235,NA,"Uni"
+"3837","Sheetz at Whitney
 Rd and Pearl Rd/ 42
 Middleburg Hts, OH
-tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.34346389,-81.82559722,NA,"136",NA,NA,NA,NA,NA,NA,NA,-49.63,-6.51,NA,NA,"GW",NA,2.45,"Cuyahoga","Ohio",257,NA,"Uni"
-"3823","Sheetz at Whitney
+tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.34346389,-81.82559722,NA,"136",NA,NA,NA,NA,NA,NA,NA,-49.63,-6.51,NA,NA,"GW",NA,2.45,"Cuyahoga","Ohio",257,NA,"Uni"
+"3838","Sheetz at Whitney
 Rd and Pearl Rd/ 42
 Middleburg Hts, OH
-tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.34346389,-81.82559722,NA,"136.01",NA,NA,NA,NA,NA,NA,NA,-51.5,-6.84,NA,NA,"GW",NA,3.22,"Cuyahoga","Ohio",257,NA,"Uni"
-"3824","Circle K at snow and smith Brookepark tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.40426667,-81.80456667,NA,"137",NA,NA,NA,NA,NA,NA,NA,-48.59972294,-6.427844736,NA,NA,"Lake Erie",NA,2.823034948,"Cuyahoga","Ohio",243,NA,"Uni"
-"3825","McDonalds on 117th s of detroit Lake wood, OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.48268333,-81.76924722,NA,"140",NA,NA,NA,NA,NA,NA,NA,-49.52516751,-6.506492957,NA,NA,"Lake Erie",NA,2.526776146,"Cuyahoga","Ohio",212,NA,"Uni"
-"3826","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.44214167,-81.75493889,NA,"141",NA,NA,NA,NA,NA,NA,NA,-56.16783592,-7.77595068,NA,NA,"Lake Erie",NA,6.03976952,"Cuyahoga","Ohio",235,NA,"Uni"
-"3827","Sheetz Ridge Rd and Day Dr Parma. OH Tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.38013889,-81.73528056,NA,"142",NA,NA,NA,NA,NA,NA,NA,-50.1743819,-6.601886018,NA,NA,"Lake Erie",NA,2.640706244,"Cuyahoga","Ohio",287,NA,"Uni"
-"3828","Best Stop at 179 &
-303 Richfield OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.23993333,-81.653825,NA,"209",NA,NA,NA,NA,NA,NA,NA,-58.68,-9.14,NA,NA,"GW",NA,14.44,"Summit","Ohio",372,NA,"Uni"
-"3829","Best Stop at 179 &
-303 Richfield OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.23993333,-81.653825,NA,"209.01",NA,NA,NA,NA,NA,NA,NA,-57.18,-8.81,NA,NA,"GW",NA,13.3,"Summit","Ohio",372,NA,"Uni"
-"3830","8952 Brecksville Rd
+tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.34346389,-81.82559722,NA,"136",NA,NA,NA,NA,NA,NA,NA,-49.63,-6.51,NA,NA,"GW",NA,2.45,"Cuyahoga","Ohio",257,NA,"Uni"
+"3839","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.34346389,-81.82559722,NA,"136",NA,NA,NA,NA,NA,NA,NA,-49.63,-6.51,NA,NA,"GW",NA,2.45,"Cuyahoga","Ohio",257,NA,"Uni"
+"3840","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.34346389,-81.82559722,NA,"136",NA,NA,NA,NA,NA,NA,NA,-49.63,-6.51,NA,NA,"GW",NA,2.45,"Cuyahoga","Ohio",257,NA,"Uni"
+"3841","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.34346389,-81.82559722,NA,"136.01",NA,NA,NA,NA,NA,NA,NA,-51.5,-6.84,NA,NA,"GW",NA,3.22,"Cuyahoga","Ohio",257,NA,"Uni"
+"3842","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.34346389,-81.82559722,NA,"136.01",NA,NA,NA,NA,NA,NA,NA,-51.5,-6.84,NA,NA,"GW",NA,3.22,"Cuyahoga","Ohio",257,NA,"Uni"
+"3843","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.34346389,-81.82559722,NA,"136.01",NA,NA,NA,NA,NA,NA,NA,-51.5,-6.84,NA,NA,"GW",NA,3.22,"Cuyahoga","Ohio",257,NA,"Uni"
+"3844","Sheetz at Whitney
+Rd and Pearl Rd/ 42
+Middleburg Hts, OH
+tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.34346389,-81.82559722,NA,"136.01",NA,NA,NA,NA,NA,NA,NA,-51.5,-6.84,NA,NA,"GW",NA,3.22,"Cuyahoga","Ohio",257,NA,"Uni"
+"3845","Circle K at snow and smith Brookepark tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.40426667,-81.80456667,NA,"137",NA,NA,NA,NA,NA,NA,NA,-48.59972294,-6.427844736,NA,NA,"Lake Erie",NA,2.823034948,"Cuyahoga","Ohio",243,NA,"Uni"
+"3846","Circle K at snow and smith Brookepark tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.40426667,-81.80456667,NA,"137",NA,NA,NA,NA,NA,NA,NA,-48.59972294,-6.427844736,NA,NA,"Lake Erie",NA,2.823034948,"Cuyahoga","Ohio",243,NA,"Uni"
+"3847","Circle K at snow and smith Brookepark tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.40426667,-81.80456667,NA,"137",NA,NA,NA,NA,NA,NA,NA,-48.59972294,-6.427844736,NA,NA,"Lake Erie",NA,2.823034948,"Cuyahoga","Ohio",243,NA,"Uni"
+"3848","Circle K at snow and smith Brookepark tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.40426667,-81.80456667,NA,"137",NA,NA,NA,NA,NA,NA,NA,-48.59972294,-6.427844736,NA,NA,"Lake Erie",NA,2.823034948,"Cuyahoga","Ohio",243,NA,"Uni"
+"3849","McDonalds on 117th s of detroit Lake wood, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.48268333,-81.76924722,NA,"140",NA,NA,NA,NA,NA,NA,NA,-49.52516751,-6.506492957,NA,NA,"Lake Erie",NA,2.526776146,"Cuyahoga","Ohio",212,NA,"Uni"
+"3850","McDonalds on 117th s of detroit Lake wood, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.48268333,-81.76924722,NA,"140",NA,NA,NA,NA,NA,NA,NA,-49.52516751,-6.506492957,NA,NA,"Lake Erie",NA,2.526776146,"Cuyahoga","Ohio",212,NA,"Uni"
+"3851","McDonalds on 117th s of detroit Lake wood, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.48268333,-81.76924722,NA,"140",NA,NA,NA,NA,NA,NA,NA,-49.52516751,-6.506492957,NA,NA,"Lake Erie",NA,2.526776146,"Cuyahoga","Ohio",212,NA,"Uni"
+"3852","McDonalds on 117th s of detroit Lake wood, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.48268333,-81.76924722,NA,"140",NA,NA,NA,NA,NA,NA,NA,-49.52516751,-6.506492957,NA,NA,"Lake Erie",NA,2.526776146,"Cuyahoga","Ohio",212,NA,"Uni"
+"3853","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.44214167,-81.75493889,NA,"141",NA,NA,NA,NA,NA,NA,NA,-56.16783592,-7.77595068,NA,NA,"Lake Erie",NA,6.03976952,"Cuyahoga","Ohio",235,NA,"Uni"
+"3854","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.44214167,-81.75493889,NA,"141",NA,NA,NA,NA,NA,NA,NA,-56.16783592,-7.77595068,NA,NA,"Lake Erie",NA,6.03976952,"Cuyahoga","Ohio",235,NA,"Uni"
+"3855","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.44214167,-81.75493889,NA,"141",NA,NA,NA,NA,NA,NA,NA,-56.16783592,-7.77595068,NA,NA,"Lake Erie",NA,6.03976952,"Cuyahoga","Ohio",235,NA,"Uni"
+"3856","Big Creek Brooklyn, OH Memphis Ave and Tiedman Rd Metro park",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.44214167,-81.75493889,NA,"141",NA,NA,NA,NA,NA,NA,NA,-56.16783592,-7.77595068,NA,NA,"Lake Erie",NA,6.03976952,"Cuyahoga","Ohio",235,NA,"Uni"
+"3857","Sheetz Ridge Rd and Day Dr Parma. OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.38013889,-81.73528056,NA,"142",NA,NA,NA,NA,NA,NA,NA,-50.1743819,-6.601886018,NA,NA,"Lake Erie",NA,2.640706244,"Cuyahoga","Ohio",287,NA,"Uni"
+"3858","Sheetz Ridge Rd and Day Dr Parma. OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.38013889,-81.73528056,NA,"142",NA,NA,NA,NA,NA,NA,NA,-50.1743819,-6.601886018,NA,NA,"Lake Erie",NA,2.640706244,"Cuyahoga","Ohio",287,NA,"Uni"
+"3859","Sheetz Ridge Rd and Day Dr Parma. OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.38013889,-81.73528056,NA,"142",NA,NA,NA,NA,NA,NA,NA,-50.1743819,-6.601886018,NA,NA,"Lake Erie",NA,2.640706244,"Cuyahoga","Ohio",287,NA,"Uni"
+"3860","Sheetz Ridge Rd and Day Dr Parma. OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.38013889,-81.73528056,NA,"142",NA,NA,NA,NA,NA,NA,NA,-50.1743819,-6.601886018,NA,NA,"Lake Erie",NA,2.640706244,"Cuyahoga","Ohio",287,NA,"Uni"
+"3861","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23993333,-81.653825,NA,"209",NA,NA,NA,NA,NA,NA,NA,-58.68,-9.14,NA,NA,"GW",NA,14.44,"Summit","Ohio",372,NA,"Uni"
+"3862","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23993333,-81.653825,NA,"209",NA,NA,NA,NA,NA,NA,NA,-58.68,-9.14,NA,NA,"GW",NA,14.44,"Summit","Ohio",372,NA,"Uni"
+"3863","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23993333,-81.653825,NA,"209",NA,NA,NA,NA,NA,NA,NA,-58.68,-9.14,NA,NA,"GW",NA,14.44,"Summit","Ohio",372,NA,"Uni"
+"3864","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.23993333,-81.653825,NA,"209",NA,NA,NA,NA,NA,NA,NA,-58.68,-9.14,NA,NA,"GW",NA,14.44,"Summit","Ohio",372,NA,"Uni"
+"3865","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23993333,-81.653825,NA,"209.01",NA,NA,NA,NA,NA,NA,NA,-57.18,-8.81,NA,NA,"GW",NA,13.3,"Summit","Ohio",372,NA,"Uni"
+"3866","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23993333,-81.653825,NA,"209.01",NA,NA,NA,NA,NA,NA,NA,-57.18,-8.81,NA,NA,"GW",NA,13.3,"Summit","Ohio",372,NA,"Uni"
+"3867","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23993333,-81.653825,NA,"209.01",NA,NA,NA,NA,NA,NA,NA,-57.18,-8.81,NA,NA,"GW",NA,13.3,"Summit","Ohio",372,NA,"Uni"
+"3868","Best Stop at 179 &
+303 Richfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.23993333,-81.653825,NA,"209.01",NA,NA,NA,NA,NA,NA,NA,-57.18,-8.81,NA,NA,"GW",NA,13.3,"Summit","Ohio",372,NA,"Uni"
+"3869","8952 Brecksville Rd
 & shell gas station
 Arlington St
-Brecksville OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.31866944,-81.62736389,NA,"208",NA,NA,NA,NA,NA,NA,NA,-48.73,-6.41,NA,NA,"GW",NA,2.55,"Cuyahoga","Ohio",262,NA,"Uni"
-"3831","8952 Brecksville Rd
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31866944,-81.62736389,NA,"208",NA,NA,NA,NA,NA,NA,NA,-48.73,-6.41,NA,NA,"GW",NA,2.55,"Cuyahoga","Ohio",262,NA,"Uni"
+"3870","8952 Brecksville Rd
 & shell gas station
 Arlington St
-Brecksville OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.31866944,-81.62736389,NA,"208.01",NA,NA,NA,NA,NA,NA,NA,-51.35,-6.82,NA,NA,"GW",NA,3.21,"Cuyahoga","Ohio",262,NA,"Uni"
-"3832","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.31433333,-81.51178333,NA,"207",NA,NA,NA,NA,NA,NA,NA,-49.39,-6.49,NA,NA,"GW",NA,2.53,"Summit","Ohio",316,NA,"Uni"
-"3833","Speedway gas
-station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.31433333,-81.51178333,NA,"207.01",NA,NA,NA,NA,NA,NA,NA,-51.44,-6.84,NA,NA,"GW",NA,3.28,"Summit","Ohio",316,NA,"Uni"
-"3834","Panera Bread at 91
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31866944,-81.62736389,NA,"208",NA,NA,NA,NA,NA,NA,NA,-48.73,-6.41,NA,NA,"GW",NA,2.55,"Cuyahoga","Ohio",262,NA,"Uni"
+"3871","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31866944,-81.62736389,NA,"208",NA,NA,NA,NA,NA,NA,NA,-48.73,-6.41,NA,NA,"GW",NA,2.55,"Cuyahoga","Ohio",262,NA,"Uni"
+"3872","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31866944,-81.62736389,NA,"208",NA,NA,NA,NA,NA,NA,NA,-48.73,-6.41,NA,NA,"GW",NA,2.55,"Cuyahoga","Ohio",262,NA,"Uni"
+"3873","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31866944,-81.62736389,NA,"208.01",NA,NA,NA,NA,NA,NA,NA,-51.35,-6.82,NA,NA,"GW",NA,3.21,"Cuyahoga","Ohio",262,NA,"Uni"
+"3874","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31866944,-81.62736389,NA,"208.01",NA,NA,NA,NA,NA,NA,NA,-51.35,-6.82,NA,NA,"GW",NA,3.21,"Cuyahoga","Ohio",262,NA,"Uni"
+"3875","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31866944,-81.62736389,NA,"208.01",NA,NA,NA,NA,NA,NA,NA,-51.35,-6.82,NA,NA,"GW",NA,3.21,"Cuyahoga","Ohio",262,NA,"Uni"
+"3876","8952 Brecksville Rd
+& shell gas station
+Arlington St
+Brecksville OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31866944,-81.62736389,NA,"208.01",NA,NA,NA,NA,NA,NA,NA,-51.35,-6.82,NA,NA,"GW",NA,3.21,"Cuyahoga","Ohio",262,NA,"Uni"
+"3877","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31433333,-81.51178333,NA,"207",NA,NA,NA,NA,NA,NA,NA,-49.39,-6.49,NA,NA,"GW",NA,2.53,"Summit","Ohio",316,NA,"Uni"
+"3878","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31433333,-81.51178333,NA,"207",NA,NA,NA,NA,NA,NA,NA,-49.39,-6.49,NA,NA,"GW",NA,2.53,"Summit","Ohio",316,NA,"Uni"
+"3879","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31433333,-81.51178333,NA,"207",NA,NA,NA,NA,NA,NA,NA,-49.39,-6.49,NA,NA,"GW",NA,2.53,"Summit","Ohio",316,NA,"Uni"
+"3880","Speedway gas station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31433333,-81.51178333,NA,"207",NA,NA,NA,NA,NA,NA,NA,-49.39,-6.49,NA,NA,"GW",NA,2.53,"Summit","Ohio",316,NA,"Uni"
+"3881","Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31433333,-81.51178333,NA,"207.01",NA,NA,NA,NA,NA,NA,NA,-51.44,-6.84,NA,NA,"GW",NA,3.28,"Summit","Ohio",316,NA,"Uni"
+"3882","Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31433333,-81.51178333,NA,"207.01",NA,NA,NA,NA,NA,NA,NA,-51.44,-6.84,NA,NA,"GW",NA,3.28,"Summit","Ohio",316,NA,"Uni"
+"3883","Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31433333,-81.51178333,NA,"207.01",NA,NA,NA,NA,NA,NA,NA,-51.44,-6.84,NA,NA,"GW",NA,3.28,"Summit","Ohio",316,NA,"Uni"
+"3884","Speedway gas
+station at east aurora Rd & S Bedford Rd/ freeway Dr Macedonia OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.31433333,-81.51178333,NA,"207.01",NA,NA,NA,NA,NA,NA,NA,-51.44,-6.84,NA,NA,"GW",NA,3.28,"Summit","Ohio",316,NA,"Uni"
+"3885","Panera Bread at 91
 & 480/14 Twinsburg
-OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.30866111,-81.44175833,NA,"206",NA,NA,NA,NA,NA,NA,NA,-49.37,-6.51,NA,NA,"GW",NA,2.71,"Summit","Ohio",332,NA,"Uni"
-"3835","Panera Bread at 91
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.30866111,-81.44175833,NA,"206",NA,NA,NA,NA,NA,NA,NA,-49.37,-6.51,NA,NA,"GW",NA,2.71,"Summit","Ohio",332,NA,"Uni"
+"3886","Panera Bread at 91
 & 480/14 Twinsburg
-OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.30866111,-81.44175833,NA,"206.01",NA,NA,NA,NA,NA,NA,NA,-51.32,-6.82,NA,NA,"GW",NA,3.24,"Summit","Ohio",332,NA,"Uni"
-"3836","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.52046111,-81.43910278,NA,"201",NA,NA,NA,NA,NA,NA,NA,-48.6671278,-6.364263727,NA,NA,"Lake Erie",NA,2.246982016,"Cuyahoga","Ohio",310,NA,"Uni"
-"3837","Circle K minimart at Vine St & 364th/ on 642 tap east lake","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.64278333,-81.42915,NA,"191",NA,NA,NA,NA,NA,NA,NA,-49.04248045,-6.423558152,NA,NA,"Lake Erie",NA,2.345984766,"Lake","Ohio",190,NA,"Uni"
-"3838","Shell gas station at 82 & 43 in Aurora OH","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.31768889,-81.35078889,NA,"205",NA,NA,NA,NA,NA,NA,NA,-49.53251814,-6.510153437,NA,NA,"Lake Erie",NA,2.548709356,"Portage","Ohio",333,NA,"Uni"
-"3839","McDonalds at
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.30866111,-81.44175833,NA,"206",NA,NA,NA,NA,NA,NA,NA,-49.37,-6.51,NA,NA,"GW",NA,2.71,"Summit","Ohio",332,NA,"Uni"
+"3887","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.30866111,-81.44175833,NA,"206",NA,NA,NA,NA,NA,NA,NA,-49.37,-6.51,NA,NA,"GW",NA,2.71,"Summit","Ohio",332,NA,"Uni"
+"3888","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.30866111,-81.44175833,NA,"206",NA,NA,NA,NA,NA,NA,NA,-49.37,-6.51,NA,NA,"GW",NA,2.71,"Summit","Ohio",332,NA,"Uni"
+"3889","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.30866111,-81.44175833,NA,"206.01",NA,NA,NA,NA,NA,NA,NA,-51.32,-6.82,NA,NA,"GW",NA,3.24,"Summit","Ohio",332,NA,"Uni"
+"3890","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.30866111,-81.44175833,NA,"206.01",NA,NA,NA,NA,NA,NA,NA,-51.32,-6.82,NA,NA,"GW",NA,3.24,"Summit","Ohio",332,NA,"Uni"
+"3891","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.30866111,-81.44175833,NA,"206.01",NA,NA,NA,NA,NA,NA,NA,-51.32,-6.82,NA,NA,"GW",NA,3.24,"Summit","Ohio",332,NA,"Uni"
+"3892","Panera Bread at 91
+& 480/14 Twinsburg
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.30866111,-81.44175833,NA,"206.01",NA,NA,NA,NA,NA,NA,NA,-51.32,-6.82,NA,NA,"GW",NA,3.24,"Summit","Ohio",332,NA,"Uni"
+"3893","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52046111,-81.43910278,NA,"201",NA,NA,NA,NA,NA,NA,NA,-48.6671278,-6.364263727,NA,NA,"Lake Erie",NA,2.246982016,"Cuyahoga","Ohio",310,NA,"Uni"
+"3894","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52046111,-81.43910278,NA,"201",NA,NA,NA,NA,NA,NA,NA,-48.6671278,-6.364263727,NA,NA,"Lake Erie",NA,2.246982016,"Cuyahoga","Ohio",310,NA,"Uni"
+"3895","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52046111,-81.43910278,NA,"201",NA,NA,NA,NA,NA,NA,NA,-48.6671278,-6.364263727,NA,NA,"Lake Erie",NA,2.246982016,"Cuyahoga","Ohio",310,NA,"Uni"
+"3896","Circle K gas station corner som center rd & mayfield rd/ 91 &322 Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52046111,-81.43910278,NA,"201",NA,NA,NA,NA,NA,NA,NA,-48.6671278,-6.364263727,NA,NA,"Lake Erie",NA,2.246982016,"Cuyahoga","Ohio",310,NA,"Uni"
+"3897","Circle K minimart at Vine St & 364th/ on 642 tap east lake",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.64278333,-81.42915,NA,"191",NA,NA,NA,NA,NA,NA,NA,-49.04248045,-6.423558152,NA,NA,"Lake Erie",NA,2.345984766,"Lake","Ohio",190,NA,"Uni"
+"3898","Circle K minimart at Vine St & 364th/ on 642 tap east lake",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.64278333,-81.42915,NA,"191",NA,NA,NA,NA,NA,NA,NA,-49.04248045,-6.423558152,NA,NA,"Lake Erie",NA,2.345984766,"Lake","Ohio",190,NA,"Uni"
+"3899","Circle K minimart at Vine St & 364th/ on 642 tap east lake",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.64278333,-81.42915,NA,"191",NA,NA,NA,NA,NA,NA,NA,-49.04248045,-6.423558152,NA,NA,"Lake Erie",NA,2.345984766,"Lake","Ohio",190,NA,"Uni"
+"3900","Circle K minimart at Vine St & 364th/ on 642 tap east lake",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.64278333,-81.42915,NA,"191",NA,NA,NA,NA,NA,NA,NA,-49.04248045,-6.423558152,NA,NA,"Lake Erie",NA,2.345984766,"Lake","Ohio",190,NA,"Uni"
+"3901","Shell gas station at 82 & 43 in Aurora OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31768889,-81.35078889,NA,"205",NA,NA,NA,NA,NA,NA,NA,-49.53251814,-6.510153437,NA,NA,"Lake Erie",NA,2.548709356,"Portage","Ohio",333,NA,"Uni"
+"3902","Shell gas station at 82 & 43 in Aurora OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31768889,-81.35078889,NA,"205",NA,NA,NA,NA,NA,NA,NA,-49.53251814,-6.510153437,NA,NA,"Lake Erie",NA,2.548709356,"Portage","Ohio",333,NA,"Uni"
+"3903","Shell gas station at 82 & 43 in Aurora OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31768889,-81.35078889,NA,"205",NA,NA,NA,NA,NA,NA,NA,-49.53251814,-6.510153437,NA,NA,"Lake Erie",NA,2.548709356,"Portage","Ohio",333,NA,"Uni"
+"3904","Shell gas station at 82 & 43 in Aurora OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.31768889,-81.35078889,NA,"205",NA,NA,NA,NA,NA,NA,NA,-49.53251814,-6.510153437,NA,NA,"Lake Erie",NA,2.548709356,"Portage","Ohio",333,NA,"Uni"
+"3905","McDonalds at
 Chillcothe Rd &
 Chagrin Rd Bain
-Bridge OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.389825,-81.34023611,NA,"204",NA,NA,NA,NA,NA,NA,NA,-63.54,-9.69,NA,NA,"GW",NA,13.98,"Geauga","Ohio",350,NA,"Uni"
-"3840","McDonalds at
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.389825,-81.34023611,NA,"204",NA,NA,NA,NA,NA,NA,NA,-63.54,-9.69,NA,NA,"GW",NA,13.98,"Geauga","Ohio",350,NA,"Uni"
+"3906","McDonalds at
 Chillcothe Rd &
 Chagrin Rd Bain
-Bridge OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.389825,-81.34023611,NA,"204.01",NA,NA,NA,NA,NA,NA,NA,-63.42,-9.67,NA,NA,"GW",NA,13.94,"Geauga","Ohio",350,NA,"Uni"
-"3841","BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.68865,-81.33878333,NA,"190",NA,NA,NA,NA,NA,NA,NA,-49.31237232,-6.489395491,NA,NA,"Lake Erie",NA,2.602791608,"Lake","Ohio",200,NA,"Uni"
-"3842","Pizza Hut on
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.389825,-81.34023611,NA,"204",NA,NA,NA,NA,NA,NA,NA,-63.54,-9.69,NA,NA,"GW",NA,13.98,"Geauga","Ohio",350,NA,"Uni"
+"3907","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.389825,-81.34023611,NA,"204",NA,NA,NA,NA,NA,NA,NA,-63.54,-9.69,NA,NA,"GW",NA,13.98,"Geauga","Ohio",350,NA,"Uni"
+"3908","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.389825,-81.34023611,NA,"204",NA,NA,NA,NA,NA,NA,NA,-63.54,-9.69,NA,NA,"GW",NA,13.98,"Geauga","Ohio",350,NA,"Uni"
+"3909","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.389825,-81.34023611,NA,"204.01",NA,NA,NA,NA,NA,NA,NA,-63.42,-9.67,NA,NA,"GW",NA,13.94,"Geauga","Ohio",350,NA,"Uni"
+"3910","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.389825,-81.34023611,NA,"204.01",NA,NA,NA,NA,NA,NA,NA,-63.42,-9.67,NA,NA,"GW",NA,13.94,"Geauga","Ohio",350,NA,"Uni"
+"3911","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.389825,-81.34023611,NA,"204.01",NA,NA,NA,NA,NA,NA,NA,-63.42,-9.67,NA,NA,"GW",NA,13.94,"Geauga","Ohio",350,NA,"Uni"
+"3912","McDonalds at
+Chillcothe Rd &
+Chagrin Rd Bain
+Bridge OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.389825,-81.34023611,NA,"204.01",NA,NA,NA,NA,NA,NA,NA,-63.42,-9.67,NA,NA,"GW",NA,13.94,"Geauga","Ohio",350,NA,"Uni"
+"3913","BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.68865,-81.33878333,NA,"190",NA,NA,NA,NA,NA,NA,NA,-49.31237232,-6.489395491,NA,NA,"Lake Erie",NA,2.602791608,"Lake","Ohio",200,NA,"Uni"
+"3914","BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.68865,-81.33878333,NA,"190",NA,NA,NA,NA,NA,NA,NA,-49.31237232,-6.489395491,NA,NA,"Lake Erie",NA,2.602791608,"Lake","Ohio",200,NA,"Uni"
+"3915","BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.68865,-81.33878333,NA,"190",NA,NA,NA,NA,NA,NA,NA,-49.31237232,-6.489395491,NA,NA,"Lake Erie",NA,2.602791608,"Lake","Ohio",200,NA,"Uni"
+"3916","BP /7.11 at 615 & 90. 615 & Market St. Menton OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.68865,-81.33878333,NA,"190",NA,NA,NA,NA,NA,NA,NA,-49.31237232,-6.489395491,NA,NA,"Lake Erie",NA,2.602791608,"Lake","Ohio",200,NA,"Uni"
+"3917","Pizza Hut on
 Chillcothe rd &
-Mayfield OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.52306667,-81.33858333,NA,"200",NA,NA,NA,NA,NA,NA,NA,-67.46,-10.38,NA,NA,"GW",NA,15.58,"Geauga","Ohio",360,NA,"Uni"
-"3843","Pizza Hut on
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52306667,-81.33858333,NA,"200",NA,NA,NA,NA,NA,NA,NA,-67.46,-10.38,NA,NA,"GW",NA,15.58,"Geauga","Ohio",360,NA,"Uni"
+"3918","Pizza Hut on
 Chillcothe rd &
-Mayfield OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.52306667,-81.33858333,NA,"200.01",NA,NA,NA,NA,NA,NA,NA,-67.53,-10.27,NA,NA,"GW",NA,14.63,"Geauga","Ohio",360,NA,"Uni"
-"3844","Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.71511111,-81.29967222,NA,"189",NA,NA,NA,NA,NA,NA,NA,-49.20126483,-6.500387364,NA,NA,"Lake Erie",NA,2.801834082,"Lake","Ohio",190,NA,"Uni"
-"3845","McDonalds at 90 & 528 Madison OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.76170278,-81.0469,NA,"187",NA,NA,NA,NA,NA,NA,NA,-47.21955977,-6.214136569,NA,NA,"Lake Erie",NA,2.493532782,"Lake","Ohio",234,NA,"Uni"
-"3846","Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.39145556,-81.43814444,NA,"203",NA,NA,NA,NA,NA,NA,NA,-49.77,-6.54,NA,NA,NA,NA,2.55,"Cuyahoga","Ohio",323,NA,"Uni"
-"3847","Winking Lizard on 303 in the valley Peninsula OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.24149444,-81.44260556,NA,"210",NA,NA,NA,NA,NA,NA,NA,-55.3,-8.36,NA,NA,NA,NA,11.58,"Summit","Ohio",325,NA,"Uni"
-"3848","Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.46316667,-81.45999167,NA,"202",NA,NA,NA,NA,NA,NA,NA,-49.26,-6.47,NA,NA,NA,NA,2.5,"Cuyahoga","Ohio",333,NA,"Uni"
-"3849","Circle K gas station
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52306667,-81.33858333,NA,"200",NA,NA,NA,NA,NA,NA,NA,-67.46,-10.38,NA,NA,"GW",NA,15.58,"Geauga","Ohio",360,NA,"Uni"
+"3919","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52306667,-81.33858333,NA,"200",NA,NA,NA,NA,NA,NA,NA,-67.46,-10.38,NA,NA,"GW",NA,15.58,"Geauga","Ohio",360,NA,"Uni"
+"3920","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.52306667,-81.33858333,NA,"200",NA,NA,NA,NA,NA,NA,NA,-67.46,-10.38,NA,NA,"GW",NA,15.58,"Geauga","Ohio",360,NA,"Uni"
+"3921","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.52306667,-81.33858333,NA,"200.01",NA,NA,NA,NA,NA,NA,NA,-67.53,-10.27,NA,NA,"GW",NA,14.63,"Geauga","Ohio",360,NA,"Uni"
+"3922","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.52306667,-81.33858333,NA,"200.01",NA,NA,NA,NA,NA,NA,NA,-67.53,-10.27,NA,NA,"GW",NA,14.63,"Geauga","Ohio",360,NA,"Uni"
+"3923","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.52306667,-81.33858333,NA,"200.01",NA,NA,NA,NA,NA,NA,NA,-67.53,-10.27,NA,NA,"GW",NA,14.63,"Geauga","Ohio",360,NA,"Uni"
+"3924","Pizza Hut on
+Chillcothe rd &
+Mayfield OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.52306667,-81.33858333,NA,"200.01",NA,NA,NA,NA,NA,NA,NA,-67.53,-10.27,NA,NA,"GW",NA,14.63,"Geauga","Ohio",360,NA,"Uni"
+"3925","Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.71511111,-81.29967222,NA,"189",NA,NA,NA,NA,NA,NA,NA,-49.20126483,-6.500387364,NA,NA,"Lake Erie",NA,2.801834082,"Lake","Ohio",190,NA,"Uni"
+"3926","Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.71511111,-81.29967222,NA,"189",NA,NA,NA,NA,NA,NA,NA,-49.20126483,-6.500387364,NA,NA,"Lake Erie",NA,2.801834082,"Lake","Ohio",190,NA,"Uni"
+"3927","Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.71511111,-81.29967222,NA,"189",NA,NA,NA,NA,NA,NA,NA,-49.20126483,-6.500387364,NA,NA,"Lake Erie",NA,2.801834082,"Lake","Ohio",190,NA,"Uni"
+"3928","Burger King at 44 & rt 2 Heisley Rd & diamond center Rd tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.71511111,-81.29967222,NA,"189",NA,NA,NA,NA,NA,NA,NA,-49.20126483,-6.500387364,NA,NA,"Lake Erie",NA,2.801834082,"Lake","Ohio",190,NA,"Uni"
+"3929","McDonalds at 90 & 528 Madison OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.76170278,-81.0469,NA,"187",NA,NA,NA,NA,NA,NA,NA,-47.21955977,-6.214136569,NA,NA,"Lake Erie",NA,2.493532782,"Lake","Ohio",234,NA,"Uni"
+"3930","McDonalds at 90 & 528 Madison OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.76170278,-81.0469,NA,"187",NA,NA,NA,NA,NA,NA,NA,-47.21955977,-6.214136569,NA,NA,"Lake Erie",NA,2.493532782,"Lake","Ohio",234,NA,"Uni"
+"3931","McDonalds at 90 & 528 Madison OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.76170278,-81.0469,NA,"187",NA,NA,NA,NA,NA,NA,NA,-47.21955977,-6.214136569,NA,NA,"Lake Erie",NA,2.493532782,"Lake","Ohio",234,NA,"Uni"
+"3932","McDonalds at 90 & 528 Madison OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.76170278,-81.0469,NA,"187",NA,NA,NA,NA,NA,NA,NA,-47.21955977,-6.214136569,NA,NA,"Lake Erie",NA,2.493532782,"Lake","Ohio",234,NA,"Uni"
+"3933","Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.39145556,-81.43814444,NA,"203",NA,NA,NA,NA,NA,NA,NA,-49.77,-6.54,NA,NA,NA,NA,2.55,"Cuyahoga","Ohio",323,NA,"Uni"
+"3934","Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.39145556,-81.43814444,NA,"203",NA,NA,NA,NA,NA,NA,NA,-49.77,-6.54,NA,NA,NA,NA,2.55,"Cuyahoga","Ohio",323,NA,"Uni"
+"3935","Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.39145556,-81.43814444,NA,"203",NA,NA,NA,NA,NA,NA,NA,-49.77,-6.54,NA,NA,NA,NA,2.55,"Cuyahoga","Ohio",323,NA,"Uni"
+"3936","Shell gas station at Solon Rd & 911 Somenter Rd Solon OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.39145556,-81.43814444,NA,"203",NA,NA,NA,NA,NA,NA,NA,-49.77,-6.54,NA,NA,NA,NA,2.55,"Cuyahoga","Ohio",323,NA,"Uni"
+"3937","Winking Lizard on 303 in the valley Peninsula OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.24149444,-81.44260556,NA,"210",NA,NA,NA,NA,NA,NA,NA,-55.3,-8.36,NA,NA,NA,NA,11.58,"Summit","Ohio",325,NA,"Uni"
+"3938","Winking Lizard on 303 in the valley Peninsula OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.24149444,-81.44260556,NA,"210",NA,NA,NA,NA,NA,NA,NA,-55.3,-8.36,NA,NA,NA,NA,11.58,"Summit","Ohio",325,NA,"Uni"
+"3939","Winking Lizard on 303 in the valley Peninsula OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.24149444,-81.44260556,NA,"210",NA,NA,NA,NA,NA,NA,NA,-55.3,-8.36,NA,NA,NA,NA,11.58,"Summit","Ohio",325,NA,"Uni"
+"3940","Winking Lizard on 303 in the valley Peninsula OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.24149444,-81.44260556,NA,"210",NA,NA,NA,NA,NA,NA,NA,-55.3,-8.36,NA,NA,NA,NA,11.58,"Summit","Ohio",325,NA,"Uni"
+"3941","Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.46316667,-81.45999167,NA,"202",NA,NA,NA,NA,NA,NA,NA,-49.26,-6.47,NA,NA,NA,NA,2.5,"Cuyahoga","Ohio",333,NA,"Uni"
+"3942","Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.46316667,-81.45999167,NA,"202",NA,NA,NA,NA,NA,NA,NA,-49.26,-6.47,NA,NA,NA,NA,2.5,"Cuyahoga","Ohio",333,NA,"Uni"
+"3943","Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.46316667,-81.45999167,NA,"202",NA,NA,NA,NA,NA,NA,NA,-49.26,-6.47,NA,NA,NA,NA,2.5,"Cuyahoga","Ohio",333,NA,"Uni"
+"3944","Heinens grocery store Pinetree Rd & Kander Rd Woodmere OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.46316667,-81.45999167,NA,"202",NA,NA,NA,NA,NA,NA,NA,-49.26,-6.47,NA,NA,NA,NA,2.5,"Cuyahoga","Ohio",333,NA,"Uni"
+"3945","Circle K gas station
 at 21 and eastern Rd
-Norton, OH Tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",40.98918056,-81.66439444,NA,"130",NA,NA,NA,NA,NA,NA,NA,-52.2,-8.06,NA,NA,"GW",NA,12.28,"Summit","Ohio",347,NA,"Uni"
-"3850","Circle K gas station
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",40.98918056,-81.66439444,NA,"130",NA,NA,NA,NA,NA,NA,NA,-52.2,-8.06,NA,NA,"GW",NA,12.28,"Summit","Ohio",347,NA,"Uni"
+"3946","Circle K gas station
 at 21 and eastern Rd
-Norton, OH Tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",40.98918056,-81.66439444,NA,"130.01",NA,NA,NA,NA,NA,NA,NA,-53.59,-8.16,NA,NA,"GW",NA,11.69,"Summit","Ohio",347,NA,"Uni"
-"3851","Sheetz gas station corner main and waterloo Rd Akron, OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.02809167,-81.52803611,NA,"128",NA,NA,NA,NA,NA,NA,NA,-55.21628184,-8.360784437,NA,NA,"Lake Rockwell",NA,11.669993656,"Summit","Ohio",309,NA,"Uni"
-"3852","Speedway gas
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",40.98918056,-81.66439444,NA,"130",NA,NA,NA,NA,NA,NA,NA,-52.2,-8.06,NA,NA,"GW",NA,12.28,"Summit","Ohio",347,NA,"Uni"
+"3947","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",40.98918056,-81.66439444,NA,"130",NA,NA,NA,NA,NA,NA,NA,-52.2,-8.06,NA,NA,"GW",NA,12.28,"Summit","Ohio",347,NA,"Uni"
+"3948","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",40.98918056,-81.66439444,NA,"130",NA,NA,NA,NA,NA,NA,NA,-52.2,-8.06,NA,NA,"GW",NA,12.28,"Summit","Ohio",347,NA,"Uni"
+"3949","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",40.98918056,-81.66439444,NA,"130.01",NA,NA,NA,NA,NA,NA,NA,-53.59,-8.16,NA,NA,"GW",NA,11.69,"Summit","Ohio",347,NA,"Uni"
+"3950","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",40.98918056,-81.66439444,NA,"130.01",NA,NA,NA,NA,NA,NA,NA,-53.59,-8.16,NA,NA,"GW",NA,11.69,"Summit","Ohio",347,NA,"Uni"
+"3951","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",40.98918056,-81.66439444,NA,"130.01",NA,NA,NA,NA,NA,NA,NA,-53.59,-8.16,NA,NA,"GW",NA,11.69,"Summit","Ohio",347,NA,"Uni"
+"3952","Circle K gas station
+at 21 and eastern Rd
+Norton, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",40.98918056,-81.66439444,NA,"130.01",NA,NA,NA,NA,NA,NA,NA,-53.59,-8.16,NA,NA,"GW",NA,11.69,"Summit","Ohio",347,NA,"Uni"
+"3953","Sheetz gas station corner main and waterloo Rd Akron, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.02809167,-81.52803611,NA,"128",NA,NA,NA,NA,NA,NA,NA,-55.21628184,-8.360784437,NA,NA,"Lake Rockwell",NA,11.669993656,"Summit","Ohio",309,NA,"Uni"
+"3954","Sheetz gas station corner main and waterloo Rd Akron, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.02809167,-81.52803611,NA,"128",NA,NA,NA,NA,NA,NA,NA,-55.21628184,-8.360784437,NA,NA,"Lake Rockwell",NA,11.669993656,"Summit","Ohio",309,NA,"Uni"
+"3955","Sheetz gas station corner main and waterloo Rd Akron, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.02809167,-81.52803611,NA,"128",NA,NA,NA,NA,NA,NA,NA,-55.21628184,-8.360784437,NA,NA,"Lake Rockwell",NA,11.669993656,"Summit","Ohio",309,NA,"Uni"
+"3956","Sheetz gas station corner main and waterloo Rd Akron, OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.02809167,-81.52803611,NA,"128",NA,NA,NA,NA,NA,NA,NA,-55.21628184,-8.360784437,NA,NA,"Lake Rockwell",NA,11.669993656,"Summit","Ohio",309,NA,"Uni"
+"3957","Speedway gas
 station corner of 224
 and 91 (1275) tap
-Lakemore, OH","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.03089167,-81.42650556,NA,"127",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.4,NA,NA,"GW",NA,11.73,"Summit","Ohio",333,NA,"Uni"
-"3853","Speedway gas
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.03089167,-81.42650556,NA,"127",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.4,NA,NA,"GW",NA,11.73,"Summit","Ohio",333,NA,"Uni"
+"3958","Speedway gas
 station corner of 224
 and 91 (1275) tap
-Lakemore, OH","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.03089167,-81.42650556,NA,"127.01",NA,NA,NA,NA,NA,NA,NA,-48.14,-6.98,NA,NA,"GW",NA,7.7,"Summit","Ohio",333,NA,"Uni"
-"3854","McGilvery Hall Kent
-OH tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.15043056,-81.35086111,NA,"213",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.31,NA,NA,"GW",NA,11.01,"Portage","Ohio",331,NA,"Uni"
-"3855","McGilvery Hall Kent
-OH tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.15043056,-81.35086111,NA,"213.01",NA,NA,NA,NA,NA,NA,NA,-56.3,-8.37,NA,NA,"GW",NA,10.66,"Portage","Ohio",331,NA,"Uni"
-"3856","Speedway gas
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.03089167,-81.42650556,NA,"127",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.4,NA,NA,"GW",NA,11.73,"Summit","Ohio",333,NA,"Uni"
+"3959","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.03089167,-81.42650556,NA,"127",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.4,NA,NA,"GW",NA,11.73,"Summit","Ohio",333,NA,"Uni"
+"3960","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.03089167,-81.42650556,NA,"127",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.4,NA,NA,"GW",NA,11.73,"Summit","Ohio",333,NA,"Uni"
+"3961","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.03089167,-81.42650556,NA,"127.01",NA,NA,NA,NA,NA,NA,NA,-48.14,-6.98,NA,NA,"GW",NA,7.7,"Summit","Ohio",333,NA,"Uni"
+"3962","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.03089167,-81.42650556,NA,"127.01",NA,NA,NA,NA,NA,NA,NA,-48.14,-6.98,NA,NA,"GW",NA,7.7,"Summit","Ohio",333,NA,"Uni"
+"3963","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.03089167,-81.42650556,NA,"127.01",NA,NA,NA,NA,NA,NA,NA,-48.14,-6.98,NA,NA,"GW",NA,7.7,"Summit","Ohio",333,NA,"Uni"
+"3964","Speedway gas
+station corner of 224
+and 91 (1275) tap
+Lakemore, OH",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.03089167,-81.42650556,NA,"127.01",NA,NA,NA,NA,NA,NA,NA,-48.14,-6.98,NA,NA,"GW",NA,7.7,"Summit","Ohio",333,NA,"Uni"
+"3965","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15043056,-81.35086111,NA,"213",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.31,NA,NA,"GW",NA,11.01,"Portage","Ohio",331,NA,"Uni"
+"3966","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15043056,-81.35086111,NA,"213",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.31,NA,NA,"GW",NA,11.01,"Portage","Ohio",331,NA,"Uni"
+"3967","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15043056,-81.35086111,NA,"213",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.31,NA,NA,"GW",NA,11.01,"Portage","Ohio",331,NA,"Uni"
+"3968","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.15043056,-81.35086111,NA,"213",NA,NA,NA,NA,NA,NA,NA,-55.47,-8.31,NA,NA,"GW",NA,11.01,"Portage","Ohio",331,NA,"Uni"
+"3969","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.15043056,-81.35086111,NA,"213.01",NA,NA,NA,NA,NA,NA,NA,-56.3,-8.37,NA,NA,"GW",NA,10.66,"Portage","Ohio",331,NA,"Uni"
+"3970","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.15043056,-81.35086111,NA,"213.01",NA,NA,NA,NA,NA,NA,NA,-56.3,-8.37,NA,NA,"GW",NA,10.66,"Portage","Ohio",331,NA,"Uni"
+"3971","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.15043056,-81.35086111,NA,"213.01",NA,NA,NA,NA,NA,NA,NA,-56.3,-8.37,NA,NA,"GW",NA,10.66,"Portage","Ohio",331,NA,"Uni"
+"3972","McGilvery Hall Kent
+OH tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.15043056,-81.35086111,NA,"213.01",NA,NA,NA,NA,NA,NA,NA,-56.3,-8.37,NA,NA,"GW",NA,10.66,"Portage","Ohio",331,NA,"Uni"
+"3973","Speedway gas
 station corner Lynn
 and Prospect
-Rootstown, OH Tap","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.11084722,-81.24344444,NA,"125",NA,NA,NA,NA,NA,NA,NA,-57.6,-8.58,NA,NA,"GW",NA,11.04,"Portage","Ohio",334,NA,"Uni"
-"3857","Speedway gas
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.11084722,-81.24344444,NA,"125",NA,NA,NA,NA,NA,NA,NA,-57.6,-8.58,NA,NA,"GW",NA,11.04,"Portage","Ohio",334,NA,"Uni"
+"3974","Speedway gas
 station corner Lynn
 and Prospect
-Rootstown, OH Tap","29.2","Cleveland-Akron","Cleveland_Jul-Aug-18",41.11084722,-81.24344444,NA,"125.01",NA,NA,NA,NA,NA,NA,NA,-58.15,-8.73,NA,NA,"GW",NA,11.69,"Portage","Ohio",334,NA,"Uni"
-"3858","Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.14751944,-81.24178611,NA,"124",NA,NA,NA,NA,NA,NA,NA,-59.79,-9.02,NA,NA,NA,NA,12.37,"Portage","Ohio",337,NA,"Uni"
-"3859","McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)","29.1","Cleveland-Akron","Cleveland_Jan-Mar-18",41.01199167,-81.60758611,NA,"129",NA,NA,NA,NA,NA,NA,NA,-52.51,-8.05,NA,NA,NA,NA,11.89,"Summit","Ohio",306,NA,"Uni"
-"3860","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH","30","Youngstown","Cleveland_Jan-Mar-18",41.18668333,-80.97133333,NA,"152",NA,NA,NA,NA,NA,NA,NA,-44.32616783,-6.404320212,NA,NA,"Mosquito creek",NA,6.908393866,"Trumbull","Ohio",283,1,"Uni"
-"3861","Circle K 4021 N
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.11084722,-81.24344444,NA,"125",NA,NA,NA,NA,NA,NA,NA,-57.6,-8.58,NA,NA,"GW",NA,11.04,"Portage","Ohio",334,NA,"Uni"
+"3975","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.11084722,-81.24344444,NA,"125",NA,NA,NA,NA,NA,NA,NA,-57.6,-8.58,NA,NA,"GW",NA,11.04,"Portage","Ohio",334,NA,"Uni"
+"3976","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.11084722,-81.24344444,NA,"125",NA,NA,NA,NA,NA,NA,NA,-57.6,-8.58,NA,NA,"GW",NA,11.04,"Portage","Ohio",334,NA,"Uni"
+"3977","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.11084722,-81.24344444,NA,"125.01",NA,NA,NA,NA,NA,NA,NA,-58.15,-8.73,NA,NA,"GW",NA,11.69,"Portage","Ohio",334,NA,"Uni"
+"3978","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.11084722,-81.24344444,NA,"125.01",NA,NA,NA,NA,NA,NA,NA,-58.15,-8.73,NA,NA,"GW",NA,11.69,"Portage","Ohio",334,NA,"Uni"
+"3979","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.11084722,-81.24344444,NA,"125.01",NA,NA,NA,NA,NA,NA,NA,-58.15,-8.73,NA,NA,"GW",NA,11.69,"Portage","Ohio",334,NA,"Uni"
+"3980","Speedway gas
+station corner Lynn
+and Prospect
+Rootstown, OH Tap",NA,"Cleveland-Akron","Cleveland_Jul-Aug-18",41.11084722,-81.24344444,NA,"125.01",NA,NA,NA,NA,NA,NA,NA,-58.15,-8.73,NA,NA,"GW",NA,11.69,"Portage","Ohio",334,NA,"Uni"
+"3981","Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.14751944,-81.24178611,NA,"124",NA,NA,NA,NA,NA,NA,NA,-59.79,-9.02,NA,NA,NA,NA,12.37,"Portage","Ohio",337,NA,"Uni"
+"3982","Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.14751944,-81.24178611,NA,"124",NA,NA,NA,NA,NA,NA,NA,-59.79,-9.02,NA,NA,NA,NA,12.37,"Portage","Ohio",337,NA,"Uni"
+"3983","Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.14751944,-81.24178611,NA,"124",NA,NA,NA,NA,NA,NA,NA,-59.79,-9.02,NA,NA,NA,NA,12.37,"Portage","Ohio",337,NA,"Uni"
+"3984","Clark gas station corner of Lake and Prospect Ravenna, OH tap water grab",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.14751944,-81.24178611,NA,"124",NA,NA,NA,NA,NA,NA,NA,-59.79,-9.02,NA,NA,NA,NA,12.37,"Portage","Ohio",337,NA,"Uni"
+"3985","McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.01199167,-81.60758611,NA,"129",NA,NA,NA,NA,NA,NA,NA,-52.51,-8.05,NA,NA,NA,NA,11.89,"Summit","Ohio",306,NA,"Uni"
+"3986","McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.01199167,-81.60758611,NA,"129",NA,NA,NA,NA,NA,NA,NA,-52.51,-8.05,NA,NA,NA,NA,11.89,"Summit","Ohio",306,NA,"Uni"
+"3987","McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.01199167,-81.60758611,NA,"129",NA,NA,NA,NA,NA,NA,NA,-52.51,-8.05,NA,NA,NA,NA,11.89,"Summit","Ohio",306,NA,"Uni"
+"3988","McDonalds Wooster Rd and 2nd NW Barberton, OH Tap (Warm)",NA,"Cleveland-Akron","Cleveland_Jan-Mar-18",41.01199167,-81.60758611,NA,"129",NA,NA,NA,NA,NA,NA,NA,-52.51,-8.05,NA,NA,NA,NA,11.89,"Summit","Ohio",306,NA,"Uni"
+"3989","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.18668333,-80.97133333,NA,"152",NA,NA,NA,NA,NA,NA,NA,-44.32616783,-6.404320212,NA,NA,"Mosquito creek",NA,6.908393866,"Trumbull","Ohio",283,1,"Uni"
+"3990","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.18668333,-80.97133333,NA,"152",NA,NA,NA,NA,NA,NA,NA,-44.32616783,-6.404320212,NA,NA,"Mosquito creek",NA,6.908393866,"Trumbull","Ohio",283,1,"Uni"
+"3991","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.18668333,-80.97133333,NA,"152",NA,NA,NA,NA,NA,NA,NA,-44.32616783,-6.404320212,NA,NA,"Mosquito creek",NA,6.908393866,"Trumbull","Ohio",283,1,"Uni"
+"3992","ACE Hardware on 165 E broad St 534 and N Milton Blvd Newton Falls OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.18668333,-80.97133333,NA,"152",NA,NA,NA,NA,NA,NA,NA,-44.32616783,-6.404320212,NA,NA,"Mosquito creek",NA,6.908393866,"Trumbull","Ohio",283,1,"Uni"
+"3993","Circle K 4021 N
 Leavitt Rd and
 Parkman Rd NW
-warren OH","30","Youngstown","Cleveland_Jan-Mar-18",41.25901667,-80.86846667,NA,"159",NA,NA,NA,NA,NA,NA,NA,-35.97,-4.82,NA,NA,"GW",NA,2.59,"Trumbull","Ohio",279,1,"Uni"
-"3862","Circle K 4021 N
+warren OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.25901667,-80.86846667,NA,"159",NA,NA,NA,NA,NA,NA,NA,-35.97,-4.82,NA,NA,"GW",NA,2.59,"Trumbull","Ohio",279,1,"Uni"
+"3994","Circle K 4021 N
 Leavitt Rd and
 Parkman Rd NW
-warren OH","30","Youngstown","Cleveland_Jul-Aug-18",41.25901667,-80.86846667,NA,"159.01",NA,NA,NA,NA,NA,NA,NA,-45.78,-6.26,NA,NA,"GW",NA,4.3,"Trumbull","Ohio",279,1,"Uni"
-"3863","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH","30","Youngstown","Cleveland_Jan-Mar-18",41.15923333,-80.76906667,NA,"154",NA,NA,NA,NA,NA,NA,NA,-41.26409612,-5.724156868,NA,NA,"Mosquito creek",NA,4.529158824,"Trumbull","Ohio",292,1,"Uni"
-"3864","Lakeside sport shop.
+warren OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.25901667,-80.86846667,NA,"159",NA,NA,NA,NA,NA,NA,NA,-35.97,-4.82,NA,NA,"GW",NA,2.59,"Trumbull","Ohio",279,1,"Uni"
+"3995","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.25901667,-80.86846667,NA,"159",NA,NA,NA,NA,NA,NA,NA,-35.97,-4.82,NA,NA,"GW",NA,2.59,"Trumbull","Ohio",279,1,"Uni"
+"3996","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.25901667,-80.86846667,NA,"159",NA,NA,NA,NA,NA,NA,NA,-35.97,-4.82,NA,NA,"GW",NA,2.59,"Trumbull","Ohio",279,1,"Uni"
+"3997","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.25901667,-80.86846667,NA,"159.01",NA,NA,NA,NA,NA,NA,NA,-45.78,-6.26,NA,NA,"GW",NA,4.3,"Trumbull","Ohio",279,1,"Uni"
+"3998","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.25901667,-80.86846667,NA,"159.01",NA,NA,NA,NA,NA,NA,NA,-45.78,-6.26,NA,NA,"GW",NA,4.3,"Trumbull","Ohio",279,1,"Uni"
+"3999","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.25901667,-80.86846667,NA,"159.01",NA,NA,NA,NA,NA,NA,NA,-45.78,-6.26,NA,NA,"GW",NA,4.3,"Trumbull","Ohio",279,1,"Uni"
+"4000","Circle K 4021 N
+Leavitt Rd and
+Parkman Rd NW
+warren OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.25901667,-80.86846667,NA,"159.01",NA,NA,NA,NA,NA,NA,NA,-45.78,-6.26,NA,NA,"GW",NA,4.3,"Trumbull","Ohio",279,1,"Uni"
+"4001","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15923333,-80.76906667,NA,"154",NA,NA,NA,NA,NA,NA,NA,-41.26409612,-5.724156868,NA,NA,"Mosquito creek",NA,4.529158824,"Trumbull","Ohio",292,1,"Uni"
+"4002","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15923333,-80.76906667,NA,"154",NA,NA,NA,NA,NA,NA,NA,-41.26409612,-5.724156868,NA,NA,"Mosquito creek",NA,4.529158824,"Trumbull","Ohio",292,1,"Uni"
+"4003","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15923333,-80.76906667,NA,"154",NA,NA,NA,NA,NA,NA,NA,-41.26409612,-5.724156868,NA,NA,"Mosquito creek",NA,4.529158824,"Trumbull","Ohio",292,1,"Uni"
+"4004","Vilage Market on Saltspring Rd and Main St 146 Tap Niles OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15923333,-80.76906667,NA,"154",NA,NA,NA,NA,NA,NA,NA,-41.26409612,-5.724156868,NA,NA,"Mosquito creek",NA,4.529158824,"Trumbull","Ohio",292,1,"Uni"
+"4005","Lakeside sport shop.
 Warren Meedville
 Rd and Wilson
-Sharpvill Rd","30","Youngstown","Cleveland_Jan-Mar-18",41.30843889,-80.74424722,NA,"162",NA,NA,NA,NA,NA,NA,NA,-59.23,-9.07,NA,NA,"GW",NA,13.33,"Trumbull","Ohio",284,1,"Uni"
-"3865","Lakeside sport shop.
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jan-Mar-18",41.30843889,-80.74424722,NA,"162",NA,NA,NA,NA,NA,NA,NA,-59.23,-9.07,NA,NA,"GW",NA,13.33,"Trumbull","Ohio",284,1,"Uni"
+"4006","Lakeside sport shop.
 Warren Meedville
 Rd and Wilson
-Sharpvill Rd","30","Youngstown","Cleveland_Jul-Aug-18",41.30843889,-80.74424722,NA,"162.01",NA,NA,NA,NA,NA,NA,NA,-58.87,-9.03,NA,NA,"GW",NA,13.37,"Trumbull","Ohio",284,1,"Uni"
-"3866","Get Go gas station
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jan-Mar-18",41.30843889,-80.74424722,NA,"162",NA,NA,NA,NA,NA,NA,NA,-59.23,-9.07,NA,NA,"GW",NA,13.33,"Trumbull","Ohio",284,1,"Uni"
+"4007","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jan-Mar-18",41.30843889,-80.74424722,NA,"162",NA,NA,NA,NA,NA,NA,NA,-59.23,-9.07,NA,NA,"GW",NA,13.33,"Trumbull","Ohio",284,1,"Uni"
+"4008","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jan-Mar-18",41.30843889,-80.74424722,NA,"162",NA,NA,NA,NA,NA,NA,NA,-59.23,-9.07,NA,NA,"GW",NA,13.33,"Trumbull","Ohio",284,1,"Uni"
+"4009","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jul-Aug-18",41.30843889,-80.74424722,NA,"162.01",NA,NA,NA,NA,NA,NA,NA,-58.87,-9.03,NA,NA,"GW",NA,13.37,"Trumbull","Ohio",284,1,"Uni"
+"4010","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jul-Aug-18",41.30843889,-80.74424722,NA,"162.01",NA,NA,NA,NA,NA,NA,NA,-58.87,-9.03,NA,NA,"GW",NA,13.37,"Trumbull","Ohio",284,1,"Uni"
+"4011","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jul-Aug-18",41.30843889,-80.74424722,NA,"162.01",NA,NA,NA,NA,NA,NA,NA,-58.87,-9.03,NA,NA,"GW",NA,13.37,"Trumbull","Ohio",284,1,"Uni"
+"4012","Lakeside sport shop.
+Warren Meedville
+Rd and Wilson
+Sharpvill Rd",NA,"Youngstown","Cleveland_Jul-Aug-18",41.30843889,-80.74424722,NA,"162.01",NA,NA,NA,NA,NA,NA,NA,-58.87,-9.03,NA,NA,"GW",NA,13.37,"Trumbull","Ohio",284,1,"Uni"
+"4013","Get Go gas station
 on Niles courtland
 road SE and East
 market, Howland
-Corners tap","30","Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
-"3867","Get Go gas station
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4014","Get Go gas station
 on Niles courtland
 road SE and East
 market, Howland
-Corners tap","30","Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
-"3868","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap","30","Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
-"3869","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap","30","Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
-"3870","Get Go gas station
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4015","Get Go gas station
 on Niles courtland
 road SE and East
 market, Howland
-Corners tap","30","Youngstown","Cleveland_Jul-Aug-18",41.23781389,-80.74012778,NA,"158.01",NA,NA,NA,NA,NA,NA,NA,-53.18,-7.72,NA,NA,"GW",NA,8.58,"Trumbull","Ohio",288,1,"Uni"
-"3871","Sheetz Gas station
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4016","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4017","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4018","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4019","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4020","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.83,-5.81,NA,NA,"GW",NA,4.65,"Trumbull","Ohio",288,1,"Uni"
+"4021","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4022","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4023","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4024","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4025","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4026","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4027","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4028","Get Go gas station on Niles courtland road SE and East market, Howland Corners tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23781389,-80.74012778,NA,"158",NA,NA,NA,NA,NA,NA,NA,-41.82738964,-5.806307115,NA,NA,"Mosquito creek",NA,4.62306728,"Trumbull","Ohio",288,1,"Uni"
+"4029","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23781389,-80.74012778,NA,"158.01",NA,NA,NA,NA,NA,NA,NA,-53.18,-7.72,NA,NA,"GW",NA,8.58,"Trumbull","Ohio",288,1,"Uni"
+"4030","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23781389,-80.74012778,NA,"158.01",NA,NA,NA,NA,NA,NA,NA,-53.18,-7.72,NA,NA,"GW",NA,8.58,"Trumbull","Ohio",288,1,"Uni"
+"4031","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23781389,-80.74012778,NA,"158.01",NA,NA,NA,NA,NA,NA,NA,-53.18,-7.72,NA,NA,"GW",NA,8.58,"Trumbull","Ohio",288,1,"Uni"
+"4032","Get Go gas station
+on Niles courtland
+road SE and East
+market, Howland
+Corners tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23781389,-80.74012778,NA,"158.01",NA,NA,NA,NA,NA,NA,NA,-53.18,-7.72,NA,NA,"GW",NA,8.58,"Trumbull","Ohio",288,1,"Uni"
+"4033","Sheetz Gas station
 at 11 and 224 in
-Canfield OH Tap","30","Youngstown","Cleveland_Jan-Mar-18",41.024025,-80.73642222,NA,"147",NA,NA,NA,NA,NA,NA,NA,-36.71,-4.93,NA,NA,"GW",NA,2.73,"Mahoning","Ohio",337,1,"Uni"
-"3872","Sheetz Gas station
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.024025,-80.73642222,NA,"147",NA,NA,NA,NA,NA,NA,NA,-36.71,-4.93,NA,NA,"GW",NA,2.73,"Mahoning","Ohio",337,1,"Uni"
+"4034","Sheetz Gas station
 at 11 and 224 in
-Canfield OH Tap","30","Youngstown","Cleveland_Jul-Aug-18",41.024025,-80.73642222,NA,"147.01",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.62,NA,NA,"GW",NA,3.22,"Mahoning","Ohio",337,1,"Uni"
-"3873","Burger King on Meridian and Magoning Rd Perkins corners, OH tap","30","Youngstown","Cleveland_Jan-Mar-18",41.102675,-80.71065,NA,"150",NA,NA,NA,NA,NA,NA,NA,-41.4820043,-5.734718913,NA,NA,"Mosquito creek",NA,4.395747004,"Mahoning","Ohio",318,1,"Uni"
-"3874","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)","30","Youngstown","Cleveland_Jan-Mar-18",41.15301667,-80.66525,NA,"155",NA,NA,NA,NA,NA,NA,NA,-41.70819041,-5.789949162,NA,NA,"Mosquito creek",NA,4.611402886,"Trumbull","Ohio",319,1,"Uni"
-"3875","Wendys at 224 and Applewood in Poland OH tap","30","Youngstown","Cleveland_Jan-Mar-18",41.02386389,-80.64688333,NA,"148",NA,NA,NA,NA,NA,NA,NA,-37.0628783,-4.972150824,NA,NA,"Mosquito creek",NA,2.714328292,"Mahoning","Ohio",333,1,"Uni"
-"3876","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap","30","Youngstown","Cleveland_Jan-Mar-18",41.08995,-80.59043889,NA,"149",NA,NA,NA,NA,NA,NA,NA,-48.51759766,-7.456492819,NA,NA,"Mosquito creek",NA,11.134344892,"Mahoning","Ohio",321,1,"Uni"
-"3877","Loves gas station on 7/62 abd Franklin in Hubbard OH tap","30","Youngstown","Cleveland_Jan-Mar-18",41.17315,-80.56958333,NA,"156",NA,NA,NA,NA,NA,NA,NA,-53.55216612,-8.013665101,NA,NA,"Mosquito creek",NA,10.557154688,"Trumbull","Ohio",304,1,"Uni"
-"3878","Scotty's Brookfield
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.024025,-80.73642222,NA,"147",NA,NA,NA,NA,NA,NA,NA,-36.71,-4.93,NA,NA,"GW",NA,2.73,"Mahoning","Ohio",337,1,"Uni"
+"4035","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.024025,-80.73642222,NA,"147",NA,NA,NA,NA,NA,NA,NA,-36.71,-4.93,NA,NA,"GW",NA,2.73,"Mahoning","Ohio",337,1,"Uni"
+"4036","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.024025,-80.73642222,NA,"147",NA,NA,NA,NA,NA,NA,NA,-36.71,-4.93,NA,NA,"GW",NA,2.73,"Mahoning","Ohio",337,1,"Uni"
+"4037","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.024025,-80.73642222,NA,"147.01",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.62,NA,NA,"GW",NA,3.22,"Mahoning","Ohio",337,1,"Uni"
+"4038","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.024025,-80.73642222,NA,"147.01",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.62,NA,NA,"GW",NA,3.22,"Mahoning","Ohio",337,1,"Uni"
+"4039","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.024025,-80.73642222,NA,"147.01",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.62,NA,NA,"GW",NA,3.22,"Mahoning","Ohio",337,1,"Uni"
+"4040","Sheetz Gas station
+at 11 and 224 in
+Canfield OH Tap",NA,"Youngstown","Cleveland_Jul-Aug-18",41.024025,-80.73642222,NA,"147.01",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.62,NA,NA,"GW",NA,3.22,"Mahoning","Ohio",337,1,"Uni"
+"4041","Burger King on Meridian and Magoning Rd Perkins corners, OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.102675,-80.71065,NA,"150",NA,NA,NA,NA,NA,NA,NA,-41.4820043,-5.734718913,NA,NA,"Mosquito creek",NA,4.395747004,"Mahoning","Ohio",318,1,"Uni"
+"4042","Burger King on Meridian and Magoning Rd Perkins corners, OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.102675,-80.71065,NA,"150",NA,NA,NA,NA,NA,NA,NA,-41.4820043,-5.734718913,NA,NA,"Mosquito creek",NA,4.395747004,"Mahoning","Ohio",318,1,"Uni"
+"4043","Burger King on Meridian and Magoning Rd Perkins corners, OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.102675,-80.71065,NA,"150",NA,NA,NA,NA,NA,NA,NA,-41.4820043,-5.734718913,NA,NA,"Mosquito creek",NA,4.395747004,"Mahoning","Ohio",318,1,"Uni"
+"4044","Burger King on Meridian and Magoning Rd Perkins corners, OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.102675,-80.71065,NA,"150",NA,NA,NA,NA,NA,NA,NA,-41.4820043,-5.734718913,NA,NA,"Mosquito creek",NA,4.395747004,"Mahoning","Ohio",318,1,"Uni"
+"4045","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15301667,-80.66525,NA,"155",NA,NA,NA,NA,NA,NA,NA,-41.70819041,-5.789949162,NA,NA,"Mosquito creek",NA,4.611402886,"Trumbull","Ohio",319,1,"Uni"
+"4046","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15301667,-80.66525,NA,"155",NA,NA,NA,NA,NA,NA,NA,-41.70819041,-5.789949162,NA,NA,"Mosquito creek",NA,4.611402886,"Trumbull","Ohio",319,1,"Uni"
+"4047","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15301667,-80.66525,NA,"155",NA,NA,NA,NA,NA,NA,NA,-41.70819041,-5.789949162,NA,NA,"Mosquito creek",NA,4.611402886,"Trumbull","Ohio",319,1,"Uni"
+"4048","Shell gast station on Belmont and Liberty St Churchill OH tap (193 & 80)",NA,"Youngstown","Cleveland_Jan-Mar-18",41.15301667,-80.66525,NA,"155",NA,NA,NA,NA,NA,NA,NA,-41.70819041,-5.789949162,NA,NA,"Mosquito creek",NA,4.611402886,"Trumbull","Ohio",319,1,"Uni"
+"4049","Wendys at 224 and Applewood in Poland OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.02386389,-80.64688333,NA,"148",NA,NA,NA,NA,NA,NA,NA,-37.0628783,-4.972150824,NA,NA,"Mosquito creek",NA,2.714328292,"Mahoning","Ohio",333,1,"Uni"
+"4050","Wendys at 224 and Applewood in Poland OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.02386389,-80.64688333,NA,"148",NA,NA,NA,NA,NA,NA,NA,-37.0628783,-4.972150824,NA,NA,"Mosquito creek",NA,2.714328292,"Mahoning","Ohio",333,1,"Uni"
+"4051","Wendys at 224 and Applewood in Poland OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.02386389,-80.64688333,NA,"148",NA,NA,NA,NA,NA,NA,NA,-37.0628783,-4.972150824,NA,NA,"Mosquito creek",NA,2.714328292,"Mahoning","Ohio",333,1,"Uni"
+"4052","Wendys at 224 and Applewood in Poland OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.02386389,-80.64688333,NA,"148",NA,NA,NA,NA,NA,NA,NA,-37.0628783,-4.972150824,NA,NA,"Mosquito creek",NA,2.714328292,"Mahoning","Ohio",333,1,"Uni"
+"4053","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.08995,-80.59043889,NA,"149",NA,NA,NA,NA,NA,NA,NA,-48.51759766,-7.456492819,NA,NA,"Mosquito creek",NA,11.134344892,"Mahoning","Ohio",321,1,"Uni"
+"4054","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.08995,-80.59043889,NA,"149",NA,NA,NA,NA,NA,NA,NA,-48.51759766,-7.456492819,NA,NA,"Mosquito creek",NA,11.134344892,"Mahoning","Ohio",321,1,"Uni"
+"4055","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.08995,-80.59043889,NA,"149",NA,NA,NA,NA,NA,NA,NA,-48.51759766,-7.456492819,NA,NA,"Mosquito creek",NA,11.134344892,"Mahoning","Ohio",321,1,"Uni"
+"4056","McDonalds on 422/McCartney Rd West od Marylyn Ave Campbell OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.08995,-80.59043889,NA,"149",NA,NA,NA,NA,NA,NA,NA,-48.51759766,-7.456492819,NA,NA,"Mosquito creek",NA,11.134344892,"Mahoning","Ohio",321,1,"Uni"
+"4057","Loves gas station on 7/62 abd Franklin in Hubbard OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.17315,-80.56958333,NA,"156",NA,NA,NA,NA,NA,NA,NA,-53.55216612,-8.013665101,NA,NA,"Mosquito creek",NA,10.557154688,"Trumbull","Ohio",304,1,"Uni"
+"4058","Loves gas station on 7/62 abd Franklin in Hubbard OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.17315,-80.56958333,NA,"156",NA,NA,NA,NA,NA,NA,NA,-53.55216612,-8.013665101,NA,NA,"Mosquito creek",NA,10.557154688,"Trumbull","Ohio",304,1,"Uni"
+"4059","Loves gas station on 7/62 abd Franklin in Hubbard OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.17315,-80.56958333,NA,"156",NA,NA,NA,NA,NA,NA,NA,-53.55216612,-8.013665101,NA,NA,"Mosquito creek",NA,10.557154688,"Trumbull","Ohio",304,1,"Uni"
+"4060","Loves gas station on 7/62 abd Franklin in Hubbard OH tap",NA,"Youngstown","Cleveland_Jan-Mar-18",41.17315,-80.56958333,NA,"156",NA,NA,NA,NA,NA,NA,NA,-53.55216612,-8.013665101,NA,NA,"Mosquito creek",NA,10.557154688,"Trumbull","Ohio",304,1,"Uni"
+"4061","Scotty's Brookfield
 express mark on
 Warren Sharon Rd
 and Bedford SE
-Brookfield OH","30","Youngstown","Cleveland_Jan-Mar-18",41.23343889,-80.56406667,NA,"157",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.81,NA,NA,"GW",NA,4.73999999999999,"Trumbull","Ohio",328,1,"Uni"
-"3879","Scotty's Brookfield
+Brookfield OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23343889,-80.56406667,NA,"157",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.81,NA,NA,"GW",NA,4.73999999999999,"Trumbull","Ohio",328,1,"Uni"
+"4062","Scotty's Brookfield
 express mark on
 Warren Sharon Rd
 and Bedford SE
-Brookfield OH","30","Youngstown","Cleveland_Jul-Aug-18",41.23343889,-80.56406667,NA,"157.01",NA,NA,NA,NA,NA,NA,NA,-53.37,-7.74,NA,NA,"GW",NA,8.55,"Trumbull","Ohio",328,1,"Uni"
+Brookfield OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23343889,-80.56406667,NA,"157",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.81,NA,NA,"GW",NA,4.73999999999999,"Trumbull","Ohio",328,1,"Uni"
+"4063","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23343889,-80.56406667,NA,"157",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.81,NA,NA,"GW",NA,4.73999999999999,"Trumbull","Ohio",328,1,"Uni"
+"4064","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jan-Mar-18",41.23343889,-80.56406667,NA,"157",NA,NA,NA,NA,NA,NA,NA,-41.74,-5.81,NA,NA,"GW",NA,4.73999999999999,"Trumbull","Ohio",328,1,"Uni"
+"4065","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23343889,-80.56406667,NA,"157.01",NA,NA,NA,NA,NA,NA,NA,-53.37,-7.74,NA,NA,"GW",NA,8.55,"Trumbull","Ohio",328,1,"Uni"
+"4066","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23343889,-80.56406667,NA,"157.01",NA,NA,NA,NA,NA,NA,NA,-53.37,-7.74,NA,NA,"GW",NA,8.55,"Trumbull","Ohio",328,1,"Uni"
+"4067","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23343889,-80.56406667,NA,"157.01",NA,NA,NA,NA,NA,NA,NA,-53.37,-7.74,NA,NA,"GW",NA,8.55,"Trumbull","Ohio",328,1,"Uni"
+"4068","Scotty's Brookfield
+express mark on
+Warren Sharon Rd
+and Bedford SE
+Brookfield OH",NA,"Youngstown","Cleveland_Jul-Aug-18",41.23343889,-80.56406667,NA,"157.01",NA,NA,NA,NA,NA,NA,NA,-53.37,-7.74,NA,NA,"GW",NA,8.55,"Trumbull","Ohio",328,1,"Uni"
