@@ -1,7 +1,7 @@
 # Let's see what the rest of Ohio is up to. 
 library(factoextra); library(readr); library(forcats); library(dplyr); 
-library(tidyr); library(maptools); library(elevatr); library(stringr); 
-library(maps); library(viridis)
+library(tidyr); library(elevatr); library(stringr); library(viridis);
+library(geodata)
 
 WOO <- read_csv("data/cityWater.csv", 
                     col_types = cols(cluster_ID = col_character())) %>% 
@@ -20,27 +20,19 @@ CLE <- read_csv("data/OhioNoWooster.csv")
 latlong2county <- function(pointsDF) {
   # Prepare SpatialPolygons object with one SpatialPolygon
   # per county
-  counties <- map('county', fill=TRUE, col="transparent", plot=FALSE)
-  IDs <- sapply(strsplit(counties$names, ":"), function(x) x[1])
-  counties_sp <- map2SpatialPolygons(counties, IDs=IDs,
-                                     proj4string=CRS("+proj=longlat +datum=WGS84"))
-  
+  counties = gadm("USA", 2, path = tempdir())
+
   # Convert pointsDF to a SpatialPoints object 
-  pointsSP <- SpatialPoints(pointsDF, 
-                            proj4string=CRS("+proj=longlat +datum=WGS84"))
+  pointsSP <- vect(pointsDF, geom = c("x", "y"), "+proj=longlat +datum=WGS84")
   
   # Use 'over' to get _indices_ of the Polygons object containing each point 
-  indices <- over(pointsSP, counties_sp)
-  
-  # Return the county names of the Polygons object containing each point
-  countyNames <- sapply(counties_sp@polygons, function(x) x@ID)
-  countyNames[indices]
+  counties <- extract(counties, pointsSP)
+  counties$NAME_2
 }
 
 xy <- data.frame(x = CLE$lon, y = CLE$lat)
 
 CLE$county <- latlong2county(xy)
-CLE$county <- gsub(".*,", "", CLE$county)
 CLE$county <- str_to_title(CLE$county) 
 
 # Elevation ---------------------------------------------------------------
@@ -70,8 +62,7 @@ datasummary <- oh %>%
 
 
 counties <- counties("OH", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Geauga", "Portage", "Summit", "Wayne", "Medina", "Cuyahoga", 
-                     "Mahoning", "Trumbull", "Ashtabula", "Lake")) %>% 
+  filter(NAME %in% CLE$county) %>% 
   vect() #%>% 
   #terra::aggregate()
 ohvect <- vect(oh, crs= crs(counties), keep = T)
@@ -102,12 +93,38 @@ ggplot()+
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Akron, OH"), fill = 'goldenrod') + 
   geom_sf(data = terra::subset(cities, cities$NAME10 == "Youngstown, OH--PA"), fill = 'hotpink') + 
   #geom_sf(data = ohvect, aes(color = d18O), size = 3) + 
-  geom_jitter(data = oh, aes(x = lon, y = lat), width = 0.01, size = 3) + 
-  scale_color_viridis(discrete = T, option = 'mako') +
+  geom_jitter(data = oh, aes(x = lon, y = lat, color = d18O), width = 0.01, size = 3) + 
+  scale_color_viridis(discrete = F, option = 'mako') +
   theme_void()
 # you can see how we have a lot of samples well outside of Cleveland. There's an argument of cachement and whether these are suburbs
 
+# Cutting Proposal --------------------------------------------------------
+# Cleveland-Akron metro
+csub = ohvect[subset(cities, cities$NAME10 == "Cleveland, OH")]
+csub = rbind(csub, ohvect[subset(cities, cities$NAME10 == "Akron, OH")])
+csub$cluster_location = rep("Cleveland-Akron")
+csub$cluster_ID[csub$cluster_location_time == "Cleveland_Jan-Mar-18"] = 
+  29.1
+csub$cluster_ID[csub$cluster_location_time == "Cleveland_Jul-Aug-18"] = 
+  29.2
 
+# Youngstown metro
+ysub = ohvect[subset(cities, cities$NAME10 == "Youngstown, OH--PA")]
+ysub$cluster_location = rep("Youngstown")
+ysub$cluster_ID = 30
+
+# Read and replace citywater values
+cw = read.csv("data/cityWater.csv")
+
+cw = cw[cw$cluster_location != "Cleveland-Akron",]
+cw = cw[cw$cluster_location != "Youngstown",]
+
+cw = rbind(cw, values(csub)[, na.omit(match(names(cw), names(csub)))])
+cw = rbind(cw, values(ysub)[, na.omit(match(names(cw), names(ysub)))])
+
+write.csv(cw, "data/cityWater.csv", row.names = FALSE)
+
+############################################################
 # Cutting Proposal --------------------------------------------------------
 # I would think we keep Wooster on its own, and then cut the 'Cleveland' samples to those in counties that are at least 
 # possibly serviced by Cleveland's water supply (accepting that urban cachement versus water supply are different things)

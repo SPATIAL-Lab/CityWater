@@ -60,9 +60,10 @@ tapData <- tapData %>%
   group_by(cluster_ID) %>% 
   mutate(modality = ifelse(mean(cluster_number) == 1, "Uni", "Multi"))
 
-tapData <- left_join(tapData, slcsf) %>% 
-  mutate(modality = coalesce(modality, majority_modality)) %>% 
-  select(-c(majority_modality))
+for(i in seq_along(slcsf$cluster_ID)){
+  tapData$modality[tapData$cluster_ID == slcsf$cluster_ID[i]] = 
+    slcsf$majority_modality[i]
+}
 
 write.csv(tapData, 'data/clustering.csv')
 # Modality ----------------------------------------------------------------
@@ -79,8 +80,7 @@ datasummary <- tapData %>%
 
 datasummary2 <- tapData %>%
   group_by(cluster_location) %>%
-  select(lat, lon) %>% 
-  summarize(n = n(), 
+  summarize(n = n()  / length(unique(cluster_ID)), 
             lat = mean(lat), 
             lon = mean(lon), 
   )
@@ -98,4 +98,4 @@ datasummary <- datasummary %>%
   left_join(datasummary3) %>% 
   mutate_at(2:13, round, 2)
 
-write.csv(datasummary, "data/datasummary.csv") # note that SF and SLC reporting for mean IDR is from 01
+write.csv(datasummary, "data/datasummary.csv", row.names = FALSE) # note that SF and SLC reporting for mean IDR is from 01

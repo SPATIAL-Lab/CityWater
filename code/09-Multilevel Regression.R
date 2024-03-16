@@ -14,7 +14,8 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 
 model <- multilevel %>% 
   select(idr, lat, lon, ruggedness, streamflow, precip, 
-                popdensity, medincome, water_use)
+                popdensity, medincome, water_use, Orange, pop, total_area,
+         )
 
 model$water_use = multilevel$water_use / multilevel$pop * 1e6 * 3.78
 model$streamflow = log(model$streamflow)
@@ -99,8 +100,8 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 
-## best model, 3 covariates:
-best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness, #this is altered to fit the best new adj R2. Losing medincome and adding ruggedness
+# best model, 3 covariates:
+best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness + total_area, #this is altered to fit the best new adj R2. Losing medincome and adding ruggedness
                  data = model)
 
 summary(best_model)
