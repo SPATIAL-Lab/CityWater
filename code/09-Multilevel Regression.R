@@ -27,7 +27,7 @@ vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (
        expression("Median income (USD)"), expression("Water use (ln[L/person/day])"))
 
 
-# Figure 4 ----------------------------------------------------------------
+## Figure 4 ----------------------------------------------------------------
 
 png("figures/Fig4.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
@@ -70,14 +70,14 @@ for(i in 2:ncol(model)){
 dev.off()
 
 
-# All Model ---------------------------------------------------------------
+## All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
 
 summary(all_model)
 vif(all_model)
-# Choosing best predictors ------------------------------------------------
+## Choosing best predictors ------------------------------------------------
 Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -89,7 +89,7 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
-# Model comparison just to check it out
+## Model comparison just to check it out
 res.sum <- summary(Best_Subset)
 data.frame(
   Adj.R2 = which.max(res.sum$adjr2),
@@ -99,7 +99,7 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 
-# best model, 3 covariates:
+## best model, 3 covariates:
 best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness, #this is altered to fit the best new adj R2. Losing medincome and adding ruggedness
                  data = model)
 
@@ -180,14 +180,14 @@ for(i in 2:ncol(model)){
 dev.off()
 
 
-# All Model ---------------------------------------------------------------
+## All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                 data = model)
 
 summary(all_model)
 vif(all_model)
-# Choosing best predictors ------------------------------------------------
+## Choosing best predictors ------------------------------------------------
 Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -293,14 +293,14 @@ for(i in 2:ncol(model)){
 dev.off()
 
 
-# All Model ---------------------------------------------------------------
+## All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                 data = model)
 
 summary(all_model)
 vif(all_model)
-# Choosing best predictors ------------------------------------------------
+## Choosing best predictors ------------------------------------------------
 Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -408,7 +408,7 @@ for(i in 2:ncol(model)){
 dev.off()
 
 
-# All Model ---------------------------------------------------------------
+## All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                 data = model)
