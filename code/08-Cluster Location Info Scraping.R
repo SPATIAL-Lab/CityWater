@@ -5,6 +5,26 @@ library(censusapi); library(readxl); library(tibble); library(terra)
 #using only those counties we have data for
 #calculating Hawaiian data, but not including in combined datasets as streamflow is missing
 
+# City Vectors -----
+cities = vect("maps/cb_2018_us_ua10_500k.shp")
+## Missing Morristown NJ
+## Need combining: San Fran San Jose and Cleveland Akron
+cn = c("Albuquerque, NM", "Ann Arbor, MI", "Athens-Clarke County, GA",
+       "Atlanta, GA", "Bellingham, WA", "Cedar City, UT",
+       "Colorado Springs, CO", "Dallas--Fort Worth--Arlington, TX",
+       "Denver--Aurora, CO", "Flagstaff, AZ", "Gainesville, FL", 
+       "La Crosse, WI--MN", "Lawrence, KS", 
+       "Los Angeles--Long Beach--Anaheim, CA", 
+       "Minneapolis--St. Paul, MN--WI", "Morristown, NJ", 
+       "Nashville-Davidson, TN",
+       "Phoenix--Mesa, AZ", "Portland, OR--WA", 
+       "Salt Lake City--West Valley City, UT",
+       "San Diego, CA", "San Francisco--Oakland, CA", "San Jose, CA",
+       "San Marcos, TX",
+       "Tampa--St. Petersburg, FL", "State College, PA", "Wooster, OH",
+       "Cleveland, OH", "Akron, OH", "Youngstown, OH--PA")
+
+cities = cities[cities$NAME10 %in% cn]
 
 # Creating Developed Areas Vectors ----------------------------------------
 

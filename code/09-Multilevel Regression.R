@@ -25,7 +25,9 @@ model$popdensity = log(model$popdensity)
 vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (m)"), 
        expression("Streamflow (ln[km"^2*"/year])"), expression("Precipitation (mm)"),
        expression("Population density (ln[people/km"^2*"])"), 
-       expression("Median income (USD)"), expression("Water use (ln[L/person/day])"))
+       expression("Median income (USD)"), expression("Water use (ln[L/person/day])"),
+       expression("Local "*delta^{18}*"O range"), expression("Population"),
+       expression("Total area (km"^2))
 
 
 ## Figure 4 ----------------------------------------------------------------
@@ -36,11 +38,11 @@ layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 
        heights = rep(lcm(3 * 2.54), 3))
 
 for(i in 2:ncol(model)){
-  if(i %in% c(2, 5, 8)){
-    par(mai = c(0.6, 0.6, 0.1, 0.1))
-  }else{
-    par(mai = c(0.6, 0.1, 0.1, 0.1))
-  }
+#  if(i %in% c(2, 5, 8)){
+#    par(mai = c(0.6, 0.6, 0.1, 0.1))
+#  }else{
+#    par(mai = c(0.6, 0.1, 0.1, 0.1))
+#  }
   
   if(i == 5){
     plot(model[, i], sqrt(model$idr), xlab = vn[i-1], 
