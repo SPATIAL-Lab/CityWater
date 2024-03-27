@@ -11,44 +11,16 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
   rename('idr' = 'IDR_O')
 
 model <- multilevel %>% 
-  select(idr, streamflow, lon, medincome)
+  select(idr, streamflow, lon, ruggedness, total_area)
 
 model$streamflow = log(model$streamflow)
-
-conus <- counties(cb = TRUE)
-conus$STATEFP <- as.numeric(conus$STATEFP)
-conus <- subset(conus, STATEFP < 60)
-conus <- subset(conus, STATEFP != 02)
-conus <- subset(conus, STATEFP != 15)
 
 # streamflow
 streamflow <- rast("maps/streamflow_mean.tif")
 streamflow = log(streamflow)
 
-# median income
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
-# Reload .Renviron
-readRenviron("~/.Renviron")
-# Check to see that the expected key is output in your R console
-Sys.getenv("CENSUS_KEY")
-
-acs_simple <- getCensus(
-  name = "acs/acs5",
-  vintage = 2020,
-  vars = c("NAME", "B01001_001E", "B19013_001E"),
-  region =  "county:*") %>% 
-  rename(pop = B01001_001E, 
-         medincome = B19013_001E) %>% 
-  filter(state < 60, state != '02', state != '15')
-acs_simple$GEOID = paste0(acs_simple$state, acs_simple$county)
-
-# Jeff Davis County, Texas has an odd glitch right now with the census, showing median income as -666666666.
-# Let's fix that. 
-acs_simple$medincome[acs_simple$GEOID == '48243'] <- 38659
-
-conus <- inner_join(conus, acs_simple, by = c("GEOID"))
-conus <- project(vect(conus), streamflow)
-medincome <- rasterize(conus, streamflow, conus$medincome)
+# ruggedness
+ruggedness <- rast("maps/elev_diff.tif")
 
 # Longitude
 lon = streamflow
@@ -58,12 +30,23 @@ values(lon) = lc[, 1]
 lon = project(lon, streamflow)
 lon = mask(lon, streamflow)
 
+# City area
+total_area = vect("maps/cb_2018_us_ua10_500k.shp")
+total_area$total_area = expanse(total_area, unit = "km")
+total_area = project(total_area, streamflow)
+total_area = crop(total_area, streamflow)
+total_area = rasterize(total_area, streamflow, field = "total_area")
+cval = values(total_area)[ ,1]
+cval[is.na(cval)] = 2.5
+values(total_area) = cval
+total_area = mask(total_area, streamflow)
+
 # Stack rasters
-s <- c(streamflow, lon, medincome)
-names(s) <- c("streamflow", "lon", "medincome")
+s <- c(streamflow, lon, ruggedness, total_area)
+names(s) <- c("streamflow", "lon", "ruggedness", "total_area")
 
 # Fit the model
-best_model <- lm(sqrt(idr) ~ streamflow + lon + medincome,
+best_model <- lm((idr) ~ streamflow + lon + ruggedness + total_area,
                  data = model)
 
 # Predict

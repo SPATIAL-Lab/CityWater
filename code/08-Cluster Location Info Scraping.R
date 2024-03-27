@@ -1,12 +1,12 @@
 # Scraping information to build predictive models. Note you'll need a Census API key to query some of this info. 
-library(dplyr);library(tigris, options(tigris_use_cache = TRUE))
+library(dplyr);library(tigris, options(tigris_use_cache = TRUE)); library(osmdata)
 library(censusapi); library(readxl); library(tibble); library(terra)
 
 #using only those counties we have data for
 #calculating Hawaiian data, but not including in combined datasets as streamflow is missing
 
 # City Vectors -----
-cities = vect("maps/cb_2018_us_ua10_500k.shp")
+cities.all = vect("maps/cb_2018_us_ua10_500k.shp")
 ## Missing Morristown NJ
 ## Need combining: San Fran San Jose and Cleveland Akron
 cn = c("Albuquerque, NM", "Ann Arbor, MI", "Athens-Clarke County, GA",
@@ -14,8 +14,8 @@ cn = c("Albuquerque, NM", "Ann Arbor, MI", "Athens-Clarke County, GA",
        "Colorado Springs, CO", "Dallas--Fort Worth--Arlington, TX",
        "Denver--Aurora, CO", "Flagstaff, AZ", "Gainesville, FL", 
        "La Crosse, WI--MN", "Lawrence, KS", 
-       "Los Angeles--Long Beach--Anaheim, CA", 
-       "Minneapolis--St. Paul, MN--WI", "Morristown, NJ", 
+       "Los Angeles--Long Beach--Anaheim, CA", "Riverside--San Bernardino, CA",
+       "Minneapolis--St. Paul, MN--WI", 
        "Nashville-Davidson, TN",
        "Phoenix--Mesa, AZ", "Portland, OR--WA", 
        "Salt Lake City--West Valley City, UT",
@@ -24,7 +24,86 @@ cn = c("Albuquerque, NM", "Ann Arbor, MI", "Athens-Clarke County, GA",
        "Tampa--St. Petersburg, FL", "State College, PA", "Wooster, OH",
        "Cleveland, OH", "Akron, OH", "Youngstown, OH--PA")
 
-cities = cities[cities$NAME10 %in% cn]
+cn = sort(cn)
+cities = cities.all[cities.all$NAME10 %in% cn]
+
+# Combine
+cities$NAME10 = gsub("San Jose, CA", "San Francisco--Oakland, CA", cities$NAME10)
+cities$NAME10 = gsub("Akron, OH", "Cleveland, OH", cities$NAME10)
+cities$NAME10 = gsub("Riverside--San Bernardino, CA", "Los Angeles--Long Beach--Anaheim, CA", 
+                     cities$NAME10)
+cities = aggregate(cities, by = "NAME10")
+
+#Drop unneeded fields
+values(cities) = subset(values(cities), select = "NAME10")
+
+# Add Morristown
+MST = getbb("Morristown, NJ, USA", format_out = "polygon")
+MST = vect(MST, crs = "WGS84", type = "polygon")
+MST$NAME10 = "Morristown"
+cities = rbind(cities, MST)
+
+## Add our names
+cities$NAME10 = gsub(",.*", "", cities$NAME10)
+cities$NAME10 = gsub("Athens-Clarke County", "Athens", cities$NAME10)
+cities$NAME10 = gsub("Cleveland", "Cleveland-Akron", cities$NAME10)
+cities$NAME10 = gsub("Dallas.*", "Dallas Fort Worth", cities$NAME10)
+cities$NAME10 = gsub("Denver.*", "Denver", cities$NAME10)
+cities$NAME10 = gsub("Los Angeles.*", "Los Angeles", cities$NAME10)
+cities$NAME10 = gsub("Minneapolis.*", "Minneapolis", cities$NAME10)
+cities$NAME10 = gsub("Nashville.*", "Nashville", cities$NAME10)
+cities$NAME10 = gsub("Phoenix.*", "Phoenix", cities$NAME10)
+cities$NAME10 = gsub("Salt.*", "Salt Lake City", cities$NAME10)
+cities$NAME10 = gsub("San Francisco.*", "San Francisco", cities$NAME10)
+cities$NAME10 = gsub("Tampa.*", "St Petersburg", cities$NAME10)
+
+#cities$total_area = round(expanse(cities, unit = "km"), 1)
+
+tapData = read.csv("data/cityWater.csv")
+tapData = vect(tapData, geom = c("lon", "lat"), crs = "WGS84")
+
+for(i in seq_along(cities)){
+  td = tapData[tapData$cluster_location == cities$NAME10[i]]
+  ch = convHull(td)
+  cities$total_area[i] = expanse(ch, unit = "km")
+}
+
+# Elevation, precip, streamflow -------------------------------
+
+ruggedness <- rast("maps/elev_diff.tif")
+cities <- project(cities, ruggedness) %>% crop(ruggedness)
+df = terra::extract(ruggedness, cities, fun = max, na.rm = TRUE, ID = FALSE)
+cities$ruggedness <- round(df, 0)
+
+precip <- project(rast("maps/precip_mean.tif"), ruggedness)
+streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
+
+df <- terra::extract(streamflow, cities, fun = mean, na.rm = TRUE, ID = FALSE)
+cities$streamflow <- df
+
+df <- terra::extract(precip, cities, fun = mean, na.rm = TRUE, ID = FALSE)
+cities$precip <- df
+
+multivariate <- as.data.frame(cities) 
+multivariate <- multivariate %>% 
+  rename(cluster_location = NAME10)
+
+# Census demographic info -------------------------------------------------
+
+Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
+# Reload .Renviron
+readRenviron("~/.Renviron")
+# Check to see that the expected key is output in your R console
+Sys.getenv("CENSUS_KEY")
+
+acs_simple <- getCensus(
+  name = "acs/acs5",
+  vintage = 2020,
+  vars = c("NAME", "B01001_001E", "B19013_001E"),
+  region = "county:*") %>% 
+  rename(pop = B01001_001E, 
+         medincome = B19013_001E)
+acs_simple$GEOID = paste0(acs_simple$state, acs_simple$county)
 
 # Creating Developed Areas Vectors ----------------------------------------
 
@@ -95,11 +174,6 @@ GNV <- counties("FL", cb = T, resolution = "20m") %>%
   mutate(id = "Gainesville") %>% 
   vect()
 
-HI <- counties("HI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Hawaii"))%>% 
-  mutate(id = "Hawaii") %>% 
-  vect()
-
 LCR1 <- counties("MN", cb = T, resolution = "20m") %>% 
   filter(NAME %in% c("Houston", "Winona")) %>% 
   vect() 
@@ -139,11 +213,6 @@ NAS <- counties("TN", cb = T, resolution = "20m") %>%
   vect() %>% 
   terra::aggregate()
 NAS$id <- "Nashville"
-
-OA <- counties("HI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Honolulu"))%>% 
-  mutate(id = "Oahu") %>% 
-  vect()
 
 PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>% 
   filter(NAME %in% c("Maricopa", "Pinal")) %>% 
@@ -205,253 +274,6 @@ YNG <- counties("OH", cb = T, resolution = "20m") %>%
   terra::aggregate()
 YNG$id = "Youngstown"
 
-expandedArea <- rbind(AA, ABQ, ATH, ATL, BEL, CED, CLE, COL, DEN, DFW, FLG, 
-                         GNV, HI, LAW, LAX, LCR, MOR, MSP,NAS, OA, PHX, PTD, SC, 
-                         SD, SF, SLC, SM, SP, WOO, YNG, keepnames = T)
-
-# Extrapolate elevation, precip, streamflow -------------------------------
-
-ruggedness <- rast("maps/elev_diff.tif")
-expandedArea <- project(expandedArea, ruggedness) %>% crop(ruggedness)
-df = terra::extract(ruggedness, expandedArea, fun = max, na.rm = TRUE)
-expandedArea$ruggedness <- round(df$na_dem, 0)
-
-precip <- project(rast("maps/precip_mean.tif"), ruggedness)
-streamflow <- project(rast("maps/streamflow_mean.tif"), ruggedness)
-Orange <- project(rast("maps/Orange.tif"), ruggedness)
-
-df <- terra::extract(streamflow, expandedArea, weights = F, fun = mean, na.rm = TRUE)
-expandedArea$streamflow <- c(df$last)
-
-df <- terra::extract(precip, expandedArea, weights = F, fun = mean, na.rm = TRUE)
-expandedArea$precip <- c(df$last)
-
-df <- terra::extract(Orange, expandedArea, weights = F, fun = mean, na.rm = TRUE,
-                     ID = FALSE)
-expandedArea$Orange <- c(df)
-
-multivariate <- subset(as.data.frame(expandedArea), !is.na(id)) 
-multivariate <- multivariate %>% 
-  select(c(id, ruggedness, streamflow, precip, Orange)) %>% 
-  rename(cluster_location = id)
-
-# Land and water area totals ----------------------------------------------
-AA <- counties("MI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Washtenaw"))%>%
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Ann Arbor")
-
-ABQ <- counties("NM", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Bernalillo"))%>%
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = 'Albuquerque')
-
-ATH <- counties("GA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Clarke","Oconee")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Athens")
-
-ATL <- counties("GA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Cobb", "DeKalb", "Fulton"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Atlanta") 
-
-BEL <- counties("WA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Whatcom"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Bellingham") 
-
-CED <- counties("UT", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Iron")) %>%
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Cedar City")  
-
-CLE <- counties("OH", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Cuyahoga", "Geauga", "Lake", "Medina")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Cleveland-Akron")
-
-COL <- counties("CO", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("El Paso")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Colorado Springs")
-
-DFW <- counties("TX", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Collin County", "Dallas", "Ellis", "Johnson",
-                     "Tarrant"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Dallas Fort Worth") 
-
-DEN <- counties("CO", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Adams", "Arapahoe", "Boulder","Broomfield",
-                     "Denver", "Jefferson"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Denver")
-
-FLG <- counties("AZ", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Coconino"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Flagstaff") 
-
-GNV <- counties("FL", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Alachua"))%>%
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Gainesville")
-
-HI <- counties("HI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Hawaii"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Hawaii")
-
-LAW <- counties("KS", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Douglas"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Lawrence")
-
-LAX <- counties("CA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Los Angeles", "Riverside",
-                     "San Bernardino","San Diego"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Los Angeles") 
-
-LCR <- counties("MN", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Houston", "Winona"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T))
-LCR2 <- counties("WI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("La Crosse"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T))
-LCR <- rbind(LCR, LCR2) %>% 
-  summarize(total_land = sum(total_land), 
-            total_water = sum(total_water))%>% 
-  add_column(cluster_location = "La Crosse")
-rm(LCR2)
-MOR <- counties("NJ", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Essex", "Morris", "Somerset", "Union"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Morristown")
-
-MSP <- counties("MN", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Anoka", "Hennepin", "Ramsey"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Minneapolis")
-
-NAS <- counties("TN", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Cheatham", "Davidson", "Rutherford", "Williamson"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Nashville") 
-
-OA <- counties("HI", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Honolulu"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Oahu") 
-
-PHX <- counties("AZ", cb = TRUE, resolution = "20m") %>% 
-  filter(NAME %in% c("Maricopa", "Pinal")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Phoenix")
-
-### This also crosses state borders. I'm dead. 
-PTD <- counties("OR", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Clackamas", "Multnomah"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T))
-PTD2 <- counties("WA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Clark"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T))
-PTD <- rbind(PTD, PTD2) %>% 
-  summarize(total_land = sum(total_land), 
-            total_water = sum(total_water))%>% 
-  add_column(cluster_location = "Portland")
-rm(PTD2)
-SLC <- counties("UT", cb = TRUE, resolution = "20m") %>% 
-  filter(NAME %in% c("Salt Lake", "Davis")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Salt Lake City")
-
-SD <- counties("CA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("San Diego")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "San Diego")
-
-SF <- counties("CA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Alameda","Contra Costa", "Marin", "San Francisco",
-                     "San Mateo","Santa Clara")) %>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "San Francisco") 
-
-SM <- counties("TX", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Hays"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "San Marcos")
-
-SC <- counties("PA", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Centre"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "State College") 
-
-SP <- counties("FL", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Pinellas"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "St Petersburg") 
-
-WOO <- counties("OH", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Wayne"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Wooster")
-
-YNG <- counties("OH", cb = T, resolution = "20m") %>% 
-  filter(NAME %in% c("Mahoning", "Trumbull"))%>% 
-  summarize(total_land = sum(ALAND, na.rm = T), 
-            total_water = sum(AWATER, na.rm = T)) %>% 
-  add_column(cluster_location = "Youngstown")
-
-# Census demographic info -------------------------------------------------
-
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
-# Reload .Renviron
-readRenviron("~/.Renviron")
-# Check to see that the expected key is output in your R console
-Sys.getenv("CENSUS_KEY")
-
-acs_simple <- getCensus(
-  name = "acs/acs5",
-  vintage = 2020,
-  vars = c("NAME", "B01001_001E", "B19013_001E"),
-  region = "county:*") %>% 
-  rename(pop = B01001_001E, 
-         medincome = B19013_001E)
-acs_simple$GEOID = paste0(acs_simple$state, acs_simple$county)
-
 #Let's combine population and average median income. 
 AA$pop <- subset(acs_simple, GEOID == "26161")$pop
 AA$medincome <- subset(acs_simple, GEOID == "26161")$medincome
@@ -487,14 +309,14 @@ CED$medincome <- subset(acs_simple, GEOID == "49021")$medincome
 
 # CLE counties "Cuyahoga", "Geauga", "Lake", "Medina"
 CLE$pop <- sum(subset(acs_simple,
-                  GEOID == "39035" | GEOID == "39055" | GEOID == "39085" | 
-                    GEOID == "39103")$pop)
-CLE$medincome <- weighted.mean(subset(acs_simple,
-               GEOID == "39035" | GEOID == "39055" | GEOID == "39085" | 
-                 GEOID == "39103")$medincome, 
-               subset(acs_simple,
                       GEOID == "39035" | GEOID == "39055" | GEOID == "39085" | 
                         GEOID == "39103")$pop)
+CLE$medincome <- weighted.mean(subset(acs_simple,
+                                      GEOID == "39035" | GEOID == "39055" | GEOID == "39085" | 
+                                        GEOID == "39103")$medincome, 
+                               subset(acs_simple,
+                                      GEOID == "39035" | GEOID == "39055" | GEOID == "39085" | 
+                                        GEOID == "39103")$pop)
 
 COL$pop <- subset(acs_simple, GEOID == "08041")$pop 
 COL$medincome <- subset(acs_simple, GEOID == "08041")$medincome 
@@ -545,9 +367,6 @@ FLG$medincome <- subset(acs_simple, GEOID == "04005")$medincome
 
 GNV$pop <- subset(acs_simple, GEOID == "12001")$pop 
 GNV$medincome <- subset(acs_simple, GEOID == "12001")$medincome 
-
-HI$pop <- subset(acs_simple, GEOID == "15001")$pop 
-HI$medincome <- subset(acs_simple, GEOID == "15001")$medincome 
 
 LAW$pop <- subset(acs_simple, GEOID == "20045")$pop 
 LAW$medincome <- subset(acs_simple, GEOID == "20045")$medincome 
@@ -620,13 +439,10 @@ NAS$medincome <- weighted.mean(subset(acs_simple,
                                         GEOID == "47149" |
                                         GEOID == "47187")$medincome,
                                subset(acs_simple, 
-                                        GEOID == "47021" |
+                                      GEOID == "47021" |
                                         GEOID == "47037" | 
                                         GEOID == "47149" |
                                         GEOID == "47187")$pop)
-
-OA$pop <- subset(acs_simple, GEOID == "15003")$pop 
-OA$medincome <- subset(acs_simple, GEOID == "15003")$medincome 
 
 PHX$pop <- sum(subset(acs_simple, 
                       GEOID == "04013" |GEOID == "04021")$pop)
@@ -657,30 +473,30 @@ SD$pop <- subset(acs_simple, GEOID == "06073")$pop
 SD$medincome <- subset(acs_simple, GEOID == "06073")$medincome
 
 SF$pop <- sum(subset(acs_simple, 
-                      GEOID == "06001" |
-                      GEOID == "06013" | 
-                      GEOID == "06041" |
-                      GEOID == "06075"| 
-                      GEOID == "06081"| 
-                      GEOID == "06085")$pop)
+                     GEOID == "06001" |
+                       GEOID == "06013" | 
+                       GEOID == "06041" |
+                       GEOID == "06075"| 
+                       GEOID == "06081"| 
+                       GEOID == "06085")$pop)
 SF$medincome <- weighted.mean(subset(acs_simple, 
-                                      GEOID == "06001" |
-                                      GEOID == "06013" | 
-                                      GEOID == "06041" |
-                                      GEOID == "06075"| 
-                                      GEOID == "06081"| 
-                                      GEOID == "06085")$medincome,
+                                     GEOID == "06001" |
+                                       GEOID == "06013" | 
+                                       GEOID == "06041" |
+                                       GEOID == "06075"| 
+                                       GEOID == "06081"| 
+                                       GEOID == "06085")$medincome,
                               subset(acs_simple, 
-                                      GEOID == "06001" |
-                                      GEOID == "06013" | 
-                                      GEOID == "06041" |
-                                      GEOID == "06075" | 
-                                      GEOID == "06081" | 
-                                      GEOID == "06085")$pop)
+                                     GEOID == "06001" |
+                                       GEOID == "06013" | 
+                                       GEOID == "06041" |
+                                       GEOID == "06075" | 
+                                       GEOID == "06081" | 
+                                       GEOID == "06085")$pop)
 
 SLC$pop <- sum(subset(acs_simple, 
                       GEOID == "49011" |
-                      GEOID == "49035")$pop)
+                        GEOID == "49035")$pop)
 SLC$medincome <- weighted.mean(subset(acs_simple, 
                                       GEOID == "49011" |
                                         GEOID == "49035")$medincome,
@@ -706,19 +522,21 @@ YNG$medincome <- weighted.mean(subset(acs_simple,
                                       GEOID == "39099" | GEOID == "39155")$pop)
 
 clusterLocations <- rbind(AA, ABQ, ATH, ATL, BEL, CED, CLE, COL, DEN, DFW, FLG, 
-                         GNV, LAW, LAX, LCR, HI, MOR, MSP, NAS, OA, PHX, PTD, SC, 
-                         SD, SF, SLC, SM, SP, WOO, YNG)
+                          GNV, LAW, LAX, LCR, MOR, MSP, NAS, PHX, PTD, SC, 
+                          SD, SF, SLC, SM, SP, WOO, YNG)
 
-clusterLocations$total_area <- (clusterLocations$total_land + 
-                                  clusterLocations$total_water) * 0.000001
+# Popdensity
+clusterLocations$popdensity = clusterLocations$pop / 
+  expanse(clusterLocations, unit = "km")
 
-clusterLocations$perc_water <- round(((clusterLocations$total_water * 0.000001) /
-                                        clusterLocations$total_area)*100, 2)
+clusterLocations = as.data.frame(clusterLocations)
+clusterLocations = subset(clusterLocations, 
+                          select = c("id", "pop", "medincome", "popdensity"))
+
 #we want to create a population density instead of just population, 
 #so can do pop/(total_land/1000) for sqkm- bodies of water in regions generally aren't counted towards land total
-multivariate <- left_join(multivariate, clusterLocations, by = "cluster_location")
-multivariate$popdensity <- multivariate$pop/(multivariate$total_land*0.000001)
-
+multivariate <- merge(multivariate, clusterLocations, 
+                          by.x = "cluster_location", by.y = "id")
 
 # Water Use ---------------------------------------------------------------
 
@@ -986,8 +804,7 @@ multivariate$groundwater_total[multivariate$cluster_location == "Youngstown"] <-
 
 
 
-# Put it all together -----------------------------------------------------
+# Write it -----------------------------------------------------
 
-multivariate <- multivariate %>% select(-c(geometry))
 write.csv(multivariate, "data/multivariate.csv")
 

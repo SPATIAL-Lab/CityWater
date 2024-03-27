@@ -4,8 +4,7 @@ tapData <- read.csv("data/cityWater.csv")
 tapData <- subset(tapData, cluster_location != "Oahu" & cluster_location != "Hawaii")
 datasummary <- read.csv("data/datasummary.csv")
 datasummary <- datasummary[,-c(2:4, 6:13, 16, 17)]
-multivariate <- read.csv("data/multivariate.csv") %>% 
-  filter(cluster_location != "Oahu" & cluster_location != "Hawaii")
+multivariate <- read.csv("data/multivariate.csv")
 multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>% 
   rename('sd' = 'd18O_sd', 
          'idr' = 'IDR_O')
@@ -14,20 +13,19 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 
 model <- multilevel %>% 
   select(idr, lat, lon, ruggedness, streamflow, precip, 
-                popdensity, medincome, water_use, Orange, pop, total_area,
+                medincome, water_use, pop, total_area,
          )
 
 model$water_use = multilevel$water_use / multilevel$pop * 1e6 * 3.78
 model$streamflow = log(model$streamflow)
 model$water_use = log(model$water_use)
-model$popdensity = log(model$popdensity)
+#model$popdensity = log(model$popdensity)
 
 vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (m)"), 
        expression("Streamflow (ln[km"^2*"/year])"), expression("Precipitation (mm)"),
-       expression("Population density (ln[people/km"^2*"])"), 
+       #expression("Population density (ln[people/km"^2*"])"), 
        expression("Median income (USD)"), expression("Water use (ln[L/person/day])"),
-       expression("Local "*delta^{18}*"O range"), expression("Population"),
-       expression("Total area (km"^2))
+       expression("Population"), expression("Total area (km"^2))
 
 
 ## Figure 4 ----------------------------------------------------------------
@@ -38,11 +36,11 @@ layout(matrix(1:9, nrow = 3, byrow = TRUE), widths = c(lcm(3.0 * 2.54), lcm(2.5 
        heights = rep(lcm(3 * 2.54), 3))
 
 for(i in 2:ncol(model)){
-#  if(i %in% c(2, 5, 8)){
-#    par(mai = c(0.6, 0.6, 0.1, 0.1))
-#  }else{
-#    par(mai = c(0.6, 0.1, 0.1, 0.1))
-#  }
+  if(i %in% c(2, 5, 8)){
+    par(mai = c(0.6, 0.6, 0.1, 0.1))
+  }else{
+    par(mai = c(0.6, 0.1, 0.1, 0.1))
+  }
   
   if(i == 5){
     plot(model[, i], sqrt(model$idr), xlab = vn[i-1], 
@@ -102,7 +100,7 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 
-# best model, 3 covariates:
+# best model, 4 covariates:
 best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness + total_area, #this is altered to fit the best new adj R2. Losing medincome and adding ruggedness
                  data = model)
 
@@ -114,6 +112,7 @@ plot(best_model)
 # Checking variance inflation factors for these independent variables we've got highly correlated variables 
 vif(best_model) 
 
+######
 
 # Without YNG and CLE -----------------------------------------------------
 ughHio <- multivariate <- read.csv("data/multivariate.csv") %>% 
