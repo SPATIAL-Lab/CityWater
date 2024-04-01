@@ -44,48 +44,6 @@ temporal_29.1 <- tapData[tapData$cluster_location_time == "Cleveland_Jan-Mar-18"
 temporal_29.2 <- tapData[tapData$cluster_location_time == "Cleveland_Jul-Aug-18", ]
 # k-means clustering ------------------------------------------------------
 
-# Salt Lake City
-km_SF_25.1 <- temporal_25.1 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.1$km_cluster <- factor(km_SF_25.1$cluster)
-
-#temporal_25.2
-km_SF_25.2 <- temporal_25.2 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.2$km_cluster <- factor(km_SF_25.2$cluster)
-
-#temporal_25.3
-km_SF_25.3 <- temporal_25.3 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.3$km_cluster <- factor(km_SF_25.3$cluster)
-
-#temporal_25.4
-km_SF_25.4 <- temporal_25.4 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.4$km_cluster <- factor(km_SF_25.4$cluster)
-
-#temporal_25.5
-km_SF_25.5 <- temporal_25.5 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.5$km_cluster <- factor(km_SF_25.5$cluster)
-
-#temporal_25.6
-km_SF_25.6 <- temporal_25.6 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.6$km_cluster <- factor(km_SF_25.6$cluster)
-
-#temporal_25.7
-km_SF_25.7 <- temporal_25.7 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_25.7$km_cluster <- factor(km_SF_25.7$cluster)
-
 #temporal_1.1
 km_SLC_1.01 <- temporal_1.01 %>%
   select(c(17, 16)) %>% 
@@ -152,6 +110,48 @@ km_SLC_1.11 <- temporal_1.11 %>%
   eclust("kmeans", nboot = 500)
 temporal_1.11$km_cluster <- factor(km_SLC_1.11$cluster)
 
+# temporal_25.1
+km_SF_25.1 <- temporal_25.1 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.1$km_cluster <- factor(km_SF_25.1$cluster)
+
+#temporal_25.2
+km_SF_25.2 <- temporal_25.2 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.2$km_cluster <- factor(km_SF_25.2$cluster)
+
+#temporal_25.3
+km_SF_25.3 <- temporal_25.3 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.3$km_cluster <- factor(km_SF_25.3$cluster)
+
+#temporal_25.4
+km_SF_25.4 <- temporal_25.4 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.4$km_cluster <- factor(km_SF_25.4$cluster)
+
+#temporal_25.5
+km_SF_25.5 <- temporal_25.5 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.5$km_cluster <- factor(km_SF_25.5$cluster)
+
+#temporal_25.6
+km_SF_25.6 <- temporal_25.6 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.6$km_cluster <- factor(km_SF_25.6$cluster)
+
+#temporal_25.7
+km_SF_25.7 <- temporal_25.7 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_25.7$km_cluster <- factor(km_SF_25.7$cluster)
+
 #temporal_26.1
 km_PHO_26.1 <- temporal_26.1 %>%
   select(c(17, 16)) %>% 
@@ -164,18 +164,6 @@ km_PHO_26.2 <- temporal_26.2 %>%
   eclust("kmeans", nboot = 500)
 temporal_26.2$km_cluster <- factor(km_PHO_26.2$cluster)
 
-#temporal_28.1
-km_LAX_28.1 <- temporal_28.1 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_28.1$km_cluster <- factor(km_LAX_28.1$cluster)
-
-#temporal_28.2
-km_LAX_28.2 <- temporal_28.2 %>%
-  select(c(17, 16)) %>% 
-  eclust("kmeans", nboot = 500)
-temporal_28.2$km_cluster <- factor(km_LAX_28.2$cluster)
-
 #temporal_27.1
 km_SAN_27.1 <- temporal_27.1 %>%
   select(c(17, 16)) %>% 
@@ -187,6 +175,18 @@ km_SAN_27.2 <- temporal_27.2 %>%
   select(c(17, 16)) %>% 
   eclust("kmeans", nboot = 500)
 temporal_27.2$km_cluster <- factor(km_SAN_27.2$cluster)
+
+#temporal_28.1
+km_LAX_28.1 <- temporal_28.1 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_28.1$km_cluster <- factor(km_LAX_28.1$cluster)
+
+#temporal_28.2
+km_LAX_28.2 <- temporal_28.2 %>%
+  select(c(17, 16)) %>% 
+  eclust("kmeans", nboot = 500)
+temporal_28.2$km_cluster <- factor(km_LAX_28.2$cluster)
 
 #temporal_29.1
 km_CLE_29.1 <- temporal_29.1 %>%
@@ -204,11 +204,12 @@ temporal_29.2$km_cluster <- factor(km_CLE_29.2$cluster)
 kmeans <- list(temporal_1.01, temporal_1.02, temporal_1.03,
                temporal_1.04, temporal_1.05, temporal_1.06, 
                temporal_1.07, temporal_1.08, temporal_1.09, 
-               temporal_1.10, temporal_1.11, temporal_25.1, 
-               temporal_25.2, temporal_25.3, temporal_25.4, 
+               temporal_1.10, temporal_1.11, 
+               temporal_25.1, temporal_25.2, temporal_25.3, temporal_25.4, 
                temporal_25.5, temporal_25.6, temporal_25.7, 
-               temporal_26.1, temporal_26.2, temporal_28.1, 
-               temporal_28.2, temporal_27.1, temporal_27.2, 
+               temporal_26.1, temporal_26.2,
+               temporal_27.1, temporal_27.2, 
+               temporal_28.1, temporal_28.2, 
                temporal_29.1, temporal_29.2
 )
 
