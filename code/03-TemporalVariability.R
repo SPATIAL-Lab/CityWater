@@ -274,8 +274,9 @@ idr <- df %>%
     IDR_O = round(abs(diff(quantile(.data$d18O, c(0.1, 0.9), names = F))), 2), 
     IDR_d_ex = round(abs(diff(quantile(.data$d_ex, c(0.1, 0.9), names = F))), 2), 
     IDR_H = round(abs(diff(quantile(.data$d2H, c(0.1, 0.9), names = F))), 2),
+    n = n()
   ) %>% 
-  select(cluster_ID, IDR_O, IDR_d_ex, IDR_H) %>% 
+  select(cluster_ID, IDR_O, IDR_d_ex, IDR_H, n) %>% 
   mutate(city = cluster_ID, 
          city = if_else(grepl('25.*', city), "SF", 
                         if_else(grepl('26.*', city), "Phoenix", 

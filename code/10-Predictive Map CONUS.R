@@ -46,7 +46,7 @@ s <- c(streamflow, lon, ruggedness, total_area)
 names(s) <- c("streamflow", "lon", "ruggedness", "total_area")
 
 # Fit the model
-best_model <- lm((idr) ~ streamflow + lon + ruggedness + total_area,
+best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness + total_area,
                  data = model)
 
 # Predict

@@ -16,13 +16,12 @@ plot_usmap(regions = "states", fill = 'grey90') +
   theme_void() + 
   theme(legend.position = 'top')
 
-ggsave("figures/idrplot.pdf", 
+ggsave("figures/idrplot.tiff", 
        units = c('in'), 
        dpi = 600, 
        width = 6, 
        height = 3
-       )
-
+)
 # Hydrogen SD
 plot_usmap(regions = "states", fill = 'grey90') + 
   geom_point(data = transformed_data, aes(x = x, y = y, size = d2H_sd, fill = modality), shape = 21) + 
