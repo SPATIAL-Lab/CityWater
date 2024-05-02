@@ -16,16 +16,15 @@ plot_usmap(regions = "states", fill = 'grey90') +
   theme_void() + 
   theme(legend.position = 'top')
 
-ggsave("figures/idrplot.pdf", 
+ggsave("figures/idrplot.tiff", 
        units = c('in'), 
        dpi = 600, 
        width = 6, 
        height = 3
-       )
-
+)
 # Hydrogen SD
 plot_usmap(regions = "states", fill = 'grey90') + 
-  geom_point(data = transformed_data, aes(x = x, y = y, size = d2H_sd, fill = Modality), shape = 21) + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = d2H_sd, fill = modality), shape = 21) + 
   labs(color = "Modality",
        size = "Standard Deviation") + 
   scale_fill_manual(values = c("#003f5c", "#ffa600")) + 
@@ -35,7 +34,7 @@ plot_usmap(regions = "states", fill = 'grey90') +
 
 # Deuterium excess IDR
 plot_usmap(regions = "states", fill = 'grey90') + 
-  geom_point(data = transformed_data, aes(x = x, y = y, size = IDR_d_ex, fill = Modality), shape = 21) + 
+  geom_point(data = transformed_data, aes(x = x, y = y, size = IDR_d_ex, fill = modality), shape = 21) + 
   labs(color = "Modality",
        size = "Interdecile Range") + 
   scale_fill_manual(values = c("#003f5c", "#d2042d")) + 
@@ -57,6 +56,6 @@ plot_usmap(regions = "states", fill = 'grey90') +
 
 ggplot(data = datasummary, aes(x = d18O_sd, y = d2H_sd)) + 
   geom_smooth(se = F, method = lm) +
-  geom_point(aes(color = Modality), size = 3) + 
+  geom_point(aes(color = modality), size = 3) + 
   scale_color_manual(values = c("#003f5c", "#ffa600")) +
   geom_text_repel(aes(label = Cluster_Location))

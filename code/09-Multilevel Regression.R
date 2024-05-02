@@ -13,21 +13,22 @@ multilevel <- left_join(multivariate, datasummary, by = 'cluster_location') %>%
 
 model <- multilevel %>% 
   select(idr, lat, lon, ruggedness, streamflow, precip, 
-                popdensity, medincome, water_use)
+                medincome, water_use, pop, total_area,
+         )
 
 model$water_use = multilevel$water_use / multilevel$pop * 1e6 * 3.78
-
 model$streamflow = log(model$streamflow)
 model$water_use = log(model$water_use)
-model$popdensity = log(model$popdensity)
+#model$popdensity = log(model$popdensity)
 
 vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (m)"), 
        expression("Streamflow (ln[km"^2*"/year])"), expression("Precipitation (mm)"),
-       expression("Population density (ln[people/km"^2*"])"), 
-       expression("Median income (USD)"), expression("Water use (ln[L/person/day])"))
+       #expression("Population density (ln[people/km"^2*"])"), 
+       expression("Median income (USD)"), expression("Water use (ln[L/person/day])"),
+       expression("Population"), expression("Total area (km"^2))
 
 
-# Figure 4 ----------------------------------------------------------------
+## Figure 4 ----------------------------------------------------------------
 
 png("figures/Fig4.png", width = 8.2, height = 9.2, units = "in", res = 600)
 
@@ -70,14 +71,14 @@ for(i in 2:ncol(model)){
 dev.off()
 
 
-# All Model ---------------------------------------------------------------
+## All Model ---------------------------------------------------------------
 
 all_model <- lm(sqrt(idr) ~ .,
                  data = model)
 
 summary(all_model)
 vif(all_model)
-# Choosing best predictors ------------------------------------------------
+## Choosing best predictors ------------------------------------------------
 Best_Subset <- regsubsets(sqrt(idr) ~ .,
                           data = model,
                           nbest = 1,      # 1 best model for each number of predictors
@@ -89,7 +90,7 @@ summary_best_subset <- summary(Best_Subset)
 as.data.frame(cbind(summary_best_subset$outmat, "bic" = round(summary_best_subset$bic, 2),
                     "adjr2" = round(summary_best_subset$adjr2, 2)))
 
-# Model comparison just to check it out
+## Model comparison just to check it out
 res.sum <- summary(Best_Subset)
 data.frame(
   Adj.R2 = which.max(res.sum$adjr2),
@@ -99,8 +100,8 @@ data.frame(
 plot(res.sum$adjr2)
 plot(res.sum$bic)
 
-# best model, 3 covariates:
-best_model <- lm(sqrt(idr) ~ streamflow + lon + medincome,
+# best model, 4 covariates:
+best_model <- lm(sqrt(idr) ~ streamflow + lon + ruggedness + total_area, #this is altered to fit the best new adj R2. Losing medincome and adding ruggedness
                  data = model)
 
 summary(best_model)
@@ -110,3 +111,4 @@ plot(best_model)
 
 # Checking variance inflation factors for these independent variables we've got highly correlated variables 
 vif(best_model) 
+
