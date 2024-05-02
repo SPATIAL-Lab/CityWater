@@ -90,7 +90,7 @@ multivariate <- multivariate %>%
 
 # Census demographic info -------------------------------------------------
 
-Sys.setenv(CENSUS_KEY = "7d9a4b25e4c9d0cced63abc32010591eac577c4e")
+Sys.setenv(CENSUS_KEY = "YOUR KEY HERE")
 # Reload .Renviron
 readRenviron("~/.Renviron")
 # Check to see that the expected key is output in your R console
