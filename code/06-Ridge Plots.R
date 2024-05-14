@@ -49,7 +49,4 @@ DensPlot_d_ex <- ggplot(density, aes(x = d_ex, y = cluster_location, fill = ..x.
   )
 
 DensPlot_d18O + DensPlot_d_ex  
-ggsave("figures/densityRidges.pdf", width=12, height=5, units="in", dpi=300)
-
-
-
+ggsave("figures/densityRidges.pdf", width=12, height=6, units="in", dpi=300)
