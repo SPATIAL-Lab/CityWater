@@ -16,7 +16,7 @@ plot_usmap(regions = "states", fill = 'grey90') +
   theme_void() + 
   theme(legend.position = 'top')
 
-ggsave("figures/idrplot.tiff", 
+ggsave("figures/idrplot.pdf", 
        units = c('in'), 
        dpi = 600, 
        width = 6, 
