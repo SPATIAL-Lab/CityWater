@@ -22,10 +22,10 @@ model$water_use = log(model$water_use)
 #model$popdensity = log(model$popdensity)
 
 vn = c(expression("Latitude"), expression("Longitude"), expression("Ruggedness (m)"), 
-       expression("Streamflow (ln[km"^2*"/year])"), expression("Precipitation (mm)"),
+       expression("Streamflow (ln[km"^3*"/year])"), expression("Precipitation (mm)"),
        #expression("Population density (ln[people/km"^2*"])"), 
        expression("Median income (USD)"), expression("Water use (ln[L/person/day])"),
-       expression("Population"), expression("Total area (km"^2))
+       expression("Population"), expression("Total area (km"^2*")"))
 
 
 ## Figure 4 ----------------------------------------------------------------
