@@ -1,7 +1,7 @@
 # Ridge Plots for Figure 3 ------------------------------------------------
 
 library(dplyr); library(ggplot2); library(ggridges); library(patchwork);
-library(readr)
+library(readr); library(factoextra)
 
 tapData <- read_csv("data/cityWater.csv", 
                     col_types = cols(cluster_ID = col_character()))
